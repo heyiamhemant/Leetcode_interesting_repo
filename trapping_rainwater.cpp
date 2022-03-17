@@ -33,7 +33,8 @@ int trap(vector<int> &height)
         if (x != end)
         {
             total += sum;
-            cout << "total=" << total << "\n" i = x;
+            cout << "total=" << total << "\n";
+            i = x;
         }
     }
     while (j > i)
@@ -50,7 +51,8 @@ int trap(vector<int> &height)
         if (((y >= 0)))
         {
             total += sum;
-            cout << "total=" << total << "\n" j = y;
+            cout << "total=" << total << "\n";
+            j = y;
         }
     }
     cout << "total =" << total << "\n";
