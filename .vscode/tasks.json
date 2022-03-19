@@ -8,29 +8,31 @@
 			"args": [
 				"copy",
 				"${file}",
-				"${workspaceFolder}\\jspwTest.cpp",
+				"${workspaceFolder}\\x.cpp",
 				"&&",
 				"g++",
-				"jspwTest.cpp",
+				"x.cpp",
 				"-o",
-				"jspwTest",
+				"x",
 				"&&",
-				"jspwTest",
+				"x",
 				"<",
 				".vscode\\input.txt",
 				">",
 				".vscode\\output.txt",
+				"2>",
+				".vscode\\error.txt",
 				"&&",
 				"del",
-				"jspwTest.exe",
+				"x.exe",
 				"&&",
 				"del",
-				"jspwTest.cpp",
-				"&&",
-				"del",
-				"${file}"
+				"x.cpp"
 			],
-			"group": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"problemMatcher": {
 				"owner": "cpp",
 				"fileLocation": [

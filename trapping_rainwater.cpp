@@ -1,3 +1,6 @@
+// https://leetcode.com/problems/trapping-rain-water/
+/*Given n non-negative integers representing an elevation map where the width of each bar is 1,
+compute how much water it can trap after raining.*/
 #include <bits/stdc++.h>
 #define db1(x) cerr << #x << "=" << x << '\n'
 #define db2(x, y) cerr << #x << "=" << x << "," << #y << "=" << y << '\n'
@@ -14,49 +17,41 @@
     cout.tie(0);
 using namespace std;
 using ll = long long;
+
 int trap(vector<int> &height)
 {
-    int total = 0;
-    int i = 0, sum = 0, sumi = 0, sumj = 0;
-    int j = height.size() - 1;
-    int x = 0, y = 0;
-    int end = height.size();
-    int min = 0;
-    while (i < end)
+    int i = 0, n = height.size(), j = n - 1, sum = 0;
+    int Min = 0, total = 0, bs = 0, bi = 0;
+    while (i < j)
     {
-        min = height[i];
-        sum = 0;
-        while (x < end && height[x] < min)
+        bi = i;
+        bs = sum;
+        Min = height[i++];
+        while (i < j && height[i] < Min)
         {
-            sum += (min - height[x++]);
+            sum += (Min - height[i++]);
         }
-        if (x != end)
+        if (i == n)
         {
-            total += sum;
-            cout << "total=" << total << "\n";
-            i = x;
+            sum = bs;
+            i = bi;
         }
+
+        bi = j;
+        bs = sum;
+        Min = height[j--];
+        while (i < j && height[j] < Min)
+        {
+            sum += (Min - height[j--]);
+        }
+        if (j < 0)
+        {
+            sum = bs;
+            j = bi;
+        }
+        db2(i, j);
     }
-    while (j > i)
-    {
-        while (j < i)
-        {
-        }
-        min = height[j];
-        sum = 0;
-        while (y >= 0 && height[y] < min)
-        {
-            sum += (min - height[y--]);
-        }
-        if (((y >= 0)))
-        {
-            total += sum;
-            cout << "total=" << total << "\n";
-            j = y;
-        }
-    }
-    cout << "total =" << total << "\n";
-    return total;
+    return sum;
 }
 int main()
 {
@@ -70,6 +65,7 @@ int main()
         vector<int> v(n);
         rep(i, n) cin >> v[i];
         rep(i, n) cout << v[i] << " ";
+        cout << "\n";
         cout << trap(v);
         cout << '\n';
     }
