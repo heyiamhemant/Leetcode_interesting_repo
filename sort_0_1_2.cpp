@@ -26,17 +26,20 @@ void sort012(vector<int> &A)
     int p0 = -1;
     int p2 = n;
     int i = 0;
-    while(i< p2)
+    while (i < p2)
     {
-        //keep i greater than 0's marker
-        if(A[i]==0){
-            swap(A[++p0],A[i++]);
+        // keep i greater than 0's marker
+        if (A[i] == 0)
+        {
+            swap(A[++p0], A[i++]);
         }
-        else if (A[i]==2){
-            swap(A[i],A[--p2]);
+        else if (A[i] == 2)
+        {
+            swap(A[i], A[--p2]);
         }
         // if (A[i]==1) move forward
-        else i++;
+        else
+            i++;
     }
 }
 int main()
@@ -51,7 +54,7 @@ int main()
         vector<int> v(n);
         rep(i, n) cin >> v[i];
         sort012(v);
-        rep(i,n) cout<< v[i]<<" ";
+        rep(i, n) cout << v[i] << " ";
         cout << '\n';
     }
     return 0;
