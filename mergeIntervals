@@ -1,0 +1,42 @@
+from os import *
+from sys import *
+from collections import *
+from math import *
+
+from sys import stdin, setrecursionlimit
+
+
+class Solution:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+
+def mergeIntervals(intervals):
+    # Write your code here.
+    intervals.sort(key=lambda x: x.start)
+    i = 0
+    while i < len(intervals) - 1:
+        if intervals[i].end >= intervals[i + 1].start:
+            intervals[i + 1].start = min(intervals[i].start, intervals[i + 1].start)
+            intervals[i + 1].end = max(intervals[i].end, intervals[i + 1].end)
+            intervals.pop(i)
+        else:
+            i += 1
+    return intervals
+
+
+n = int(input())
+arr1 = list(map(int, stdin.readline().strip().split(" ")))
+arr2 = list(map(int, stdin.readline().strip().split(" ")))
+arr1.sort()
+arr2.sort()
+intervals = []
+for i in range(n):
+    a = Solution(arr1[i], arr2[i])
+    intervals.append(a)
+
+res = mergeIntervals(intervals)
+
+for i in range(len(res)):
+    print(res[i].start, res[i].end)
