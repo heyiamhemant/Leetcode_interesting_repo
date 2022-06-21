@@ -6,8 +6,9 @@ from typing import List
 
 
 class Array:
-    arr = []
-    n = 0
+    # private data members
+    __arr = []
+    __n = 0
 
     def __init__(self, n: int):
         self.n = n
