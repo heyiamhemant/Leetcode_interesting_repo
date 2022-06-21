@@ -13,6 +13,9 @@ class Array:
         self.n = n
         self.arr = [int(input()) for i in range(self.n)]
 
+    def __del__(self):
+        pass
+
 
 def KthSmallestAndLargest(arr: List, n: int, k: int, sort: int = 0) -> List:
     # simple approch to sort and get the kth positions from each side
