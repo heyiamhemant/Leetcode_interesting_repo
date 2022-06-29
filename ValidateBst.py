@@ -1,4 +1,7 @@
 # Definition for a binary tree node.
+from sys import maxsize
+
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -6,18 +9,17 @@ class TreeNode:
         self.right = right
 
 
-class Solution:
-    def Dfs(self, root: TreeNode, visited: dict) -> bool:
-        if not visited.has_key(root.val):
-            visited[root.val] = 1
-        else:
-            return False
+def traversal(root: TreeNode, MIN: int, MAX: int) -> bool:
+    if root and root.val < MAX and root.val > MIN:
+        left, right = True, True
         if root.left:
-            return self.Dfs(root.left)
+            left = traversal(root.left, MIN, root.val)
         if root.right:
-            return self.Dfs(root.right)
-        return True
+            right = traversal(root.right, root.val, MAX)
+        return left and right
+    return False
 
+
+class Solution:
     def isValidBST(self, root: TreeNode) -> bool:
-        visited = {}
-        return self.Dfs(root, visited)
+        return traversal(root, -maxsize - 1, maxsize)
