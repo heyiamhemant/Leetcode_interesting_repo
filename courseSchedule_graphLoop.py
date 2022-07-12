@@ -1,5 +1,7 @@
 # striver NEED SELF DFS TO DETECT CYCLE IN DIRECTED GRAPH
 
+# actually this is topological sort, if we add the node to stack when returning
+
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites) -> bool:
