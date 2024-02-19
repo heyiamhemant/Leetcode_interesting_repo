@@ -24,24 +24,18 @@ The length of a path between two nodes is represented by the number of edges bet
  class Solution
  {
  public:
-     int height(TreeNode *root)
+
+     int calculateDiameter(TreeNode *root, int &diameter)
      {
          if (!root)
              return 0;
-         return (1 + (height(root->left), height(root->right)));
-     }
-     void calculateDiameter(TreeNode *root, int &diameter)
-     {
-         if (!root)
-             return;
-        if(root->left)
-            calculateDiameter(root->left, diameter);
-        if(root->right)
-            calculateDiameter(root->right, diameter);
-        diameter = max(diameter, height(root->left)+ height(root->right));
+        int d_l = calculateDiameter(root->left, diameter);
+        int d_r = calculateDiameter(root->right, diameter);
+        diameter =  max(diameter, d_l + d_r);
+        return 1 + max(d_l , d_r);
     }
     int diameterOfBinaryTree(TreeNode* root) {
-        int diameter = 0;
+        int diameter = 0 ;
         // diamter of tree = max(height(node->leftNode) + height(node->rightNode)) for every node
          calculateDiameter(root, diameter);
          return diameter;
