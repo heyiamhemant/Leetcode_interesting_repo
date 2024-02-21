@@ -56,7 +56,7 @@ class LRUCache(object):
     hMap = {}
     capacity = 0
     def __init__(self, capacity):
-        Node head
+        Node head 
         
     def __get(self, key):
         
