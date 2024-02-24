@@ -3,8 +3,6 @@
 
 # find the maximum sum of the longest alternating subsequence -> [+,-,+,-] subsequence
 import sys
-
-
 def alternatingSubsequence(nums):
     # start with positive
     INT_MIN = -sys.maxsize - 1
