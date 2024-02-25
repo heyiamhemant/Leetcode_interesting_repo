@@ -39,41 +39,40 @@ class Solution(object):
         # if the hash function of
         if a == b:
             return 1
-
-        x = len(a) // len(b)
-        for i in range(x):
-            a += a
+        orig = a
+        x = 1
+        while len(a) < len(b):
+            a+=orig
+            x+=1
+        if a == b :
+            return x 
         if RabinKarp(
             a, b
-        ):  # minimum repetition to have a substring of len(b) length possible
+        ):  # minimum repetition to have a substring of len(b) length possible)
+            return x
+        if a+orig == b:
+            return x+1
+        if RabinKarp(a + orig, b):  # worst case repetition to have substring in the string
             return x + 1
-        if RabinKarp(a + a, b):  # worst case repetition to have substring in the string
-            return x + 2
         return -1
 
 
 def RabinKarp(str, substr):
 
-    # print(f"str = {str}, substr = {substr}")
-    substrHashCode = 0
-    for i, c in enumerate(substr):
-        substrHashCode += Hash(c) * (10 ** (len(substr) - i - 1))
-
+    #print(f"str = {str}, substr = {substr}")
     ws = len(substr)
-    strHashCode = 0
-    for i in range(ws):
-        c = Hash(str[i])
-        strHashCode += c * (10 ** (ws - i - 1))
-    print(strHashCode, substrHashCode)
-    if strHashCode == substrHashCode:
-        return 1
-    for i in range(ws, len(str)):
-        strHashCode -= Hash(str[i - ws]) * 10 ** (ws - 1)
-        strHashCode *= 10
-        strHashCode += Hash(str[i])
-        print(f"substrHashCode= {substrHashCode}, strHashCode = {strHashCode}")
-        if strHashCode == substrHashCode:
-            return matchstr(str, substr, i, ws)
+    substrHashCode = 0
+    substrHashCode = sum( (Hash(c) * (10 ** (ws-i -1)) % (10**6)) for i,c in enumerate(substr))
+    #print(f"substrHashCode = {substrHashCode}")
+
+    #print(len(str) - ws)
+    for i in range(len(str)-ws + 1):
+        j = i
+        strHashCode = sum((Hash(str[j]) * (10 **(ws-(j-i)-1)) % (10**6))  for j in range(j, j+ws)) 
+        #print(str[i:i+ws],strHashCode, substr )
+        if strHashCode == substrHashCode and  matchstr(str[i:i+ws], substr):
+            return 1
+    #print(strHashCode, substrHashCode)
     return 0
 
 
@@ -81,12 +80,14 @@ def Hash(char):
     return ord(char) - ord("a") + 1
 
 
-def matchstr(str, substr, i, ws):
-    print(str[i - ws + 1 : i + 1], substr)
-    if str[i - ws + 1 : i + 1] == substr:
+def matchstr(str, substr):
+    if str == substr:
         return 1
     return 0
 
 
 sol = Solution()
+print(sol.repeatedStringMatch("abcde", "deabcdeabc"))
 print(sol.repeatedStringMatch("aa", "a"))
+print(sol.repeatedStringMatch("abcd", "cdabcdab"))
+print(sol.repeatedStringMatch("a", "aa"))
