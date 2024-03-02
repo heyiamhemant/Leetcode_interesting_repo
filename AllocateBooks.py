@@ -81,20 +81,36 @@ Without considering the no. of students to be allotted, the min possible result 
 The max possible result without considering no. of students is the sum(all books)"""
 
 class Solution():
-    def solve(self, A, B):
-        if len(nums) < B:
+    def books(self, A, B):
+        if len(A) < B:
             return -1
-        minVal = max(nums)
-        maxVal = sum(x for x in nums)
+        minVal = max(A)
+        maxVal = sum(A)
         while minVal < maxVal:
-            mid = minVal + maxVal/2
+            mid = (minVal + maxVal)//2
+            allocated = StudentsAllocated(A, mid)
+            #print(allocated, minVal, maxVal)
+            if allocated > B: # means we assigned less books per student
+                minVal = mid + 1
+            else:
+                maxVal = mid
+        return minVal
+                
             
-        # if every one get allotted even one book the max would be max(nums[i]), not considering the one book rule here.
-        
+        # if every one get allotted even one book the max would be max(A[i]), not considering the one book rule here.
 
-def StudentsAllocated(nums, books): # books will get the mid value
-    
+
+def StudentsAllocated(A, books): # books will get the mid value
+    count = 0
+    students = 1
+    for x in A:
+        count+=x
+        if count > books:
+            students+=1 # now the new student's allotment for books
+            count = x # reset the sum           
+    return students
     
 sol = Solution()
-nums = [12]
-print(sol.solve(nums))
+A = [12, 34 ,67,90]
+B = 2
+print(sol.books(A, B))
