@@ -84,9 +84,17 @@ class Solution():
     def solve(self, A, B):
         if len(nums) < B:
             return -1
+        minVal = max(nums)
+        maxVal = sum(x for x in nums)
+        while minVal < maxVal:
+            mid = minVal + maxVal/2
+            
         # if every one get allotted even one book the max would be max(nums[i]), not considering the one book rule here.
+        
 
-
+def StudentsAllocated(nums, books): # books will get the mid value
+    
+    
 sol = Solution()
 nums = [12]
 print(sol.solve(nums))
