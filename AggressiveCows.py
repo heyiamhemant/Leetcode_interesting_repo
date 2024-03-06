@@ -33,19 +33,35 @@ class Solution:
         # The max possible distance is the answer.
 
         # make sure the stalls are in increasing order
-        sort(stalls)
-        max_distance = - float(inf)
+        stalls.sort()
         def placeCowsLinear():
+            max_distance = - float('inf')
             for dist in range(1, max(stalls) - min(stalls)):
                 countCow = 0
-                lastStall = stall[0] # first placement of cow
+                lastStall = stalls[0] # first placement of cow
                 for stall in stalls:
                     if stall - lastStall >= dist:
                         countCow+=1 # sucessfull placement of next cow
-            if countCow == cows:
-                max_distance = max(dist, max_distance)
-
-        return max_distance
+                if countCow == cows:
+                    max_distance = max(dist, max_distance)
+            return max_distance
+        def placeCowsBinarySearch():
+            # we go from min_distance which is definetly possible to max_distance definetly impossible, and perform bisection with that
+            max_distance = stalls[len(stalls) - 1]
+            min_distance = stalls[0]
+            while(min_distance < max_distance):
+                mid = (max_distance + min_distance)//2 # distance cannot be in float
+                last_stall = stalls[0]
+                countCow = 0
+                for stall in stalls:
+                    if stall - last_stall >= mid:
+                        countCow+=1
+                if countCow >=cows:
+                    min_distance = mid+1
+                else:
+                    max_distance = mid-1
+            return max_distance
+        return placeCowsBinarySearch()
     
 sol = Solution()
 stalls = [1,4,5,8,9]
