@@ -56,17 +56,15 @@ class Solution(object):
 
         if len(grid) == 0:
             return -1
-        count = 0
-        visited = set()
+
+        q  = C.deque()
         for row in range(len(grid)):
             for col in range(len(grid[row])):
-
-                if grid[row][col] == 2 and (row, col) not in visited:
-                    print(f"calling {row}, {col}")
-                    count += orangeBfs(grid, row, col, visited)
-                    # print(f"result is {count}")
+                if grid[row][col] == 2:
+                    q.append((row,col))
         # for row in grid:
         # print(row)
+        count = orangeBfs(grid, q)
         for row in grid:
             for ele in row:
                 if ele == 1:
@@ -75,13 +73,12 @@ class Solution(object):
         return count
 
 
-def orangeBfs(grid, row, col, visited, count=0):
+def orangeBfs(grid, q):
+    visited = set()
     rowSize = len(grid)
     colSize = len(grid[0])
-    q = C.deque()
-    q.append((row, col))
     # print(q)
-
+    count = -1
     while q:
         for k in range(len(q)):
             i, j = q.popleft()
@@ -96,7 +93,7 @@ def orangeBfs(grid, row, col, visited, count=0):
                 # print(f"pos ({x} , {y})")
                 if x >= 0 and x < rowSize and y >= 0 and y < colSize:
                     if (x, y) not in visited and grid[x][y] == 1:
-                        # print(f"for {i},{j} adj is {x},{y}")
+                        print(f"for {i},{j} adj is {x},{y}")
                         # print(visited)
                         # print(f"added neigh {x}, {y}")
                         q.append((x, y))
@@ -105,8 +102,8 @@ def orangeBfs(grid, row, col, visited, count=0):
         for row in grid:
             print(row)
         count += 1
-        print(f"increasing count to {count - 1}")
-    return count - 1
+        print(f"increasing count to {count}")
+    return count
 
 
 sol = Solution()
@@ -129,5 +126,6 @@ grid = [
         [1,0,0,1],
         [1,1,1,1]]"""
 grid = [[2, 1, 1], [1, 1, 1], [0, 1, 2]]
-print()
+grid = [[2, 2], [1, 1], [0, 0], [2, 0]]
+# print()
 print(sol.orangesRotting(grid))
