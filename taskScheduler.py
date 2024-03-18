@@ -52,6 +52,8 @@ Next we convert the jobs to their frequencies.
 We use a max_Heap to always get the highest frequency job and then we execute it, we reduce its freq by 1 and add it to a queue.
 We also add when the task can be taken up again to the queue.
 Next time we check in the queue, if the job can be taken up we add it to the heap."""
+
+
 class Solution(object):
     def leastInterval(self, tasks, n):
         """
@@ -77,29 +79,27 @@ class Solution(object):
         H.heapify(jobs)
         q = deque()
         t = 0
-        #print(jobs)
+        # print(jobs)
         while jobs or q:
-            #print(f"time = {t}")
+            print(f"time = {t}")
             if q:
                 j, tJob = q[0]
                 if t >= tJob:
-                    #print(f"t = {t}, tJob = {tJob} ")
+                    # print(f"t = {t}, tJob = {tJob} ")
                     q.popleft()
-                    #print(f"scheduled {j}")
+                    # print(f"scheduled {j}")
                     H.heappush(jobs, j)
-                    #print(f"jobs = {jobs},  q = {q}")
+                    # print(f"jobs = {jobs},  q = {q}")
             if jobs:
                 curJob = H.heappop(jobs)
-                #print(f"curJob = {curJob}")
+                print(f"curJob = {curJob}")
                 remainingJob = curJob + 1
                 if remainingJob != 0:
-                    #print(f"added to queue {remainingJob}, {t+n}")
+                    # print(f"added to queue {remainingJob}, {t+n}")
                     q.append((remainingJob, t + n + 1))
-                    #print(f"jobs = {jobs},  q = {q}")
+                    print(f"jobs = {jobs},  q = {q}")
 
             t += 1
-            if t > 15:
-                break
         return t
 
 
@@ -107,5 +107,5 @@ sol = Solution()
 tasks = ["A", "B", "A", "C", "A", "B"]
 n = 2
 tasks = ["A", "A", "A", "B", "B", "B"]
-n = 2
+n = 50
 print(sol.leastInterval(tasks, n))
