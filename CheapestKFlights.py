@@ -49,7 +49,6 @@ There will not be any multiple flights between two cities.
 0 <= src, dst, k < n
 src != dst"""
 
-
 # Bellman ford algorithm
 # maintain the stops that you have encountered.
 # Use a queue to perform a bfs on the graph
@@ -104,8 +103,8 @@ class Solution:
 
 sol = Solution()
 n = 4
-flights = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]]
+flights = [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]]
 src = 0
 dst = 3
 k = 1
-print(sol.findCheapestPrice(n , flights, src, dst, k))
+print(sol.findCheapestPrice(n, flights, src, dst, k))
