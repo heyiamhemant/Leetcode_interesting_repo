@@ -25,7 +25,7 @@ Constraints:
 s and t consist of lowercase English letters.
  """
 
- class Solution:
+class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         Map = {}
         for c in s:
