@@ -26,6 +26,7 @@ It is guaranteed that the answer is unique.
 
 Follow up: Your algorithm's time complexity must be better than O(n log n), where n is the array's size."""
 
+
 class Solution:
     def topKFrequent(self, nums: list[int], k: int) -> list[int]:
         res = [0 for i in range(k)]
@@ -35,12 +36,31 @@ class Solution:
         # we can also use a bucket, which maps from (count) -> [list of elements], as this count(i) < len(array).
 
         n = len(nums)
-        buckets = [ [] for i in range(n)]
+        bucket = [
+            [] for i in range(n + 1)
+        ]  # map from count -> list of elements with that count
         count = {}
-        for i, num in enumerate(nums):
+
+        #  count every element how many times do each element occur?
+        for num in nums:
             if num in count:
-                count[num]+=1
+                count[num] += 1
             else:
-                count[num] = 0
+                count[num] = 1
+
+        # print(count)
+        res = []
+        # put every element in a bucket, all elements than occur n times in bucket n
+        for ele, c in count.items():
+            bucket[c].append(ele)
+
+        # print(bucket)
+
+        # add to the result the most frequent k elements
+        countToK = 0
+        for i in range(n, 0, -1):
+            for j in range(len(bucket[i])):
+                if countToK < k:
+                    countToK += 1
+                    res.append(bucket[i][j])
         return res
-        
