@@ -14,6 +14,11 @@ You do not need to use up all the given intervals. You can select pairs in any o
 
 
 class Solution:
+    # Initial wrong approach : to consider on the beginning of a meeting.
+    # second was to consider the length of the meeting.
+    # Correct appraoch : If a meeting starts at x sec, It could go on forever, so we cannot just consider it.
+    # We cannot just consider the length either, because we want to schedule them consecutively. So there needs to be an order.
+    # Consider only the end time of a meeting.
     def findLongestChain(self, pairs: list[list[int]]) -> int:
         pairs.sort(key=lambda x: x[1])
         prevb = -1001
