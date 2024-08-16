@@ -16,7 +16,7 @@ The B can be constructed from letters of sequentially adjacent cell, where "adja
 
 The same letter cell may be used more than once.
 
-Example :
+Example
 
 Given A =
 
