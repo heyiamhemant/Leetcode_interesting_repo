@@ -47,7 +47,6 @@ using namespace std;
 
 class Solution {
     public : 
-/*************  ✨ Codeium Command ⭐  *************/
     /**
      * @brief Calculates the cost of a string.
      *
@@ -58,7 +57,6 @@ class Solution {
      * @param s the string to calculate the cost for
      * @return the cost of the string
      */
-/******  5117149e-62bf-470d-b011-0577237f02f7  *******/
     std::array<int, 26> getCost(string s) {
         std::array<int, 26> c;
         c.fill(0);
@@ -66,13 +64,7 @@ class Solution {
             c[s[i] - 'a']++;
         return c;
     }
-/*************  ✨ Codeium Command ⭐  *************/
-    /**
-     * @brief Groups anagrams of given strings together.
-     * @param strs A vector of strings
-     * @return A vector of vectors of strings, where each inner vector contains strings which are anagrams of each other.
-     */
-/******  7dc19cc4-eba5-4c89-9fdb-ba09e6634fa0  *******/
+
     vector <vector<string>> groupAnagrams(vector<string> &strs) {
         vector<vector<string>> res;
         vector<int> visited = vector<int>(strs.size(), 0);
