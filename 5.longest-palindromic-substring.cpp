@@ -40,12 +40,31 @@
  * 
  * 
  */
+#include<iostream>
+using namespace std;
 
 // @lc code=start
 class Solution {
 public:
-    string longestPalindrome(string s) {
+    //string longestPalindrome(string s) {
         
+    //}
+    // brute force
+    string longestPalidrome(string s) {
+        string longestPal;
+        for (int i = 0; i < s.size(); i++)
+        {
+
+            int p = i + 1, q = i - 1;
+            string pal = toString(s[i]);
+            while (p > i && p < s.size() && q < i && q > 0 && s[p] == s[q])
+            {
+                    pal = s[p++] + pal + s[q--];
+            }
+            if (pal.size() > longestPal.size())
+                longestPal = pal;
+        }
+        return longestPal;
     }
 };
 // @lc code=end
