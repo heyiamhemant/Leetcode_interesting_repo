@@ -49,6 +49,7 @@
 class Solution {
 public:
     int strStr(string haystack, string needle) {
+        int foundPos = -1;
         if(needle.size() > haystack.size())
             return foundPos;
         for (int i = 0; i < haystack.size() - needle.size() + 1 ;i++) {
