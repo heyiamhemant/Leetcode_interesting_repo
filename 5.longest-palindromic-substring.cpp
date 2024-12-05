@@ -54,7 +54,6 @@ public:
         string longestPal;
         for (int i = 0; i < s.size(); i++)
         {
-
             int p = i + 1, q = i - 1;
             string pal = toString(s[i]);
             while (p > i && p < s.size() && q < i && q > 0 && s[p] == s[q])
