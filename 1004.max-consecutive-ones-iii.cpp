@@ -53,7 +53,6 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
-/*************  ✨ Codeium Command ⭐  *************/
 /**
  * This function computes the maximum number of consecutive 1's in a binary array `nums`
  * by flipping at most `k` 0's to 1's. It uses a sliding window approach, where two pointers
@@ -68,7 +67,6 @@ public:
  * @return The maximum number of consecutive 1's that can be obtained by flipping at most `k` 0's.
  */
 
-/******  d4b26fc9-05bf-4fd2-b619-3c02bba62d5a  *******/
     int longestOnesMySolution(vector<int>& nums, int k) {
         int left = 0, right = 0, count = 0, flipCount = 0, maxOnes = 0;
         set<int> flipped;
