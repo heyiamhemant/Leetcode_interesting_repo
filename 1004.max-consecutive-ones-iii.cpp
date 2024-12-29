@@ -53,6 +53,29 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
+    /**
+     * Given a binary array nums and an integer k, return the maximum number of
+     * consecutive 1's in the array if you can flip at most k 0's.
+     *
+     * Time complexity: O(n)
+     * Space complexity: O(1)
+     */
+    int longestOnesBest(vector<int> &nums, int k ){
+        int left = 0, right = 0;
+        int n = nums.size();
+        while (right < n) {
+            if(nums[right] == 0)
+                k--;
+            if(k < 0) { // for a case like 111000 , k will get negative by extra zeroes
+                if (nums[left] == 0){
+                    k++; // get back the flip
+                }
+                left++; // left will catch up to right by the amount of extra zeroes
+            }
+            right++;
+        }
+        return right - left; 
+    }
 /**
  * This function computes the maximum number of consecutive 1's in a binary array `nums`
  * by flipping at most `k` 0's to 1's. It uses a sliding window approach, where two pointers
