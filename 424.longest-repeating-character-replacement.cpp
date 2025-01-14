@@ -49,16 +49,44 @@
  * 
  */
 #include<iostream>
+#include<map>
 using namespace std;
 // @lc code=start
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        for (int i = 0; i < s.size(); i++) {
-            for (int j = i; j < s.size(); j++){
-                
+        int right = 0;
+        int left = 0;
+        unordered_map<char, int> cMap;
+        char maxFreqC;
+        int maxFreq = 0;
+        while (right < s.size())
+        {
+            char c = s[right];
+            if (cMap.find(c) == cMap.end())
+            {
+                cMap[c] = 0;
+            } else {
+                if(c != maxFreqC)
+                    k--;
+
+                int freq = ++cMap[c];
+                if (freq > maxFreq) {
+                    maxFreqC = c;
+                    maxFreq = freq;
+                }
             }
+
+            while(k <0 && left < right && s[left] != maxFreqC) {
+                k++;
+                if(cMap[c] > 0)
+                    cMap[c]--;
+                else
+                    return 0;
+            }
+            right++;
         }
+        return right - left;
     }
 };
 // @lc code=end
