@@ -63,29 +63,54 @@
  * 
  * 
  */
-
+#include<vector>
+#include<stack>
+using namespace std;
 // @lc code=start
 class MinStack {
+    stack<int> arr;
+    stack<int> minStack;
+
 public:
     MinStack() {
-        
+
     }
     
+    /**
+     * Pushes the element val onto the stack.
+     * @param val the value to push onto the stack
+     */
     void push(int val) {
-        
+        arr.push(val);
+        if(!minStack.empty()) {
+            if( val <= minStack.top())
+                minStack.push(val);
+        } else 
+            minStack.push(val);
     }
-    
+
     void pop() {
-        
+        if(arr.empty())
+            return;
+        int ele = arr.top();
+        arr.pop();
+        if(!minStack.empty() && ele == minStack.top())
+            minStack.pop();
     }
-    
+
     int top() {
-        
+        if(!arr.empty())
+            return arr.top();
+       
+        return -1;
     }
-    
+
     int getMin() {
-        
+        if(!minStack.empty())
+            return minStack.top();
+        return -1;
     }
+};
 };
 
 /**
