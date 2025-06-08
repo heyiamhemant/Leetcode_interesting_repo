@@ -71,12 +71,12 @@ public:
     int findGCD(vector<int>& nums) {
         int minNum = *min_element(nums.begin(), nums.end());
         int maxNum = *max_element(nums.begin(), nums.end());
-        // euclid's theorem 
+        // euclid's the̦orem 
         // gcd (a,b) = gcd(a-b,b), b < a --> division is repeated subtraction
         int a = maxNum, b = minNum;
         while (b > 0)
         {
-            if(b <= a) {
+            if(b < a) {
                 a = a % b;
             } else
                 swap(a, b);
