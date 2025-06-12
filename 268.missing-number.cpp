@@ -67,3 +67,17 @@ public:
         return expectedSum - sum;
     }
 };
+
+
+class Solution {
+    public:
+        int missingNumber(vector<int>& nums) {
+            int res = nums.size();
+            for(int i = 0 ; i < nums.size() ; i++) {
+                res ^= i; // product with 0 to n-1
+                res ^= nums[i]; // product with array elements except missing
+            }
+            
+            return res;
+        }
+    };
