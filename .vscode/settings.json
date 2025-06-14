@@ -17,7 +17,8 @@
         "span": "cpp",
         "regex": "cpp",
         "valarray": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "__locale": "cpp"
     },
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
