@@ -64,17 +64,15 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
-    uint32_t reverseBits(uint32_t n) {
-        uint32_t reversed = 0;
-        int pos = 31;
-        while (n > 0) {
-        {
-            reversed += ((n % 10) * pow(2, pos)) ;
-            n /= 10;
-            pos--;
-        }
-        return reversed
+uint32_t reverseBits(uint32_t n) {
+    uint32_t reversed = 0;
+    for (int i = 0 ; i < 32 ; i++) {
+        // get the last bit and shift it to most significant position, and keep adding bits using | (OR) operator
+        reversed |= (n & 1) << (31-i);
+        n >>= 1;
     }
+    return reversed;
+}
 };
 // @lc code=end
 
