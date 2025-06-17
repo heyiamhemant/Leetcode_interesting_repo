@@ -5,6 +5,14 @@ from math import *
 
 
 def nextPermutation(permutation, n) -> list[int]:
+    """
+    This function takes a permutation and its length as input, and returns the next permutation in lexicographical order.
+    
+    The approach is to find the first decreasing pair from the right, and swap the first of the pair with the smallest element greater than it from the right.
+    
+    Finally, reverse the permutation from the position of the first of the pair to the end.
+    """
+    
     i = 0
     if n > 1:
         i = n - 2
