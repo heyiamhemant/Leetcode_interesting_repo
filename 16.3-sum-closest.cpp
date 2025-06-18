@@ -55,6 +55,7 @@ using namespace std;
 class Solution {
     public:
         int threeSumClosest(vector<int>& nums, int target) {
+            // solved by sorting the array and using two pointers method
             sort(nums.begin(), nums.end());
             int minDelta = INT_MAX;
             int result = 0;
