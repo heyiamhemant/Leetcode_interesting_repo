@@ -49,6 +49,8 @@
  * 
  */
 
+#include<iostream>
+using namespace std;
 // @lc code=start
 class Solution {
     public:
