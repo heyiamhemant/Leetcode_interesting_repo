@@ -42,17 +42,14 @@ class Solution {
             int tenPower = 1;
             while(a || b) {
                 int sum = a % 10 + b % 10 + carry;
-                carry = 0;
-                if (sum > 10)
-                    carry = sum / 10;
+                carry = sum / 10;
                 totalSum+=((sum % 10) * tenPower) ;
                 a/=10;
                 b/=10;
-                cout << "sum : " <<sum << " carry : " << carry <<endl;
                 tenPower*=10; 
             }
-            return totalSum + carry; 
+            return totalSum + (carry * tenPower); 
         }
-    };
+};
 // @lc code=end
 
