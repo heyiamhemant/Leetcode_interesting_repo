@@ -36,6 +36,12 @@
 // @lc code=start
 class Solution {
     public:
+        /**
+         * This function takes two integers and returns their sum
+         * without using the operators + or -. It does this by
+         * performing a binary addition, keeping track of carry
+         * and adding each digit to the total sum.
+         */
         int getSum(int a, int b) {
             int carry = 0;
             int totalSum = 0;
