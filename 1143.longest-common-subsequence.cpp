@@ -61,21 +61,22 @@
  * 
  * 
  */
-
+#include<iostream>
+using namespace std;
 // @lc code=start
 class Solution {
     public:
         int longestConsecutive(vector<int>& nums) {
              // hash set
              unordered_set<int> numbers(nums.begin(), nums.end());
+             unordered_set<int> isAccessed;
              int maxCount =0 ;
-             for(int num : nums) {
-                numbers.insert(num);
-             }
              for(int num : nums) {
                 int count  = 1;
                 //avoid start sequence with numbers in the middle of a sequence
-                if(numbers.find(num-1) == numbers.end()) {
+                //avoid checking for the same sequence using same initial sum again and again
+                if(isAccessed.find(num) == isAccessed.end() && numbers.find(num-1) == numbers.end()) {
+                    isAccessed.insert(num);
                     int curNum = num;
                     while(numbers.find(curNum + 1) != numbers.end()) {
                         count++;
@@ -87,5 +88,3 @@ class Solution {
              return maxCount;
         }
     };
-// @lc code=end
-
