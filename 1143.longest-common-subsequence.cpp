@@ -62,29 +62,35 @@
  * 
  */
 #include<iostream>
+#include<unordered_set>
 using namespace std;
 // @lc code=start
 class Solution {
     public:
-        int longestConsecutive(vector<int>& nums) {
-             // hash set
-             unordered_set<int> numbers(nums.begin(), nums.end());
-             unordered_set<int> isAccessed;
-             int maxCount =0 ;
-             for(int num : nums) {
-                int count  = 1;
-                //avoid start sequence with numbers in the middle of a sequence
-                //avoid checking for the same sequence using same initial sum again and again
-                if(isAccessed.find(num) == isAccessed.end() && numbers.find(num-1) == numbers.end()) {
-                    isAccessed.insert(num);
-                    int curNum = num;
-                    while(numbers.find(curNum + 1) != numbers.end()) {
-                        count++;
-                        curNum++;
-                    }
-                    maxCount = max(maxCount, count);
+        int longestCommonSubsequence(string text1, string text2) {
+            int m = text1.size();
+            int n = text2.size();
+
+            // why not dp[m][n]?
+            // Because we need to consider the case where we have an empty string
+            // So we create a dp array of size (m+1) x (n+1)
+            // This allows us to handle the base case where one of the strings is empty
+            // dp[i][j] will hold the length of the longest common subsequence of text
+            int dp[m+1][n+1];
+            memset(dp, 0, sizeof(dp));
+            for(int i = 1; i <= m; i++) {
+                for(int j = 1; j <= n; j++) {
+                    // If characters match, increment the count from the previous indices
+                    // Otherwise, take the maximum from either excluding the current character of text1 or text2
+                    // This ensures we are considering the longest subsequence found so far
+                    // dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+                    if(text1[i-1] == text2[j-1]) 
+                        dp[i][j] = 1 + dp[i-1][j-1];
+                    else
+                    // If characters do not match, take the maximum of the two possible subsequences
+                        dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
                 }
             }
-             return maxCount;
+            return dp[m][n];
         }
-    };
+};
