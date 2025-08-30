@@ -98,5 +98,27 @@ public:
         return maxLen;
     }
 };
+
+// wnd attempt
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int winStart = 0; 
+        int maxCount = 0;
+        int winEnd = 0; 
+        set<char> map; 
+        while(winEnd < s.size()) { 
+            char cur = s[winEnd]; 
+            while(map.find(cur) != map.end())
+                map.erase(s[winStart++]); 
+            map.insert(cur);
+            maxCount = max(maxCount , winEnd - winStart + 1);
+            winEnd++; 
+        } 
+        return maxCount;
+
+    }
+};
 // @lc code=end
 
