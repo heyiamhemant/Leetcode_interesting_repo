@@ -96,12 +96,14 @@ public:
                 count2++;
             else if(count1 == 0)
                 candidate1 = nums[i];
+                
+            if(count1 > n/3) 
+                result.push_back(candidate1);
             
+            if(count2 > n/3)
+                result.push_back(candidate2);
         }
-        if(count1 > n/3)
-            result.push_back(candidate1);
-        if(count2 > n/3)
-            result.push_back(candidate2);
+
 
         return result;
     }
