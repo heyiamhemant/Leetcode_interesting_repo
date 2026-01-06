@@ -95,6 +95,42 @@ public:
             result = true;
         return result;
     }
+    
+    bool checkInclusion7Jan(string s1, string s2) {
+        if (s1.size() > s2.size()) return false;
+
+        array<int, 26> target = {0};
+        array<int, 26> window = {0};
+
+        // Count frequency of s1
+        for (char c : s1) {
+            target[c - 'a']++;
+        }
+
+        int len = s1.size();
+
+        // Build initial window of size len in s2
+        for (int i = 0; i < len; ++i) {
+            window[s2[i] - 'a']++;
+        }
+
+        // Check first window
+        if (target == window) return true;
+
+        // Slide the window across s2
+        for (int i = len; i < s2.size(); ++i) {
+            // Add new char
+            window[s2[i] - 'a']++;
+
+            // Remove old char (the one leaving the window)
+            window[s2[i - len] - 'a']--;
+
+            // Check if current window matches
+            if (target == window) return true;
+        }
+
+        return false;
+    }
 };
 // @lc code=end
 
