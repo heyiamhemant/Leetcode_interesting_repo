@@ -78,19 +78,35 @@
 using namespace std;
 #include<vector>
 #include<stack>
-class Solution
-{
+class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
-        
-        stack<string> Stack;
-        vector<string> reversed = tokens;
-        reverse(reversed.begin(), reversed.end());
-        for (string tok : reversed)
-        {
-            
-            
+        stack<int> S;
+        for(std::string &s : tokens) {
+            if(s == "+"){
+                int a = S.top(); S.pop();
+                int b = S.top(); S.pop();
+                S.push(a+b);
+            } else if(s == "/"){
+                int a = S.top(); S.pop();
+                int b = S.top(); S.pop();
+                S.push(b/a);
+            } else if( s== "-"){
+                int a = S.top(); S.pop();
+                int b = S.top(); S.pop();
+                S.push(b-a);
+            } else if (s == "*") {
+                int a = S.top(); S.pop();
+                int b = S.top(); S.pop();
+                S.push(a*b);
+            } else {
+                // number
+                S.push(stoi(s));
+            }
         }
+        if(!S.empty())
+            return S.top();
+        return -1;
     }
 };
 // @lc code=end
