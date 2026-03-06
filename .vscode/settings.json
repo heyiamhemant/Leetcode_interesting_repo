@@ -27,5 +27,8 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "CodeGPT.apiKey": "CodeGPT Plus Beta"
+    "CodeGPT.apiKey": "CodeGPT Plus Beta",
+    "workbench.panel.defaultLocation": "left",
+    "terminal.integrated.defaultLocation": "left",
+    "python.languageServer": "None"
 }

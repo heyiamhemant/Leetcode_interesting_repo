@@ -1,0 +1,135 @@
+{
+  "LeetCode Solution Template": {
+    "prefix": "lct",
+    "body": [
+      "/*",
+      " * @lc app=leetcode id=${1:problem_id} lang=cpp",
+      " *",
+      " * [${1:problem_id}] ${2:Problem Name}",
+      " *",
+      " * https://leetcode.com/problems/${3:problem-slug}/description/",
+      " *",
+      " * algorithms",
+      " * ${4|Easy,Medium,Hard|} (${5:acceptance_rate}%)",
+      " *",
+      " * ${6:Problem description}",
+      " *",
+      " * Example:",
+      " * Input: ${7:example_input}",
+      " * Output: ${8:example_output}",
+      " */",
+      "",
+      "#include <iostream>",
+      "#include <vector>",
+      "#include <string>",
+      "#include <algorithm>",
+      "#include <unordered_map>",
+      "#include <unordered_set>",
+      "using namespace std;",
+      "",
+      "// @lc code=start",
+      "class Solution {",
+      "public:",
+      "    ${9:return_type} ${10:function_name}(${11:parameters}) {",
+      "        $0",
+      "    }",
+      "};",
+      "// @lc code=end",
+      "",
+      "// ============================================================================",
+      "// Test Cases",
+      "// ============================================================================",
+      "",
+      "int main() {",
+      "    Solution sol;",
+      "    ",
+      "    // Test Case 1",
+      "    {",
+      "        cout << \"Test Case 1:\" << endl;",
+      "        // ${12:Add test code here}",
+      "        cout << \"✓ Passed\" << endl << endl;",
+      "    }",
+      "    ",
+      "    // Test Case 2",
+      "    {",
+      "        cout << \"Test Case 2:\" << endl;",
+      "        // ${13:Add test code here}",
+      "        cout << \"✓ Passed\" << endl << endl;",
+      "    }",
+      "    ",
+      "    return 0;",
+      "}"
+    ],
+    "description": "LeetCode C++ solution template with test cases"
+  },
+  
+  "LeetCode Solution Simple": {
+    "prefix": "lcs",
+    "body": [
+      "#include <iostream>",
+      "#include <vector>",
+      "#include <string>",
+      "using namespace std;",
+      "",
+      "class Solution {",
+      "public:",
+      "    ${1:return_type} ${2:function_name}(${3:parameters}) {",
+      "        $0",
+      "    }",
+      "};",
+      "",
+      "int main() {",
+      "    Solution sol;",
+      "    ",
+      "    // Test cases",
+      "    ",
+      "    return 0;",
+      "}"
+    ],
+    "description": "Simple LeetCode template"
+  },
+  
+  "LeetCode Test Case": {
+    "prefix": "lctest",
+    "body": [
+      "    // Test Case ${1:number}",
+      "    {",
+      "        cout << \"Test Case ${1:number}:\" << endl;",
+      "        ${2:// Add test code}",
+      "        cout << \"✓ Passed\" << endl << endl;",
+      "    }"
+    ],
+    "description": "Add a test case block"
+  },
+  
+  "Print Vector": {
+    "prefix": "pv",
+    "body": [
+      "cout << \"[${1:label}]: [\";",
+      "for (size_t i = 0; i < ${2:vec}.size(); i++) {",
+      "    cout << ${2:vec}[i];",
+      "    if (i < ${2:vec}.size() - 1) cout << \", \";",
+      "}",
+      "cout << \"]\" << endl;"
+    ],
+    "description": "Print a vector"
+  },
+  
+  "Print 2D Vector": {
+    "prefix": "pv2d",
+    "body": [
+      "cout << \"[${1:label}]: [\";",
+      "for (size_t i = 0; i < ${2:vec}.size(); i++) {",
+      "    cout << \"[\";",
+      "    for (size_t j = 0; j < ${2:vec}[i].size(); j++) {",
+      "        cout << ${2:vec}[i][j];",
+      "        if (j < ${2:vec}[i].size() - 1) cout << \", \";",
+      "    }",
+      "    cout << \"]\";",
+      "    if (i < ${2:vec}.size() - 1) cout << \", \";",
+      "}",
+      "cout << \"]\" << endl;"
+    ],
+    "description": "Print a 2D vector"
+  }
+}

@@ -1,7 +1,5 @@
-Solution is : 
-eat tea ate   
-tan nat    
-bat     
-abc     
-bbb     
-Solution is : 
+Input: "babad"
+Output: "bab"
+
+Input: "cbbd"
+Output: "bb"
