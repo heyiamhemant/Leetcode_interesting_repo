@@ -65,6 +65,7 @@ public:
     }
     bool checkSameNodeRec(TreeNode* it1, TreeNode* it2) {
         if(!it1 && !it2) return true;
+        
         if(!it1 || !it2) return false;
         if(it1->val != it2->val) 
             return false;

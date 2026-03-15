@@ -77,6 +77,9 @@ public:
         stack<char> Stack;
         for (char c : s)
         {
+            // push the opening brackets into stack, 
+            //and pop the stack when we meet closing brackets, 
+            //if the stack is empty at the end, then it's valid
             if( c == '(' || c == '[' || c == '{' )
                 Stack.push(c);
             else if( c == ')' && !Stack.empty() && Stack.top() == '(')
