@@ -69,14 +69,15 @@
 /**
  * Definition for singly-linked list.
  */
+#include<iostream>
+using namespace std;
 struct ListNode {
      int val;
      ListNode *next;
      ListNode(int x) : val(x), next(NULL) {}
 };
 
-#include<iostream>
-using namespace std;
+
 class Solution {
 public:
 // Floyd's Tortoise and Hare Algorithm
