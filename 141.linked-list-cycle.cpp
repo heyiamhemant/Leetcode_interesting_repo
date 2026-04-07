@@ -68,37 +68,24 @@
 // @lc code=start
 /**
  * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode(int x) : val(x), next(NULL) {}
+};
  */
+#include<iostream>
+using namespace std;
 class Solution {
 public:
-    /**
-     * Given head, the head of a linked list, determine if the linked list
-     * has a cycle in it. A cycle is defined as a node pointing back to a
-     * previously traversed node.
-     * 
-     * This function uses the Floyd's cycle-finding algorithm, also known as
-     * the "tortoise and the hare" algorithm. The algorithm works by having
-     * two pointers, one that increments one step at a time and one that
-     * increments two steps at a time. If there is a cycle, the two pointers
-     * will eventually meet at the same node.
-     * 
-     * @param head the head of the linked list
-     * @return true if there is a cycle, false if not
-     */
+// Floyd's Tortoise and Hare Algorithm
     bool hasCycle(ListNode *head) {
-        ListNode *slow = head;
-        ListNode *fast = head;
-        if(head == NULL  ||head->next == NULL)
-            return false;
-        while (fast && fast->next) { 
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast && fast->next){
             slow = slow->next;
             fast = fast->next->next;
-            if(fast == slow)
+            if(slow == fast)
                 return true;
         }
         return false;
