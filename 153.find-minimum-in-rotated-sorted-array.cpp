@@ -100,5 +100,27 @@ class Solution {
         return min_num;
     }
 };
+//10 Apr 2026
+class Solution {
+public:
+    int findMin(vector<int> &nums) {
+        int low = 0;
+        int high = nums.size() - 1;
+        int mid = 0;
+        int min_num = nums[low];
+        while(low <= high) {
+
+            mid = low + (high - low)/2;
+            //cout << "low : " << low << " high : " << high << " mid :" << mid << endl;
+            if(nums[mid] <= min_num) min_num = nums[mid];
+            if(nums[mid] < nums[high]) // right side sorted
+                high = mid - 1;
+            else
+                low = mid + 1; 
+        }
+        return min_num;
+    }
+};
+
 // @lc code=end
 
