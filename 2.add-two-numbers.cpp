@@ -59,14 +59,14 @@
 // @lc code=start
 /**
  * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
  */
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
@@ -106,6 +106,31 @@ public:
         if(carry && prev)
             prev->next = new ListNode(carry);
         return head;
+    }
+    ListNode* addTwoNumbers13Apr(ListNode* l1, ListNode* l2) {
+        int carry = 0;
+        ListNode* it1 = l1;
+        ListNode* it2 = l2;
+        ListNode* it3 = new ListNode(0);
+        ListNode* ans = it3;
+        while(it1 || it2 || carry) {
+
+            int curSum = carry;
+            if(it1) {
+                curSum+=it1->val;
+                it1 = it1->next;
+            }
+            if(it2) {
+                curSum+=it2->val;
+                it2 = it2->next;
+            }
+
+            it3->next = new ListNode(curSum % 10);
+            carry = curSum / 10;
+            it3 = it3->next;
+        }
+        
+        return ans->next;
     }
 };
 // @lc code=end
