@@ -103,6 +103,33 @@ public:
             head = follow->next;
         return head;
     }
+
+    ListNode* removeNthFromEnd15April2026(ListNode* head, int n) {
+        int count = n;
+        ListNode* lead = head;
+        ListNode* follow = head;
+        ListNode* prev = head;
+        while(lead && count > 0) {
+            lead = lead->next;
+            count--;
+        }
+
+        if(!lead) return head->next;
+
+        while(lead) {
+            lead = lead->next;
+            prev = follow;
+            follow = follow->next;
+        }
+
+        if(prev->next)
+            prev->next = prev->next->next;
+        else
+            return NULL;
+            
+        return head;
+
+    }
 };
 // @lc code=end
 
