@@ -79,6 +79,35 @@ class Solution {
             }
             return -1;
         }
-    };
-// @lc code=end
 
+    int search15April2026(vector<int>& nums, int target) {
+        int low = 0 ;
+        int high = nums.size() - 1;
+        int mid = 0;
+        while(low <= high) {
+            mid = low + (high - low)/2;
+
+            //cout << "low : " << low << " high :" << high << " mid: " << mid <<endl;
+            if(nums[mid] < nums[high]) // right sorted
+            {
+                
+                if(target == nums[mid]) return mid;
+                else if(target <= nums[high] && target > nums[mid]) // in sorted half
+                    low = mid + 1;
+                else // in non sorted
+                    high = mid - 1;
+
+            } else { // left sorted
+                if(target == nums[mid]) return mid;
+
+                else if(target < nums[mid] && target >= nums[low]) // in sorted half
+                    high = mid - 1;
+                else  // in non sorted
+                    low = mid + 1 ;
+                
+            }
+        }
+        return -1;   
+    }
+};
+// @lc code=end
