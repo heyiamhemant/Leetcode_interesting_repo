@@ -83,49 +83,46 @@ struct ListNode
 };
 #include<iostream>
     using namespace std;
-    class Solution
-    {
-    public:
-        void reorderList(ListNode* head) {
-            // Handle edge cases: empty list or single node
-            if (!head || !head->next) return;
-            
-            // Step 1: Find the middle of the list using slow and fast pointers
-            ListNode *slow = head, *fast = head, *prev = NULL;
-            while (fast && fast->next) {
-                fast = fast->next->next;
-                prev = slow;
-                slow = slow->next;
-            }
-            
-            // Step 2: Split the list into two halves
-            if (prev) prev->next = NULL; // Ensure prev is not null
-            
-            // Step 3: Reverse the second half
-            ListNode *list2 = slow, *Next = NULL;
-            prev = NULL;
-            while (list2) {
-                Next = list2->next;
-                list2->next = prev;
-                prev = list2;
-                list2 = Next;
-            }
-            ListNode *head2 = prev; // Head of the reversed second half
-            
-            ListNode *curr = head; // Keep track of current node for appending
-            while (head && head2) {
-                ListNode *Next = head->next;   // Save next node of first list
-                ListNode *Next2 = head2->next; // Save next node of second list
-                head->next = head2;            // Link first list node to second list node
-                head2->next = Next;            // Link second list node back to first list
-                curr = head2;                  // Update curr to the last merged node
-                head = Next;                   // Move to next node in first list
-                head2 = Next2;                 // Move to next node in second list
-            }
-            
-            // Step 5: Append any remaining nodes from head2
-            if (head2) curr->next = head2;
+
+    // 19 April 2026
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = NULL;
+        while(head) {
+            ListNode* next = head->next;
+            head->next = prev;
+            prev = head;
+            head = next;
         }
-    };
+        return prev;
+    }
+
+    void reorderList(ListNode* head) {
+        // find mid of the list
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        
+        // reverse the second half of list
+        ListNode* mid = reverseList(slow->next);
+        slow->next = NULL;
+
+        // merge alternatively
+        ListNode* it = head;
+        while(it && mid) {
+            ListNode* midNext = mid->next;
+            ListNode* itNext = it->next;
+            it->next = mid;
+            mid->next = itNext;
+            mid = midNext;
+            it = itNext;
+        }
+
+    }
+};
 // @lc code=end
 
