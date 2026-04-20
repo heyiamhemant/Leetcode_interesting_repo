@@ -44,7 +44,7 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
 /* ── Layout ── */
-#app { display: flex; min-height: 100vh; }
+#app { display: flex; min-height: 100vh; position: relative; z-index: 1; }
 
 /* ── Sidebar ── */
 #sidebar {
@@ -164,6 +164,16 @@ body {
 }
 .stat-label { font-size: 12px; color: var(--muted); }
 
+/* ── Particle Canvas ── */
+#particle-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+}
+
 /* ── Power Levels ── */
 .power-section { margin-bottom: 24px; }
 .section-title {
@@ -174,6 +184,9 @@ body {
   letter-spacing: 1px;
   color: var(--muted);
   margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .power-grid {
   display: grid;
@@ -185,6 +198,22 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 14px 16px;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.power-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(124,106,245,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+.power-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(124,106,245,0.15);
 }
 .power-header {
   display: flex;
@@ -205,22 +234,249 @@ body {
   color: var(--muted);
 }
 .power-bar-bg {
-  height: 6px;
+  height: 8px;
   background: var(--border);
-  border-radius: 3px;
+  border-radius: 4px;
   overflow: hidden;
+  position: relative;
 }
 .power-bar-fill {
   height: 100%;
-  border-radius: 3px;
-  transition: width 0.8s cubic-bezier(.4,0,.2,1);
+  border-radius: 4px;
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+  position: relative;
+}
+.power-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 20px; height: 100%;
+  background: rgba(255,255,255,0.35);
+  filter: blur(4px);
+  animation: barShimmer 2s ease-in-out infinite;
+}
+@keyframes barShimmer {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 .power-level-label {
   font-family: var(--font-mono);
   font-size: 10px;
   color: var(--muted);
-  margin-top: 5px;
-  text-align: right;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.power-rank-badge {
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 99px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.rank-master   { background: rgba(255,215,0,0.2);  color: #ffd700; border: 1px solid rgba(255,215,0,0.3); }
+.rank-proficient { background: rgba(63,207,180,0.2); color: var(--easy); border: 1px solid rgba(63,207,180,0.3); }
+.rank-developing { background: rgba(245,166,35,0.2); color: var(--medium); border: 1px solid rgba(245,166,35,0.3); }
+.rank-beginner { background: rgba(245,95,95,0.2);  color: var(--hard); border: 1px solid rgba(245,95,95,0.3); }
+.rank-untrained { background: rgba(107,114,128,0.2); color: var(--muted); border: 1px solid rgba(107,114,128,0.3); }
+
+/* ── XP / Level UI ── */
+.xp-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.xp-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  white-space: nowrap;
+  min-width: 90px;
+}
+.xp-bar-bg {
+  flex: 1;
+  height: 10px;
+  background: var(--border);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #a89af5);
+  border-radius: 5px;
+  transition: width 1.5s cubic-bezier(.4,0,.2,1);
+  position: relative;
+  overflow: hidden;
+}
+.xp-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: xpShine 2.5s ease-in-out infinite;
+}
+@keyframes xpShine {
+  0% { left: -100%; }
+  60%, 100% { left: 100%; }
+}
+.xp-next-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ── Streak Card ── */
+.streak-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.streak-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.streak-card:hover {
+  border-color: var(--accent3);
+  box-shadow: 0 0 16px rgba(245,166,35,0.12);
+}
+.streak-icon {
+  font-size: 28px;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px rgba(245,166,35,0.5));
+}
+.streak-icon.cold { filter: none; font-size: 24px; }
+.streak-num {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1;
+}
+.streak-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ── Animated Stat Cards ── */
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow);
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent);
+}
+.stat-card.green::before { background: var(--easy); }
+.stat-card.amber::before { background: var(--medium); }
+.stat-card.red::before   { background: var(--hard); }
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label { font-size: 12px; color: var(--muted); }
+
+/* ── Celebration Burst ── */
+.burst-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+}
+.burst-particle {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  animation: burstFly 0.9s ease-out forwards;
+}
+@keyframes burstFly {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+}
+
+/* ── Animate in sections ── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim-in {
+  animation: fadeSlideUp 0.4s ease-out both;
+}
+.anim-in-1 { animation-delay: 0.05s; }
+.anim-in-2 { animation-delay: 0.1s; }
+.anim-in-3 { animation-delay: 0.15s; }
+.anim-in-4 { animation-delay: 0.2s; }
+
+/* ── Pulsing sidebar logo ── */
+.logo-title {
+  font-family: var(--font-head);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+.dojo-rank {
+  display: inline-block;
+  font-size: 9px;
+  padding: 1px 7px;
+  background: linear-gradient(135deg, var(--accent), #a89af5);
+  color: #fff;
+  border-radius: 99px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+  animation: rankPulse 3s ease-in-out infinite;
+}
+@keyframes rankPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(124,106,245,0.4); }
+  50% { box-shadow: 0 0 0 5px rgba(124,106,245,0); }
+}
+
+/* ── Today progress bar glow ── */
+.today-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--easy), #20c997);
+  border-radius: 4px;
+  transition: width 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+.today-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  animation: xpShine 2s ease-in-out infinite;
 }
 
 /* ── Today's Revision Panel ── */
@@ -688,11 +944,12 @@ td { padding: 11px 14px; vertical-align: middle; }
   margin-bottom: 14px;
 }
 .today-bar-bg { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
-.today-bar-fill { height: 100%; background: var(--easy); border-radius: 4px; transition: width 0.4s; }
+/* .today-bar-fill defined above with gradient + shimmer */
 .today-progress-label { font-family: var(--font-mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
 </style>
 </head>
 <body>
+<canvas id="particle-canvas"></canvas>
 <div id="app">
 
 <!-- Sidebar -->
@@ -700,6 +957,7 @@ td { padding: 11px 14px; vertical-align: middle; }
   <div class="logo">
     <div class="logo-title">DSA Dojo 🥋</div>
     <div class="logo-sub">Hemant's Revision System</div>
+    <div class="dojo-rank" id="sidebar-rank">Warrior</div>
   </div>
   <div class="nav">
     <div class="nav-item active" onclick="navigate('dashboard')">
@@ -728,15 +986,34 @@ td { padding: 11px 14px; vertical-align: middle; }
   <div class="page-title">Dashboard</div>
   <div class="page-sub">Your DSA power levels and revision overview</div>
 
-  <div class="dash-grid" id="stat-cards"></div>
+  <!-- XP / Rank bar -->
+  <div class="card anim-in" style="margin-bottom:16px;padding:16px 20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <span style="font-family:var(--font-head);font-size:13px;font-weight:700;letter-spacing:0.5px;">FIGHTER RANK</span>
+      <span id="xp-rank-label" style="font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;"></span>
+    </div>
+    <div class="xp-bar-wrap" style="margin-bottom:6px;">
+      <span class="xp-label" id="xp-val-label">0 XP</span>
+      <div class="xp-bar-bg">
+        <div class="xp-bar-fill" id="xp-bar-fill" style="width:0%"></div>
+      </div>
+      <span class="xp-next-label" id="xp-next-label">next rank</span>
+    </div>
+    <div style="font-size:11px;color:var(--muted);font-family:var(--font-mono);" id="xp-desc"></div>
+  </div>
 
-  <div class="power-section">
-    <div class="section-title">Topic Power Levels</div>
+  <!-- Streak row -->
+  <div class="streak-row anim-in anim-in-1" id="streak-row"></div>
+
+  <div class="dash-grid anim-in anim-in-2" id="stat-cards"></div>
+
+  <div class="power-section anim-in anim-in-3">
+    <div class="section-title">⚡ Topic Power Levels</div>
     <div class="power-grid" id="power-grid"></div>
   </div>
 
-  <div class="section-title" style="margin-top:8px;">Confidence Distribution</div>
-  <div class="card" style="margin-bottom:24px;">
+  <div class="section-title anim-in anim-in-4" style="margin-top:8px;">📊 Confidence Distribution</div>
+  <div class="card anim-in anim-in-4" style="margin-bottom:24px;">
     <div id="conf-dist" style="display:flex;gap:8px;align-items:flex-end;height:80px;padding:0 4px;"></div>
     <div style="display:flex;gap:8px;margin-top:8px;font-size:11px;color:var(--muted);font-family:var(--font-mono);">
       <span style="flex:1;text-align:center;">?</span>
@@ -892,6 +1169,7 @@ td { padding: 11px 14px; vertical-align: middle; }
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
+<div class="burst-container" id="burst-container"></div>
 
 <script>
 // ═══════════════════════════════════════════════════════
@@ -981,6 +1259,109 @@ function navigate(page) {
 // ═══════════════════════════════════════════════════════
 // DASHBOARD
 // ═══════════════════════════════════════════════════════
+// ── Recency-based minimum power ──
+// If a problem was solved recently and has no review conf set,
+// it gets a baseline confidence derived from how recent it was solved.
+function getEffectiveConf(p) {
+  const stored = getConf(p);
+  if (stored > 0) return stored; // user has explicitly set confidence
+
+  // No conf set — derive a minimum from solve recency
+  if (!p.date || p.date === 'None' || p.date === '') return 0;
+
+  const solveDate = parseDate(p.date);
+  if (!solveDate) return 0;
+
+  const today = new Date();
+  const daysSince = Math.floor((today - solveDate) / 86400000);
+
+  // Within 7 days: baseline 3 (Okay), 7-30 days: 2 (Shaky), 30-90 days: 1 (Blank), >90 days: 0
+  if (daysSince <= 7)  return 3;
+  if (daysSince <= 30) return 2;
+  if (daysSince <= 90) return 1;
+  return 0;
+}
+
+function parseDate(dateStr) {
+  if (!dateStr || dateStr === 'None' || dateStr === '') return null;
+  // Handles "15 Oct 2024" or "2024-10-15"
+  const d = new Date(dateStr);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+// ── XP / Rank System ──
+const RANKS = [
+  { name: 'Novice',      minXP: 0,    color: '#6b7280' },
+  { name: 'Apprentice',  minXP: 100,  color: '#a89af5' },
+  { name: 'Warrior',     minXP: 300,  color: 'var(--accent)' },
+  { name: 'Veteran',     minXP: 700,  color: 'var(--medium)' },
+  { name: 'Expert',      minXP: 1200, color: 'var(--easy)' },
+  { name: 'Master',      minXP: 2000, color: '#ffd700' },
+  { name: 'Legend',      minXP: 3500, color: '#ff6b9d' },
+];
+
+function calcXP() {
+  let xp = 0;
+  RAW_PROBLEMS.forEach(p => {
+    const c = getConf(p);
+    const ec = getEffectiveConf(p);
+    const useConf = Math.max(c, ec);
+    if (useConf === 0) return;
+    // XP from difficulty × confidence
+    const diffMult = p.diff === 'Hard' ? 3 : p.diff === 'Medium' ? 2 : 1;
+    xp += useConf * diffMult * 5;
+    // Bonus for reviews
+    const ud = getUD(p.id);
+    xp += (ud.reviewed || 0) * 10;
+  });
+  return Math.round(xp);
+}
+
+function getRank(xp) {
+  let rank = RANKS[0];
+  for (const r of RANKS) {
+    if (xp >= r.minXP) rank = r;
+  }
+  return rank;
+}
+
+function getNextRank(xp) {
+  for (const r of RANKS) {
+    if (xp < r.minXP) return r;
+  }
+  return null;
+}
+
+function calcStreak() {
+  // Count consecutive days where any review happened
+  const reviewDates = new Set();
+  RAW_PROBLEMS.forEach(p => {
+    const ud = getUD(p.id);
+    if (ud.lastReviewed) reviewDates.add(ud.lastReviewed);
+  });
+  // Also count solve dates
+  RAW_PROBLEMS.forEach(p => {
+    if (p.date && p.date !== 'None' && p.date !== '') {
+      const d = parseDate(p.date);
+      if (d) reviewDates.add(d.toISOString().split('T')[0]);
+    }
+  });
+
+  const today = new Date();
+  let streak = 0;
+  let check = new Date(today);
+  while (true) {
+    const key = check.toISOString().split('T')[0];
+    if (reviewDates.has(key)) {
+      streak++;
+      check.setDate(check.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+  return streak;
+}
+
 function renderDashboard() {
   const total = RAW_PROBLEMS.length;
   const solved = RAW_PROBLEMS.filter(p => p.date && p.date !== 'None' && p.date !== '').length;
@@ -988,32 +1369,88 @@ function renderDashboard() {
   const med  = RAW_PROBLEMS.filter(p => p.diff === 'Medium').length;
   const hard = RAW_PROBLEMS.filter(p => p.diff === 'Hard').length;
 
-  document.getElementById('stat-cards').innerHTML = `
-    <div class="stat-card">
-      <div class="stat-num">${total}</div>
-      <div class="stat-label">Total Problems</div>
+  // XP & Rank
+  const xp = calcXP();
+  const rank = getRank(xp);
+  const nextRank = getNextRank(xp);
+  const xpForCurrent = rank.minXP;
+  const xpForNext = nextRank ? nextRank.minXP : xp;
+  const xpPct = nextRank ? Math.round((xp - xpForCurrent) / (xpForNext - xpForCurrent) * 100) : 100;
+
+  document.getElementById('xp-rank-label').textContent = rank.name.toUpperCase();
+  document.getElementById('xp-rank-label').style.color = rank.color;
+  document.getElementById('xp-val-label').textContent = `${xp.toLocaleString()} XP`;
+  document.getElementById('xp-bar-fill').style.width = xpPct + '%';
+  document.getElementById('xp-bar-fill').style.background = `linear-gradient(90deg, ${rank.color}, #a89af5)`;
+  document.getElementById('xp-next-label').textContent = nextRank ? `→ ${nextRank.name} (${nextRank.minXP.toLocaleString()} XP)` : 'MAX RANK';
+  document.getElementById('xp-desc').textContent = nextRank
+    ? `${(xpForNext - xp).toLocaleString()} XP to ${nextRank.name} · Keep grinding!`
+    : 'You have reached the highest rank. Legendary!';
+  document.getElementById('sidebar-rank').textContent = rank.name;
+
+  // Streak
+  const streak = calcStreak();
+  const totalReviewed = RAW_PROBLEMS.filter(p => getUD(p.id).reviewed > 0).length;
+  document.getElementById('streak-row').innerHTML = `
+    <div class="streak-card">
+      <div class="streak-icon ${streak === 0 ? 'cold' : ''}">${streak > 0 ? '🔥' : '❄️'}</div>
+      <div>
+        <div class="streak-num" style="color:${streak > 0 ? 'var(--accent3)' : 'var(--muted)'}">${streak}</div>
+        <div class="streak-label">Day Streak</div>
+      </div>
     </div>
-    <div class="stat-card green">
-      <div class="stat-num" style="color:var(--easy)">${easy}</div>
-      <div class="stat-label">Easy</div>
+    <div class="streak-card">
+      <div class="streak-icon">⚔️</div>
+      <div>
+        <div class="streak-num" style="color:var(--accent)">${solved}</div>
+        <div class="streak-label">Problems Solved</div>
+      </div>
     </div>
-    <div class="stat-card amber">
-      <div class="stat-num" style="color:var(--medium)">${med}</div>
-      <div class="stat-label">Medium</div>
+    <div class="streak-card">
+      <div class="streak-icon">🔄</div>
+      <div>
+        <div class="streak-num" style="color:var(--easy)">${totalReviewed}</div>
+        <div class="streak-label">Reviewed</div>
+      </div>
     </div>
-    <div class="stat-card red">
-      <div class="stat-num" style="color:var(--hard)">${hard}</div>
-      <div class="stat-label">Hard</div>
+    <div class="streak-card">
+      <div class="streak-icon">💎</div>
+      <div>
+        <div class="streak-num" style="color:#ffd700">${xp.toLocaleString()}</div>
+        <div class="streak-label">Total XP</div>
+      </div>
     </div>
   `;
 
-  // Power levels by topic
+  // Stat cards with count-up
+  document.getElementById('stat-cards').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-num" data-target="${total}">0</div>
+      <div class="stat-label">Total Problems</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-num" style="color:var(--easy)" data-target="${easy}">0</div>
+      <div class="stat-label">Easy</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-num" style="color:var(--medium)" data-target="${med}">0</div>
+      <div class="stat-label">Medium</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-num" style="color:var(--hard)" data-target="${hard}">0</div>
+      <div class="stat-label">Hard</div>
+    </div>
+  `;
+  // Trigger count-up after a short delay
+  setTimeout(animateCountUp, 200);
+
+  // Power levels by topic — use effective confidence
   const topicMap = {};
   RAW_PROBLEMS.forEach(p => {
     const t = p.topic.split('/')[0].trim();
     if (!topicMap[t]) topicMap[t] = { total:0, confSum:0, solved:0 };
     topicMap[t].total++;
-    topicMap[t].confSum += getConf(p);
+    topicMap[t].confSum += getEffectiveConf(p);
     if (p.date && p.date !== 'None' && p.date !== '') topicMap[t].solved++;
   });
 
@@ -1027,26 +1464,36 @@ function renderDashboard() {
   };
 
   const topics = Object.entries(topicMap).sort((a,b)=>b[1].total-a[1].total);
-  const maxTotal = Math.max(...topics.map(t=>t[1].total));
 
   document.getElementById('power-grid').innerHTML = topics.map(([name, data]) => {
     const avgConf = data.total ? data.confSum / data.total : 0;
     const pct = Math.round(avgConf / 5 * 100);
     const color = pct >= 70 ? 'var(--easy)' : pct >= 40 ? 'var(--medium)' : pct >= 20 ? '#f5a623' : 'var(--hard)';
     const level = pct >= 80 ? 'Master' : pct >= 60 ? 'Proficient' : pct >= 40 ? 'Developing' : pct >= 20 ? 'Beginner' : 'Untrained';
+    const rankClass = level === 'Master' ? 'rank-master' : level === 'Proficient' ? 'rank-proficient' : level === 'Developing' ? 'rank-developing' : level === 'Beginner' ? 'rank-beginner' : 'rank-untrained';
     const icon = TOPIC_ICONS[name] || '🔧';
     return `
       <div class="power-card">
         <div class="power-header">
           <div class="power-name">${icon} ${name}</div>
-          <div class="power-count">${data.total} problems</div>
+          <div class="power-count">${data.total} probs</div>
         </div>
         <div class="power-bar-bg">
-          <div class="power-bar-fill" style="width:${pct}%;background:${color};"></div>
+          <div class="power-bar-fill" style="width:0%;background:${color};" data-pct="${pct}"></div>
         </div>
-        <div class="power-level-label">${level} · avg conf ${avgConf.toFixed(1)}/5</div>
+        <div class="power-level-label">
+          <span style="color:${color}">⚡ ${avgConf.toFixed(1)}/5</span>
+          <span class="power-rank-badge ${rankClass}">${level}</span>
+        </div>
       </div>`;
   }).join('');
+
+  // Animate power bars after render
+  setTimeout(() => {
+    document.querySelectorAll('.power-bar-fill[data-pct]').forEach(el => {
+      el.style.width = el.dataset.pct + '%';
+    });
+  }, 100);
 
   // Confidence distribution bar chart
   const confDist = [0,0,0,0,0,0]; // index 0=unset, 1-5
@@ -1267,6 +1714,7 @@ function saveModal() {
   const conf = selBtn ? parseInt(selBtn.className.match(/c(\d)/)[1]) : 0;
   const comment = document.getElementById('modal-comment').value.trim();
   const ud = getUD(activeModal);
+  const prevConf = ud.conf || 0;
   userData[activeModal] = {
     conf,
     comment,
@@ -1275,8 +1723,22 @@ function saveModal() {
   };
   saveState();
   closeModalDirect();
-  showToast('Saved! ✓', 'success');
+
+  // Celebration burst on high confidence or level-up
+  if (conf >= 4 && conf > prevConf) {
+    const btn = document.querySelector('.btn-primary');
+    if (btn) {
+      const r = btn.getBoundingClientRect();
+      triggerBurst(r.left + r.width/2, r.top + r.height/2);
+    } else {
+      triggerBurst(window.innerWidth/2, window.innerHeight/2);
+    }
+    showToast(conf === 5 ? '🔥 Solid! XP gained!' : '⚡ Confidence up!', 'success');
+  } else {
+    showToast('Saved! ✓', 'success');
+  }
   renderProblems();
+  renderDashboard();
   updateBadges();
 }
 
@@ -1454,6 +1916,101 @@ function showToast(msg, type='info') {
   t.textContent = msg;
   t.className = `toast ${type} show`;
   setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ═══════════════════════════════════════════════════════
+// COUNT-UP ANIMATION
+// ═══════════════════════════════════════════════════════
+function animateCountUp() {
+  document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+    const target = parseInt(el.dataset.target) || 0;
+    const duration = 800;
+    const start = Date.now();
+    const tick = () => {
+      const elapsed = Date.now() - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = target;
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// PARTICLE BACKGROUND
+// ═══════════════════════════════════════════════════════
+(function initParticles() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const COUNT = 55;
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  function createParticle() {
+    return {
+      x: rand(0, canvas.width),
+      y: rand(0, canvas.height),
+      r: rand(1, 2.5),
+      vx: rand(-0.15, 0.15),
+      vy: rand(-0.25, -0.05),
+      alpha: rand(0.2, 0.7),
+      color: Math.random() > 0.5 ? '124,106,245' : Math.random() > 0.5 ? '63,207,180' : '245,166,35',
+    };
+  }
+
+  for (let i = 0; i < COUNT; i++) particles.push(createParticle());
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
+      ctx.fill();
+
+      p.x += p.vx;
+      p.y += p.vy;
+      p.alpha -= 0.0008;
+
+      if (p.y < -10 || p.alpha <= 0) {
+        Object.assign(p, createParticle(), { y: canvas.height + 10 });
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ═══════════════════════════════════════════════════════
+// BURST CELEBRATION
+// ═══════════════════════════════════════════════════════
+function triggerBurst(x, y) {
+  const container = document.getElementById('burst-container');
+  const colors = ['#7c6af5','#3fcfb4','#f5a623','#f55f5f','#ffd700','#a89af5'];
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('div');
+    el.className = 'burst-particle';
+    const angle = (i / 18) * Math.PI * 2;
+    const dist = 60 + Math.random() * 80;
+    el.style.cssText = `
+      left:${x}px; top:${y}px;
+      background:${colors[i % colors.length]};
+      --dx:${Math.cos(angle)*dist}px;
+      --dy:${Math.sin(angle)*dist}px;
+    `;
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 1000);
+  }
 }
 
 // ═══════════════════════════════════════════════════════
