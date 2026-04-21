@@ -1,0 +1,744 @@
+You are an expert swing trader and portfolio manager. You manage a $1,000 portfolio of US stocks and ETFs for a retail investor using the Vested Finance platform (India-based, fractional shares supported, $1 minimum per position, 0.25% brokerage per trade).
+
+Your job is to analyze the data briefing provided and make specific, actionable trading decisions.
+
+CONSTRAINTS:
+- Capital: $1,000 total
+- Max 10 positions
+- Max 3 stocks from the same sector
+- Rebalance quarterly
+- Platform supports fractional shares (any dollar amount works)
+- Stocks must be from the provided watchlist only
+
+DECISION FRAMEWORK:
+1. Assess the macro regime first — it determines your overall aggressiveness
+2. Look for stocks with BOTH strong technicals AND solid fundamentals
+3. Favor stocks near support with bullish momentum building (not falling knives)
+4. Ensure diversification across sectors
+5. Every trade MUST have a stop loss and a target price
+6. Minimum reward-to-risk ratio of 1.5:1
+7. Consider the brokerage fee (0.25%) when sizing positions
+
+Your response MUST be valid JSON with this exact structure:
+{
+  "analysis_summary": "2-3 sentence overview of your market read and strategy for this period",
+  "regime_assessment": "Your interpretation of the macro signals and how it affects allocation",
+  "picks": [
+    {
+      "ticker": "AAPL",
+      "action": "BUY",
+      "conviction": "HIGH|MEDIUM|LOW",
+      "position_usd": 120.00,
+      "entry_price": 185.50,
+      "stop_loss": 170.60,
+      "target": 205.00,
+      "risk_reward_ratio": 1.8,
+      "reasoning": "Why this stock, why now — reference specific technical and fundamental factors"
+    }
+  ],
+  "watchlist_notes": [
+    {
+      "ticker": "TSLA",
+      "note": "Approaching support at $220, wait for RSI to hit 35 before entering"
+    }
+  ],
+  "portfolio_allocation": {
+    "total_deployed": 850.00,
+    "cash_reserve": 150.00,
+    "rationale": "Why this cash level"
+  },
+  "risk_warnings": ["Any broader concerns about the market or specific positions"],
+  "next_review_triggers": ["Events that should trigger an early review before next quarter"]
+}
+
+IMPORTANT:
+- Be specific with numbers. No vague ranges.
+- Reference the actual data from the briefing (RSI values, support levels, P/E ratios, etc.)
+- If the market is bearish, it's OK to hold fewer than 10 positions or keep more cash
+- If no good setups exist, say so — don't force trades
+- Think like a professional fund manager who must justify every decision
+
+
+Here is the complete data briefing for all stocks in the universe:
+
+======================================================================
+SWING TRADING DATA BRIEFING
+Generated: 2026-04-21T20:02:55.472951
+======================================================================
+
+CAPITAL: $1000 | MAX POSITIONS: 10
+SECTOR CAP: 3 per sector | PLATFORM: Vested Finance (fractional shares, $1 minimum)
+UNIVERSE: 448 tickers scanned, top 60 shown below
+
+======================================================================
+MACRO REGIME: BULL (allocation 100%, tilt: growth)
+Bull signals: 3/3
+  - spy_trend: SPY $708.72 above 200 EMA $653.14 (+8.5%)
+  - vix_level: VIX 18.9 (low fear, < 20)
+  - yield_curve: 10Y-2Y spread 0.54% (normal)
+
+======================================================================
+TOP STOCKS BY COMPOSITE SCORE (60 of 435 analyzed)
+======================================================================
+
+--- CF (CF Industries Holdings, Inc.) | Sector: materials ---
+  Price: $115.94  |  5d: -4.7%  |  20d: -7.2%
+  52w Range: $71.89 - $141.96 (-18.3% from high)
+  Scores -> Tech: 78.2 | Fund: 87.5 | Macro: 85.0
+  Tech breakdown -> RSI: 79.93 | MACD: 65.0 | EMA: 100.0 | BB: 100.0 | Vol: 50.0 | ADX: 52.51 | S/R: 90.0
+  Indicators -> RSI: 45.04 | MACD hist: -2.4128 | ADX: 21.25 | ATR: 7.294 | Vol ratio: 0.74
+  Fundamentals -> P/E: 13.258237 | Rev growth: 0.228 | EPS growth: 0.371 | D/E: 46.765 | ROE: 0.23401 | FCF: 1307874944.0
+  Support: [124.5, 120.11, 116.39]
+  Resistance: [94.7, 97.39, 105.27]
+  Quant risk -> Stop: $114.64 (1.1%) | Target: $137.82 (18.9%) | R:R: 16.9
+
+--- KMI (Kinder Morgan, Inc.) | Sector: oil_gas ---
+  Price: $31.94  |  5d: -0.4%  |  20d: -2.7%
+  52w Range: $24.38 - $34.73 (-8.0% from high)
+  Scores -> Tech: 77.7 | Fund: 73.2 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 65.0 | EMA: 75.0 | BB: 100.0 | Vol: 50.0 | ADX: 54.8 | S/R: 90.0
+  Indicators -> RSI: 39.54 | MACD hist: -0.1938 | ADX: 22.4 | ATR: 0.7603 | Vol ratio: 0.82
+  Fundamentals -> P/E: 21.551872 | Rev growth: 0.131 | EPS growth: 0.493 | D/E: 99.71 | ROE: 0.09826 | FCF: 455875008.0
+  Support: [32.67, 32.52, 32.44]
+  Resistance: [30.28, 33.24, 33.8]
+  Quant risk -> Stop: $31.2 (2.3%) | Target: $34.22 (7.1%) | R:R: 3.1
+
+--- WDAY (Workday, Inc.) | Sector: software_cloud ---
+  Price: $127.94  |  5d: +6.7%  |  20d: -5.9%
+  52w Range: $110.36 - $276.0 (-53.6% from high)
+  Scores -> Tech: 66.8 | Fund: 83.8 | Macro: 85.0
+  Tech breakdown -> RSI: 71.55 | MACD: 80.0 | EMA: 20.0 | BB: 50.0 | Vol: 70.0 | ADX: 70.34 | S/R: 90.0
+  Indicators -> RSI: 49.22 | MACD hist: 1.2737 | ADX: 30.17 | ATR: 6.4719 | Vol ratio: 1.33
+  Fundamentals -> P/E: 10.562927 | Rev growth: 0.145 | EPS growth: 0.629 | D/E: 48.956 | ROE: 0.08231 | FCF: 3012750080.0
+  Support: [169.01, 156.87, 130.91]
+  Resistance: [132.14, 132.69, 138.09]
+  Quant risk -> Stop: $121.69 (4.9%) | Target: $147.36 (15.2%) | R:R: 3.1
+
+--- PATH (UiPath, Inc.) | Sector: software_cloud ---
+  Price: $10.56  |  5d: +4.3%  |  20d: -12.4%
+  52w Range: $9.28 - $19.84 (-46.8% from high)
+  Scores -> Tech: 66.1 | Fund: 83.0 | Macro: 85.0
+  Tech breakdown -> RSI: 77.76 | MACD: 80.0 | EMA: 20.0 | BB: 70.0 | Vol: 50.0 | ADX: 54.4 | S/R: 90.0
+  Indicators -> RSI: 46.12 | MACD hist: 0.0308 | ADX: 22.2 | ATR: 0.6288 | Vol ratio: 0.59
+  Fundamentals -> P/E: 12.388995 | Rev growth: 0.136 | EPS growth: 1.057 | D/E: 3.901 | ROE: 0.14374 | FCF: 473554368.0
+  Support: [11.62, 10.7, 10.66]
+  Resistance: [11.06, 11.42, 11.6]
+  Quant risk -> Stop: $10.47 (0.9%) | Target: $12.45 (17.9%) | R:R: 20.4
+
+--- PSX (Phillips 66) | Sector: oil_gas ---
+  Price: $155.75  |  5d: -2.9%  |  20d: -11.2%
+  52w Range: $92.31 - $190.61 (-18.3% from high)
+  Scores -> Tech: 72.0 | Fund: 74.2 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 65.0 | EMA: 75.0 | BB: 100.0 | Vol: 50.0 | ADX: 77.13 | S/R: 50.0
+  Indicators -> RSI: 35.99 | MACD hist: -2.5729 | ADX: 33.57 | ATR: 5.8795 | Vol ratio: 0.65
+  Fundamentals -> P/E: 10.405413 | Rev growth: 0.013 | EPS growth: 2427.284 | D/E: 71.38 | ROE: 0.15427 | FCF: 1261250048.0
+  Support: [173.15, 171.0, 160.62]
+  Resistance: [146.75, 157.85, 162.45]
+  Quant risk -> Stop: $152.97 (1.8%) | Target: $173.39 (11.3%) | R:R: 6.3
+
+--- VEEV (Veeva Systems Inc.) | Sector: software_cloud ---
+  Price: $168.84  |  5d: +6.6%  |  20d: -8.3%
+  52w Range: $148.05 - $310.5 (-45.6% from high)
+  Scores -> Tech: 65.7 | Fund: 78.5 | Macro: 85.0
+  Tech breakdown -> RSI: 78.77 | MACD: 80.0 | EMA: 20.0 | BB: 70.0 | Vol: 50.0 | ADX: 48.51 | S/R: 90.0
+  Indicators -> RSI: 45.61 | MACD hist: 0.7212 | ADX: 19.25 | ATR: 7.4374 | Vol ratio: 0.77
+  Fundamentals -> P/E: 17.327534 | Rev growth: 0.16 | EPS growth: 0.232 | D/E: 1.329 | ROE: 0.13933 | FCF: 1048066496.0
+  Support: [177.91, 177.88, 176.77]
+  Resistance: [174.97, 177.91, 178.67]
+  Quant risk -> Stop: $167.3 (0.9%) | Target: $191.15 (13.2%) | R:R: 14.5
+
+--- FAST (Fastenal Company) | Sector: transport_logistics ---
+  Price: $45.56  |  5d: -0.5%  |  20d: +4.1%
+  52w Range: $38.45 - $50.09 (-9.0% from high)
+  Scores -> Tech: 64.9 | Fund: 79.2 | Macro: 85.0
+  Tech breakdown -> RSI: 72.89 | MACD: 65.0 | EMA: 100.0 | BB: 70.0 | Vol: 50.0 | ADX: 40.08 | S/R: 50.0
+  Indicators -> RSI: 48.55 | MACD hist: -0.1664 | ADX: 15.04 | ATR: 1.2684 | Vol ratio: 0.71
+  Fundamentals -> P/E: 33.53702 | Rev growth: 0.124 | EPS growth: 0.138 | D/E: 11.167 | ROE: 0.33842 | FCF: 904462528.0
+  Support: [45.38, 45.28, 45.1]
+  Resistance: [45.89, 46.16, 46.8]
+  Quant risk -> Stop: $45.15 (0.9%) | Target: $49.37 (8.3%) | R:R: 9.3
+
+--- GILD (Gilead Sciences, Inc.) | Sector: pharma ---
+  Price: $135.87  |  5d: -2.3%  |  20d: -1.0%
+  52w Range: $90.95 - $156.4 (-13.1% from high)
+  Scores -> Tech: 64.3 | Fund: 79.5 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 10.0 | EMA: 75.0 | BB: 100.0 | Vol: 50.0 | ADX: 31.04 | S/R: 90.0
+  Indicators -> RSI: 39.22 | MACD hist: -0.1254 | ADX: 10.52 | ATR: 3.1322 | Vol ratio: 0.73
+  Fundamentals -> P/E: 13.865833 | Rev growth: 0.047 | EPS growth: 0.234 | D/E: 112.923 | ROE: 0.40655 | FCF: 7540624896.0
+  Support: [146.24, 142.28, 141.96]
+  Resistance: [140.42, 140.91, 141.49]
+  Quant risk -> Stop: $133.22 (1.9%) | Target: $145.27 (6.9%) | R:R: 3.5
+
+--- INTU (Intuit Inc.) | Sector: software_cloud ---
+  Price: $404.83  |  5d: +9.6%  |  20d: -10.9%
+  52w Range: $342.11 - $808.22 (-49.9% from high)
+  Scores -> Tech: 61.8 | Fund: 82.2 | Macro: 85.0
+  Tech breakdown -> RSI: 72.62 | MACD: 100.0 | EMA: 20.0 | BB: 70.0 | Vol: 50.0 | ADX: 58.96 | S/R: 50.0
+  Indicators -> RSI: 48.69 | MACD hist: 1.1405 | ADX: 24.48 | ATR: 19.3257 | Vol ratio: 0.85
+  Fundamentals -> P/E: 15.643378 | Rev growth: 0.174 | EPS growth: 0.485 | D/E: 36.148 | ROE: 0.23457001 | FCF: 5301374976.0
+  Support: [427.67, 409.84, 408.24]
+  Resistance: [405.0, 435.24, 449.7]
+  Quant risk -> Stop: $372.44 (8.0%) | Target: $462.81 (14.3%) | R:R: 1.8
+
+--- MNDY (monday.com Ltd.) | Sector: software_cloud ---
+  Price: $68.41  |  5d: +7.6%  |  20d: -7.4%
+  52w Range: $57.5 - $316.98 (-78.4% from high)
+  Scores -> Tech: 58.9 | Fund: 86.0 | Macro: 85.0
+  Tech breakdown -> RSI: 73.63 | MACD: 80.0 | EMA: 20.0 | BB: 50.0 | Vol: 70.0 | ADX: 68.25 | S/R: 50.0
+  Indicators -> RSI: 48.19 | MACD hist: 0.9018 | ADX: 29.13 | ATR: 4.166 | Vol ratio: 1.07
+  Fundamentals -> P/E: 14.348638 | Rev growth: 0.246 | EPS growth: 2.331 | D/E: 13.536 | ROE: 0.10429 | FCF: 255467504.0
+  Support: [73.15, 68.93, 68.8]
+  Resistance: [70.0, 70.59, 77.69]
+  Quant risk -> Stop: $65.93 (3.6%) | Target: $80.91 (18.3%) | R:R: 5.0
+
+--- NOC (Northrop Grumman Corporation) | Sector: industrial_conglom ---
+  Price: $656.98  |  5d: -3.6%  |  20d: -7.1%
+  52w Range: $443.01 - $774.0 (-15.1% from high)
+  Scores -> Tech: 71.9 | Fund: 69.0 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 30.0 | EMA: 75.0 | BB: 100.0 | Vol: 50.0 | ADX: 66.32 | S/R: 90.0
+  Indicators -> RSI: 33.96 | MACD hist: -2.4426 | ADX: 28.16 | ATR: 15.7677 | Vol ratio: 1.12
+  Fundamentals -> P/E: 20.562067 | Rev growth: 0.096 | EPS growth: 0.152 | D/E: 107.257 | ROE: 0.26167 | FCF: 2899875072.0
+  Support: [734.36, 691.03, 673.24]
+  Resistance: [696.93, 698.53, 703.2]
+  Quant risk -> Stop: $630.8 (4.0%) | Target: $704.28 (7.2%) | R:R: 1.8
+
+--- ADBE (Adobe Inc.) | Sector: mega_cap_tech ---
+  Price: $248.63  |  5d: +3.5%  |  20d: +0.2%
+  52w Range: $224.13 - $422.95 (-41.2% from high)
+  Scores -> Tech: 57.4 | Fund: 87.5 | Macro: 85.0
+  Tech breakdown -> RSI: 66.63 | MACD: 80.0 | EMA: 20.0 | BB: 50.0 | Vol: 70.0 | ADX: 64.48 | S/R: 50.0
+  Indicators -> RSI: 51.69 | MACD hist: 2.3887 | ADX: 27.24 | ATR: 9.2749 | Vol ratio: 1.07
+  Fundamentals -> P/E: 9.572935 | Rev growth: 0.12 | EPS growth: 0.111 | D/E: 58.34 | ROE: 0.58774 | FCF: 9321374720.0
+  Support: [284.6, 268.37, 264.04]
+  Resistance: [247.44, 251.02, 254.51]
+  Quant risk -> Stop: $243.33 (2.1%) | Target: $276.45 (11.2%) | R:R: 5.2
+
+--- BMY (Bristol-Myers Squibb Company) | Sector: pharma ---
+  Price: $59.13  |  5d: +1.8%  |  20d: +3.9%
+  52w Range: $41.46 - $62.25 (-5.0% from high)
+  Scores -> Tech: 64.5 | Fund: 77.8 | Macro: 85.0
+  Tech breakdown -> RSI: 67.2 | MACD: 80.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 34.42 | S/R: 50.0
+  Indicators -> RSI: 51.4 | MACD hist: 0.0517 | ADX: 12.21 | ATR: 1.3542 | Vol ratio: 0.77
+  Fundamentals -> P/E: 9.591959 | Rev growth: 0.013 | EPS growth: 13.921 | D/E: 254.982 | ROE: 0.40442002 | FCF: 11146874880.0
+  Support: [60.03, 58.65, 58.65]
+  Resistance: [55.55, 59.8, 60.19]
+  Quant risk -> Stop: $58.35 (1.3%) | Target: $63.19 (6.9%) | R:R: 5.2
+
+--- NOW (ServiceNow, Inc.) | Sector: software_cloud ---
+  Price: $99.72  |  5d: +12.0%  |  20d: -9.7%
+  52w Range: $81.24 - $211.48 (-52.8% from high)
+  Scores -> Tech: 64.8 | Fund: 77.5 | Macro: 85.0
+  Tech breakdown -> RSI: 73.14 | MACD: 80.0 | EMA: 20.0 | BB: 50.0 | Vol: 50.0 | ADX: 67.99 | S/R: 90.0
+  Indicators -> RSI: 48.43 | MACD hist: 0.5911 | ADX: 28.99 | ATR: 5.3683 | Vol ratio: 0.95
+  Fundamentals -> P/E: 20.598063 | Rev growth: 0.207 | EPS growth: 0.034 | D/E: 18.536 | ROE: 0.15488 | FCF: 4951625216.0
+  Support: [113.13, 111.71, 103.4]
+  Resistance: [105.58, 106.58, 108.98]
+  Quant risk -> Stop: $98.77 (0.9%) | Target: $115.82 (16.1%) | R:R: 17.0
+
+--- THC (Tenet Healthcare Corporation) | Sector: health_services ---
+  Price: $191.26  |  5d: -0.9%  |  20d: -4.5%
+  52w Range: $109.82 - $247.21 (-22.6% from high)
+  Scores -> Tech: 64.5 | Fund: 77.7 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 30.0 | EMA: 40.0 | BB: 70.0 | Vol: 50.0 | ADX: 75.5 | S/R: 90.0
+  Indicators -> RSI: 40.54 | MACD hist: 0.8526 | ADX: 32.75 | ATR: 8.2581 | Vol ratio: 1.3
+  Fundamentals -> P/E: 10.90579 | Rev growth: 0.089 | EPS growth: 0.276 | D/E: 160.793 | ROE: 0.27021 | FCF: 1677374976.0
+  Support: [230.42, 228.48, 226.06]
+  Resistance: [200.86, 201.28, 204.38]
+  Quant risk -> Stop: $186.87 (2.3%) | Target: $216.03 (12.9%) | R:R: 5.6
+
+--- CB (Chubb Limited) | Sector: insurance_diversified ---
+  Price: $329.99  |  5d: +0.0%  |  20d: +2.3%
+  52w Range: $263.32 - $344.65 (-4.3% from high)
+  Scores -> Tech: 63.6 | Fund: 78.8 | Macro: 85.0
+  Tech breakdown -> RSI: 62.59 | MACD: 80.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 32.56 | S/R: 50.0
+  Indicators -> RSI: 53.71 | MACD hist: 0.1814 | ADX: 11.28 | ATR: 5.7444 | Vol ratio: 0.92
+  Fundamentals -> P/E: 11.2296505 | Rev growth: 0.055 | EPS growth: 0.279 | D/E: 30.944 | ROE: 0.14337 | FCF: 12136875008.0
+  Support: [325.78, 323.02, 321.34]
+  Resistance: [329.5, 330.53, 334.34]
+  Quant risk -> Stop: $324.15 (1.8%) | Target: $347.22 (5.2%) | R:R: 3.0
+
+--- MNST (Monster Beverage Corporation) | Sector: consumer_staples ---
+  Price: $77.23  |  5d: +2.7%  |  20d: +4.8%
+  52w Range: $57.01 - $87.38 (-11.6% from high)
+  Scores -> Tech: 63.0 | Fund: 79.2 | Macro: 85.0
+  Tech breakdown -> RSI: 53.54 | MACD: 80.0 | EMA: 100.0 | BB: 15.0 | Vol: 70.0 | ADX: 54.48 | S/R: 50.0
+  Indicators -> RSI: 58.23 | MACD hist: 0.6078 | ADX: 22.24 | ATR: 1.7009 | Vol ratio: 1.09
+  Fundamentals -> P/E: 29.848629 | Rev growth: 0.176 | EPS growth: 0.666 | D/E: 0.8 | ROE: 0.26815 | FCF: 1514921344.0
+  Support: [79.77, 79.53, 73.86]
+  Resistance: [75.6, 76.93, 78.58]
+  Quant risk -> Stop: $73.83 (4.4%) | Target: $82.33 (6.6%) | R:R: 1.5
+
+--- VLO (Valero Energy Corporation) | Sector: oil_gas ---
+  Price: $226.28  |  5d: -6.5%  |  20d: -5.7%
+  52w Range: $103.78 - $258.43 (-12.4% from high)
+  Scores -> Tech: 67.9 | Fund: 71.3 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 30.0 | EMA: 100.0 | BB: 100.0 | Vol: 50.0 | ADX: 69.04 | S/R: 50.0
+  Indicators -> RSI: 44.44 | MACD hist: -3.3155 | ADX: 29.52 | ATR: 9.9899 | Vol ratio: 0.89
+  Fundamentals -> P/E: 13.157941 | Rev growth: -0.021 | EPS growth: 3.179 | D/E: 43.988 | ROE: 0.08299 | FCF: 3719624960.0
+  Support: [235.69, 231.2, 230.2]
+  Resistance: [193.32, 204.26, 206.77]
+  Quant risk -> Stop: $212.76 (6.0%) | Target: $256.25 (13.2%) | R:R: 2.2
+
+--- LMT (Lockheed Martin Corporation) | Sector: industrial_conglom ---
+  Price: $581.28  |  5d: -6.2%  |  20d: -7.4%
+  52w Range: $401.95 - $692.0 (-16.0% from high)
+  Scores -> Tech: 70.6 | Fund: 67.8 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 30.0 | EMA: 75.0 | BB: 100.0 | Vol: 50.0 | ADX: 53.1 | S/R: 90.0
+  Indicators -> RSI: 32.9 | MACD hist: -3.4953 | ADX: 21.55 | ATR: 15.6586 | Vol ratio: 1.49
+  Fundamentals -> P/E: 17.923674 | Rev growth: 0.091 | EPS growth: 1.61 | D/E: 338.804 | ROE: 0.76865 | FCF: 5281625088.0
+  Support: [647.23, 630.72, 618.42]
+  Resistance: [632.92, 635.62, 636.88]
+  Quant risk -> Stop: $567.96 (2.3%) | Target: $632.92 (8.9%) | R:R: 3.9
+
+--- EOG (EOG Resources, Inc.) | Sector: oil_gas ---
+  Price: $129.16  |  5d: -5.0%  |  20d: -6.2%
+  52w Range: $99.86 - $150.7 (-14.3% from high)
+  Scores -> Tech: 78.0 | Fund: 58.2 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 65.0 | EMA: 75.0 | BB: 100.0 | Vol: 50.0 | ADX: 57.34 | S/R: 90.0
+  Indicators -> RSI: 40.52 | MACD hist: -2.0413 | ADX: 23.67 | ATR: 4.4609 | Vol ratio: 0.99
+  Fundamentals -> P/E: 9.381232 | Rev growth: 0.0 | EPS growth: -0.417 | D/E: 30.62 | ROE: 0.16829 | FCF: 2327249920.0
+  Support: [137.39, 134.26, 131.98]
+  Resistance: [114.08, 114.56, 124.28]
+  Quant risk -> Stop: $125.33 (3.0%) | Target: $142.54 (10.4%) | R:R: 3.5
+
+--- VRTX (Vertex Pharmaceuticals Incorpor) | Sector: pharma ---
+  Price: $439.18  |  5d: -0.2%  |  20d: -3.3%
+  52w Range: $362.5 - $510.77 (-14.0% from high)
+  Scores -> Tech: 63.0 | Fund: 77.2 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 80.0 | EMA: 40.0 | BB: 70.0 | Vol: 50.0 | ADX: 39.47 | S/R: 50.0
+  Indicators -> RSI: 44.58 | MACD hist: 0.7996 | ADX: 14.73 | ATR: 11.3725 | Vol ratio: 0.63
+  Fundamentals -> P/E: 20.01594 | Rev growth: 0.095 | EPS growth: 0.329 | D/E: 10.908 | ROE: 0.22541 | FCF: 2573112576.0
+  Support: [474.59, 463.0, 457.74]
+  Resistance: [447.0, 447.82, 453.98]
+  Quant risk -> Stop: $431.51 (1.8%) | Target: $473.3 (7.8%) | R:R: 4.5
+
+--- UHS (Universal Health Services, Inc.) | Sector: health_services ---
+  Price: $179.72  |  5d: -1.9%  |  20d: -3.3%
+  52w Range: $151.89 - $245.89 (-26.9% from high)
+  Scores -> Tech: 60.9 | Fund: 79.5 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 30.0 | EMA: 20.0 | BB: 70.0 | Vol: 50.0 | ADX: 68.52 | S/R: 90.0
+  Indicators -> RSI: 40.54 | MACD hist: 0.7914 | ADX: 29.26 | ATR: 5.3759 | Vol ratio: 1.17
+  Fundamentals -> P/E: 7.026662 | Rev growth: 0.091 | EPS growth: 0.427 | D/E: 69.729 | ROE: 0.21326 | FCF: 565252736.0
+  Support: [210.8, 197.1, 181.81]
+  Resistance: [189.45, 191.4, 198.99]
+  Quant risk -> Stop: $176.53 (1.8%) | Target: $195.85 (9.0%) | R:R: 5.1
+
+--- OXY (Occidental Petroleum Corporatio) | Sector: oil_gas ---
+  Price: $54.48  |  5d: -6.2%  |  20d: -10.3%
+  52w Range: $37.55 - $67.45 (-19.2% from high)
+  Scores -> Tech: 70.9 | Fund: 66.2 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 65.0 | EMA: 75.0 | BB: 100.0 | Vol: 50.0 | ADX: 66.8 | S/R: 50.0
+  Indicators -> RSI: 39.44 | MACD hist: -1.2672 | ADX: 28.4 | ATR: 2.4083 | Vol ratio: 0.62
+  Fundamentals -> P/E: 15.220282 | Rev growth: 1.489 | EPS growth: None | D/E: 63.804 | ROE: 0.05929 | FCF: 2053874944.0
+  Support: [61.17, 58.1, 56.25]
+  Resistance: [46.56, 46.73, 47.46]
+  Quant risk -> Stop: $51.86 (4.8%) | Target: $61.7 (13.3%) | R:R: 2.8
+
+--- MRVL (Marvell Technology, Inc.) | Sector: mega_cap_tech ---
+  Price: $147.84  |  5d: +12.6%  |  20d: +68.3%
+  52w Range: $47.96 - $149.58 (-1.2% from high)
+  Scores -> Tech: 60.2 | Fund: 80.0 | Macro: 85.0
+  Tech breakdown -> RSI: 14.99 | MACD: 80.0 | EMA: 100.0 | BB: 15.0 | Vol: 70.0 | ADX: 84.35 | S/R: 50.0
+  Indicators -> RSI: 85.01 | MACD hist: 3.0068 | ADX: 37.17 | ATR: 6.3607 | Vol ratio: 1.42
+  Fundamentals -> P/E: 28.241869 | Rev growth: 0.221 | EPS growth: 1.063 | D/E: 33.479 | ROE: 0.19253999 | FCF: 1442787456.0
+  Support: [128.42, 86.78, 86.57]
+  Resistance: [80.36, 82.78, 83.74]
+  Quant risk -> Stop: $136.01 (8.0%) | Target: $166.92 (12.9%) | R:R: 1.6
+
+--- ALL (Allstate Corporation (The)) | Sector: insurance_diversified ---
+  Price: $215.15  |  5d: +0.0%  |  20d: +4.6%
+  52w Range: $181.06 - $219.48 (-2.0% from high)
+  Scores -> Tech: 53.9 | Fund: 87.8 | Macro: 85.0
+  Tech breakdown -> RSI: 55.31 | MACD: 30.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 45.99 | S/R: 50.0
+  Indicators -> RSI: 57.34 | MACD hist: 0.633 | ADX: 17.99 | ATR: 4.6739 | Vol ratio: 1.01
+  Fundamentals -> P/E: 8.379374 | Rev growth: 0.051 | EPS growth: 1.032 | D/E: 25.091 | ROE: 0.39518002 | FCF: 8924749824.0
+  Support: [212.4, 208.3, 203.25]
+  Resistance: [209.4, 210.3, 212.15]
+  Quant risk -> Stop: $211.34 (1.8%) | Target: $229.17 (6.5%) | R:R: 3.7
+
+--- COST (Costco Wholesale Corporation) | Sector: consumer_staples ---
+  Price: $997.84  |  5d: +1.7%  |  20d: +2.6%
+  52w Range: $842.91 - $1062.65 (-6.1% from high)
+  Scores -> Tech: 62.2 | Fund: 77.1 | Macro: 85.0
+  Tech breakdown -> RSI: 67.19 | MACD: 65.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 40.79 | S/R: 50.0
+  Indicators -> RSI: 51.4 | MACD hist: -1.5191 | ADX: 15.4 | ATR: 18.7668 | Vol ratio: 0.81
+  Fundamentals -> P/E: 44.399414 | Rev growth: 0.215 | EPS growth: 0.455 | D/E: 60.257 | ROE: 0.29650998 | FCF: 6690375168.0
+  Support: [984.0, 983.53, 977.81]
+  Resistance: [1009.62, 1010.1, 1012.83]
+  Quant risk -> Stop: $979.08 (1.9%) | Target: $1054.14 (5.6%) | R:R: 3.0
+
+--- OKE (ONEOK, Inc.) | Sector: oil_gas ---
+  Price: $83.78  |  5d: -1.8%  |  20d: -6.1%
+  52w Range: $63.15 - $95.3 (-12.1% from high)
+  Scores -> Tech: 69.2 | Fund: 68.0 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 65.0 | EMA: 75.0 | BB: 100.0 | Vol: 50.0 | ADX: 49.56 | S/R: 50.0
+  Indicators -> RSI: 40.77 | MACD hist: -0.7997 | ADX: 19.78 | ATR: 2.6058 | Vol ratio: 0.67
+  Fundamentals -> P/E: 13.60183 | Rev growth: 0.295 | EPS growth: -0.015 | D/E: 146.453 | ROE: 0.15489 | FCF: 725374976.0
+  Support: [86.07, 84.5, 84.24]
+  Resistance: [80.33, 85.55, 87.13]
+  Quant risk -> Stop: $82.4 (1.6%) | Target: $91.6 (9.3%) | R:R: 5.7
+
+--- NDSN (Nordson Corporation) | Sector: transport_logistics ---
+  Price: $283.08  |  5d: +1.8%  |  20d: +7.7%
+  52w Range: $172.19 - $304.34 (-7.0% from high)
+  Scores -> Tech: 62.9 | Fund: 75.0 | Macro: 85.0
+  Tech breakdown -> RSI: 46.45 | MACD: 80.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 49.5 | S/R: 50.0
+  Indicators -> RSI: 61.78 | MACD hist: 2.0054 | ADX: 19.75 | ATR: 6.6657 | Vol ratio: 0.69
+  Fundamentals -> P/E: 23.124336 | Rev growth: 0.088 | EPS growth: 0.442 | D/E: 66.986 | ROE: 0.17473 | FCF: 514465248.0
+  Support: [286.32, 271.11, 264.75]
+  Resistance: [271.38, 271.74, 272.63]
+  Quant risk -> Stop: $269.75 (4.7%) | Target: $303.08 (7.1%) | R:R: 1.5
+
+--- XOM (Exxon Mobil Corporation) | Sector: oil_gas ---
+  Price: $147.68  |  5d: -3.2%  |  20d: -7.5%
+  52w Range: $98.73 - $176.41 (-16.3% from high)
+  Scores -> Tech: 77.9 | Fund: 55.3 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 65.0 | EMA: 75.0 | BB: 100.0 | Vol: 50.0 | ADX: 56.55 | S/R: 90.0
+  Indicators -> RSI: 38.79 | MACD hist: -2.0752 | ADX: 23.27 | ATR: 5.2287 | Vol ratio: 0.69
+  Fundamentals -> P/E: 14.612508 | Rev growth: -0.013 | EPS growth: -0.11 | D/E: 18.936 | ROE: 0.110810004 | FCF: 12229749760.0
+  Support: [154.84, 150.98, 147.86]
+  Resistance: [141.4, 152.78, 153.38]
+  Quant risk -> Stop: $146.92 (0.5%) | Target: $163.37 (10.6%) | R:R: 20.7
+
+--- HCA (HCA Healthcare, Inc.) | Sector: health_services ---
+  Price: $478.13  |  5d: -3.9%  |  20d: -3.2%
+  52w Range: $312.33 - $555.69 (-14.0% from high)
+  Scores -> Tech: 67.0 | Fund: 69.0 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 30.0 | EMA: 75.0 | BB: 70.0 | Vol: 50.0 | ADX: 47.3 | S/R: 90.0
+  Indicators -> RSI: 40.15 | MACD hist: 0.4258 | ADX: 18.65 | ATR: 13.5524 | Vol ratio: 0.83
+  Fundamentals -> P/E: 14.303534 | Rev growth: 0.067 | EPS growth: 0.445 | D/E: None | ROE: None | FCF: 5823124992.0
+  Support: [522.39, 522.32, 521.71]
+  Resistance: [512.14, 516.9, 526.77]
+  Quant risk -> Stop: $472.4 (1.2%) | Target: $518.79 (8.5%) | R:R: 7.1
+
+--- DXCM (DexCom, Inc.) | Sector: medtech ---
+  Price: $64.62  |  5d: +2.4%  |  20d: -3.5%
+  52w Range: $54.11 - $89.98 (-28.2% from high)
+  Scores -> Tech: 55.8 | Fund: 83.0 | Macro: 85.0
+  Tech breakdown -> RSI: 71.39 | MACD: 80.0 | EMA: 20.0 | BB: 50.0 | Vol: 50.0 | ADX: 60.6 | S/R: 50.0
+  Indicators -> RSI: 49.3 | MACD hist: 0.24 | ADX: 25.3 | ATR: 2.2578 | Vol ratio: 0.94
+  Fundamentals -> P/E: 21.38147 | Rev growth: 0.131 | EPS growth: 0.78 | D/E: 50.852 | ROE: 0.34497002 | FCF: 719537472.0
+  Support: [70.81, 65.1, 63.82]
+  Resistance: [66.44, 68.76, 74.43]
+  Quant risk -> Stop: $63.5 (1.7%) | Target: $71.39 (10.5%) | R:R: 6.0
+
+--- TRV (The Travelers Companies, Inc.) | Sector: insurance_diversified ---
+  Price: $300.78  |  5d: -0.2%  |  20d: +1.4%
+  52w Range: $243.94 - $311.98 (-3.6% from high)
+  Scores -> Tech: 54.4 | Fund: 84.8 | Macro: 85.0
+  Tech breakdown -> RSI: 60.3 | MACD: 30.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 43.16 | S/R: 50.0
+  Indicators -> RSI: 54.85 | MACD hist: 0.6382 | ADX: 16.58 | ATR: 6.0682 | Vol ratio: 1.4
+  Fundamentals -> P/E: 10.558314 | Rev growth: 0.01 | EPS growth: 3.576 | D/E: 28.975 | ROE: 0.25272 | FCF: 13304375296.0
+  Support: [293.66, 292.4, 290.94]
+  Resistance: [295.53, 300.9, 301.78]
+  Quant risk -> Stop: $292.19 (2.9%) | Target: $318.98 (6.0%) | R:R: 2.1
+
+--- AGCO (AGCO Corporation) | Sector: transport_logistics ---
+  Price: $120.27  |  5d: -0.9%  |  20d: +10.1%
+  52w Range: $77.57 - $143.48 (-16.2% from high)
+  Scores -> Tech: 65.3 | Fund: 70.5 | Macro: 85.0
+  Tech breakdown -> RSI: 65.01 | MACD: 80.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 45.83 | S/R: 50.0
+  Indicators -> RSI: 52.49 | MACD hist: 0.5713 | ADX: 17.91 | ATR: 4.0286 | Vol ratio: 0.69
+  Fundamentals -> P/E: 14.925704 | Rev growth: 0.011 | EPS growth: None | D/E: 57.227 | ROE: 0.16691 | FCF: 850012480.0
+  Support: [131.01, 117.71, 113.89]
+  Resistance: [114.94, 118.96, 119.24]
+  Quant risk -> Stop: $117.12 (2.6%) | Target: $132.36 (10.1%) | R:R: 3.8
+
+--- OKTA (Okta, Inc.) | Sector: software_cloud ---
+  Price: $75.76  |  5d: +15.7%  |  20d: -3.4%
+  52w Range: $62.66 - $127.57 (-40.6% from high)
+  Scores -> Tech: 59.5 | Fund: 77.8 | Macro: 85.0
+  Tech breakdown -> RSI: 66.05 | MACD: 100.0 | EMA: 20.0 | BB: 50.0 | Vol: 70.0 | ADX: 46.39 | S/R: 50.0
+  Indicators -> RSI: 51.97 | MACD hist: 0.1219 | ADX: 18.2 | ATR: 4.1023 | Vol ratio: 1.13
+  Fundamentals -> P/E: 18.72338 | Rev growth: 0.116 | EPS growth: 1.708 | D/E: 6.444 | ROE: 0.03506 | FCF: 836124992.0
+  Support: [84.0, 79.71, 76.9]
+  Resistance: [76.45, 81.01, 81.56]
+  Quant risk -> Stop: $71.85 (5.2%) | Target: $88.07 (16.2%) | R:R: 3.1
+
+--- GIS (General Mills, Inc.) | Sector: consumer_staples ---
+  Price: $35.28  |  5d: +2.1%  |  20d: -3.1%
+  52w Range: $34.04 - $55.31 (-36.2% from high)
+  Scores -> Tech: 74.0 | Fund: 59.1 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 80.0 | EMA: 20.0 | BB: 70.0 | Vol: 50.0 | ADX: 100 | S/R: 90.0
+  Indicators -> RSI: 35.18 | MACD hist: 0.1987 | ADX: 49.56 | ATR: 0.8865 | Vol ratio: 0.8
+  Fundamentals -> P/E: 10.74567 | Rev growth: 0.022 | EPS growth: -0.145 | D/E: 217.629 | ROE: 0.23591 | FCF: 2263375104.0
+  Support: [46.25, 43.28, 43.19]
+  Resistance: [36.43, 37.3, 44.83]
+  Quant risk -> Stop: $34.87 (1.1%) | Target: $37.94 (7.5%) | R:R: 6.5
+
+--- ECL (Ecolab Inc.) | Sector: materials ---
+  Price: $275.68  |  5d: +0.2%  |  20d: +7.5%
+  52w Range: $227.03 - $308.44 (-10.6% from high)
+  Scores -> Tech: 66.3 | Fund: 69.0 | Macro: 85.0
+  Tech breakdown -> RSI: 62.09 | MACD: 80.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 59.5 | S/R: 50.0
+  Indicators -> RSI: 53.96 | MACD hist: 1.6061 | ADX: 24.75 | ATR: 6.2891 | Vol ratio: 0.79
+  Fundamentals -> P/E: 28.446373 | Rev growth: 0.048 | EPS growth: 0.202 | D/E: 91.769 | ROE: 0.22516 | FCF: 1642375040.0
+  Support: [284.06, 277.64, 274.01]
+  Resistance: [270.86, 270.9, 276.94]
+  Quant risk -> Stop: $272.64 (1.1%) | Target: $294.55 (6.8%) | R:R: 6.2
+
+--- MPC (Marathon Petroleum Corporation) | Sector: oil_gas ---
+  Price: $214.12  |  5d: -5.0%  |  20d: -7.9%
+  52w Range: $121.4 - $255.77 (-16.3% from high)
+  Scores -> Tech: 63.5 | Fund: 72.3 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 30.0 | EMA: 75.0 | BB: 100.0 | Vol: 50.0 | ADX: 62.95 | S/R: 50.0
+  Indicators -> RSI: 38.82 | MACD hist: -3.8457 | ADX: 26.48 | ATR: 8.5144 | Vol ratio: 0.57
+  Fundamentals -> P/E: 11.281796 | Rev growth: -0.012 | EPS growth: 3.507 | D/E: 142.647 | ROE: 0.24193001 | FCF: 2569374976.0
+  Support: [233.17, 225.92, 225.25]
+  Resistance: [179.84, 209.27, 228.55]
+  Quant risk -> Stop: $211.32 (1.3%) | Target: $239.66 (11.9%) | R:R: 9.1
+
+--- ABBV (AbbVie Inc.) | Sector: pharma ---
+  Price: $203.71  |  5d: -0.5%  |  20d: +0.2%
+  52w Range: $163.22 - $239.13 (-14.8% from high)
+  Scores -> Tech: 64.3 | Fund: 71.0 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 30.0 | EMA: 40.0 | BB: 100.0 | Vol: 50.0 | ADX: 43.25 | S/R: 90.0
+  Indicators -> RSI: 39.56 | MACD hist: 0.3391 | ADX: 16.62 | ATR: 5.3731 | Vol ratio: 0.92
+  Fundamentals -> P/E: 12.649078 | Rev growth: 0.1 | EPS growth: None | D/E: None | ROE: 62.25 | FCF: 18337748992.0
+  Support: [221.39, 221.19, 219.31]
+  Resistance: [212.34, 218.64, 223.96]
+  Quant risk -> Stop: $201.58 (1.1%) | Target: $219.83 (7.9%) | R:R: 7.5
+
+--- FIVE (Five Below, Inc.) | Sector: retail ---
+  Price: $247.71  |  5d: +12.0%  |  20d: +8.9%
+  52w Range: $64.98 - $247.93 (-0.1% from high)
+  Scores -> Tech: 59.6 | Fund: 77.0 | Macro: 85.0
+  Tech breakdown -> RSI: 35.28 | MACD: 100.0 | EMA: 100.0 | BB: 15.0 | Vol: 100.0 | ADX: 38.01 | S/R: 20
+  Indicators -> RSI: 67.36 | MACD hist: 0.99 | ADX: 14.01 | ATR: 9.2622 | Vol ratio: 1.63
+  Fundamentals -> P/E: 26.794662 | Rev growth: 0.243 | EPS growth: 0.263 | D/E: 92.655 | ROE: 0.17924999 | FCF: 347362368.0
+  Support: [223.35, 218.08, 213.18]
+  Resistance: [210.33, 224.8, 225.0]
+  Quant risk -> Stop: $229.19 (7.5%) | Target: $275.5 (11.2%) | R:R: 1.5
+
+--- NEE (NextEra Energy, Inc.) | Sector: clean_energy ---
+  Price: $92.01  |  5d: -0.3%  |  20d: +2.8%
+  52w Range: $61.8 - $96.21 (-4.4% from high)
+  Scores -> Tech: 65.4 | Fund: 69.5 | Macro: 85.0
+  Tech breakdown -> RSI: 70.89 | MACD: 65.0 | EMA: 100.0 | BB: 70.0 | Vol: 50.0 | ADX: 47.84 | S/R: 50.0
+  Indicators -> RSI: 49.56 | MACD hist: -0.2194 | ADX: 18.92 | ATR: 1.7526 | Vol ratio: 0.95
+  Fundamentals -> P/E: 21.039099 | Rev growth: 0.207 | EPS growth: 0.26 | D/E: 146.242 | ROE: 0.083739996 | FCF: -15209124864.0
+  Support: [92.02, 90.81, 89.98]
+  Resistance: [88.59, 92.57, 94.21]
+  Quant risk -> Stop: $90.36 (1.8%) | Target: $97.27 (5.7%) | R:R: 3.2
+
+--- MU (Micron Technology, Inc.) | Sector: mega_cap_tech ---
+  Price: $448.42  |  5d: +5.1%  |  20d: +6.1%
+  52w Range: $65.49 - $471.14 (-4.8% from high)
+  Scores -> Tech: 47.5 | Fund: 92.5 | Macro: 85.0
+  Tech breakdown -> RSI: 49.41 | MACD: 30.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 51.11 | S/R: 20.0
+  Indicators -> RSI: 60.3 | MACD hist: 8.047 | ADX: 20.55 | ATR: 25.7614 | Vol ratio: 0.66
+  Fundamentals -> P/E: 4.443394 | Rev growth: 1.963 | EPS growth: 7.56 | D/E: 14.902 | ROE: 0.39823002 | FCF: 2893499904.0
+  Support: [406.96, 374.39, 365.91]
+  Resistance: [436.71, 438.59, 455.31]
+  Quant risk -> Stop: $412.55 (8.0%) | Target: $525.7 (17.2%) | R:R: 2.1
+
+--- BSX (Boston Scientific Corporation) | Sector: medtech ---
+  Price: $60.99  |  5d: -3.5%  |  20d: -12.2%
+  52w Range: $60.59 - $109.5 (-44.3% from high)
+  Scores -> Tech: 62.5 | Fund: 73.2 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 30.0 | EMA: 20.0 | BB: 70.0 | Vol: 50.0 | ADX: 84.62 | S/R: 90.0
+  Indicators -> RSI: 33.94 | MACD hist: 0.3862 | ADX: 37.31 | ATR: 2.05 | Vol ratio: 1.04
+  Fundamentals -> P/E: 15.789366 | Rev growth: 0.159 | EPS growth: 0.185 | D/E: 48.921 | ROE: 0.12445 | FCF: 3241750016.0
+  Support: [91.45, 73.44, 72.69]
+  Resistance: [63.55, 65.56, 71.2]
+  Quant risk -> Stop: $60.29 (1.1%) | Target: $67.14 (10.1%) | R:R: 8.8
+
+--- CRM (Salesforce, Inc.) | Sector: mega_cap_tech ---
+  Price: $186.27  |  5d: +7.8%  |  20d: -4.4%
+  52w Range: $163.52 - $293.86 (-36.6% from high)
+  Scores -> Tech: 54.9 | Fund: 83.0 | Macro: 85.0
+  Tech breakdown -> RSI: 64.96 | MACD: 80.0 | EMA: 20.0 | BB: 50.0 | Vol: 70.0 | ADX: 41.22 | S/R: 50.0
+  Indicators -> RSI: 52.52 | MACD hist: 1.2738 | ADX: 15.61 | ATR: 7.4488 | Vol ratio: 1.05
+  Fundamentals -> P/E: 12.871286 | Rev growth: 0.121 | EPS growth: 0.179 | D/E: 29.947 | ROE: 0.123959996 | FCF: 16366999552.0
+  Support: [208.26, 190.12, 189.11]
+  Resistance: [188.51, 191.25, 198.6]
+  Quant risk -> Stop: $180.5 (3.1%) | Target: $208.62 (12.0%) | R:R: 3.9
+
+--- HUBS (HubSpot, Inc.) | Sector: software_cloud ---
+  Price: $229.88  |  5d: +12.0%  |  20d: -11.2%
+  52w Range: $187.45 - $682.57 (-66.3% from high)
+  Scores -> Tech: 56.0 | Fund: 80.8 | Macro: 85.0
+  Tech breakdown -> RSI: 74.51 | MACD: 80.0 | EMA: 20.0 | BB: 50.0 | Vol: 50.0 | ADX: 57.77 | S/R: 50.0
+  Indicators -> RSI: 47.74 | MACD hist: 1.3945 | ADX: 23.88 | ATR: 15.3202 | Vol ratio: 0.8
+  Fundamentals -> P/E: 15.778788 | Rev growth: 0.204 | EPS growth: 9.681 | D/E: 12.695 | ROE: 0.0231 | FCF: 651586880.0
+  Support: [255.33, 229.01, 214.13]
+  Resistance: [234.03, 249.0, 256.65]
+  Quant risk -> Stop: $227.86 (0.9%) | Target: $275.84 (20.0%) | R:R: 22.8
+
+--- TXT (Textron Inc.) | Sector: industrial_conglom ---
+  Price: $91.5  |  5d: -1.7%  |  20d: +3.1%
+  52w Range: $63.73 - $101.55 (-9.9% from high)
+  Scores -> Tech: 55.9 | Fund: 80.8 | Macro: 85.0
+  Tech breakdown -> RSI: 66.79 | MACD: 30.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 48.3 | S/R: 50.0
+  Indicators -> RSI: 51.61 | MACD hist: 0.4326 | ADX: 19.15 | ATR: 2.1442 | Vol ratio: 0.55
+  Fundamentals -> P/E: 12.480382 | Rev growth: 0.156 | EPS growth: 0.744 | D/E: 54.375 | ROE: 0.12242 | FCF: 853124992.0
+  Support: [95.65, 89.6, 87.35]
+  Resistance: [89.72, 92.04, 93.33]
+  Quant risk -> Stop: $89.15 (2.6%) | Target: $97.93 (7.0%) | R:R: 2.7
+
+--- MCK (McKesson Corporation) | Sector: health_services ---
+  Price: $859.04  |  5d: -0.6%  |  20d: -3.0%
+  52w Range: $635.12 - $999.0 (-14.0% from high)
+  Scores -> Tech: 59.8 | Fund: 74.8 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 30.0 | EMA: 75.0 | BB: 70.0 | Vol: 50.0 | ADX: 55.67 | S/R: 50.0
+  Indicators -> RSI: 39.14 | MACD hist: 1.244 | ADX: 22.83 | ATR: 19.2748 | Vol ratio: 0.84
+  Fundamentals -> P/E: 19.199612 | Rev growth: 0.114 | EPS growth: 0.38 | D/E: None | ROE: None | FCF: 9158500352.0
+  Support: [930.23, 909.77, 893.85]
+  Resistance: [848.34, 875.53, 879.1]
+  Quant risk -> Stop: $842.5 (1.9%) | Target: $916.86 (6.7%) | R:R: 3.5
+
+--- LRCX (Lam Research Corporation) | Sector: mega_cap_tech ---
+  Price: $263.16  |  5d: -1.6%  |  20d: +15.2%
+  52w Range: $60.7 - $273.5 (-3.8% from high)
+  Scores -> Tech: 53.3 | Fund: 83.0 | Macro: 85.0
+  Tech breakdown -> RSI: 46.65 | MACD: 30.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 53.08 | S/R: 50.0
+  Indicators -> RSI: 61.67 | MACD hist: 3.2894 | ADX: 21.54 | ATR: 11.0993 | Vol ratio: 0.66
+  Fundamentals -> P/E: 36.77263 | Rev growth: 0.221 | EPS growth: 0.37 | D/E: 44.195 | ROE: 0.65565 | FCF: 4816949760.0
+  Support: [255.48, 228.61, 215.0]
+  Resistance: [221.62, 225.5, 232.17]
+  Quant risk -> Stop: $254.2 (3.4%) | Target: $296.46 (12.7%) | R:R: 3.7
+
+--- T (AT&T Inc.) | Sector: telecom_media ---
+  Price: $26.18  |  5d: +2.2%  |  20d: -6.6%
+  52w Range: $22.71 - $29.14 (-10.1% from high)
+  Scores -> Tech: 70.1 | Fund: 61.4 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 65.0 | EMA: 40.0 | BB: 70.0 | Vol: 50.0 | ADX: 61.08 | S/R: 90.0
+  Indicators -> RSI: 40.02 | MACD hist: -0.1749 | ADX: 25.54 | ATR: 0.6522 | Vol ratio: 0.81
+  Fundamentals -> P/E: 10.30442 | Rev growth: 0.036 | EPS growth: -0.056 | D/E: 124.179 | ROE: 0.18805 | FCF: 12586250240.0
+  Support: [27.25, 27.13, 26.94]
+  Resistance: [27.23, 27.73, 28.53]
+  Quant risk -> Stop: $24.88 (5.0%) | Target: $28.14 (7.5%) | R:R: 1.5
+
+--- GOOGL (Alphabet Inc.) | Sector: mega_cap_tech ---
+  Price: $337.42  |  5d: +5.0%  |  20d: +12.1%
+  52w Range: $145.6 - $348.75 (-3.2% from high)
+  Scores -> Tech: 53.9 | Fund: 82.2 | Macro: 85.0
+  Tech breakdown -> RSI: 33.78 | MACD: 30.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 67.36 | S/R: 55.35
+  Indicators -> RSI: 68.11 | MACD hist: 4.6909 | ADX: 28.68 | ATR: 7.9257 | Vol ratio: 0.67
+  Fundamentals -> P/E: 25.028374 | Rev growth: 0.18 | EPS growth: 0.311 | D/E: 16.133 | ROE: 0.35705003 | FCF: 38088376320.0
+  Support: [326.31, 306.24, 300.44]
+  Resistance: [311.42, 312.47, 319.3]
+  Quant risk -> Stop: $324.68 (3.8%) | Target: $361.2 (7.0%) | R:R: 1.9
+
+--- KR (Kroger Company (The)) | Sector: consumer_staples ---
+  Price: $67.89  |  5d: -0.2%  |  20d: -7.3%
+  52w Range: $58.31 - $76.58 (-11.3% from high)
+  Scores -> Tech: 67.0 | Fund: 65.2 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 65.0 | EMA: 75.0 | BB: 70.0 | Vol: 50.0 | ADX: 57.81 | S/R: 50.0
+  Indicators -> RSI: 41.65 | MACD hist: -0.5218 | ADX: 23.91 | ATR: 1.9957 | Vol ratio: 0.74
+  Fundamentals -> P/E: 12.106503 | Rev growth: 0.012 | EPS growth: 0.509 | D/E: 415.97 | ROE: 0.14405 | FCF: 3398874880.0
+  Support: [72.75, 71.36, 69.96]
+  Resistance: [69.81, 72.2, 72.81]
+  Quant risk -> Stop: $66.98 (1.3%) | Target: $73.88 (8.8%) | R:R: 6.6
+
+--- CVS (CVS Health Corporation) | Sector: health_services ---
+  Price: $76.58  |  5d: -1.9%  |  20d: +7.1%
+  52w Range: $56.79 - $84.46 (-9.3% from high)
+  Scores -> Tech: 63.4 | Fund: 69.8 | Macro: 85.0
+  Tech breakdown -> RSI: 64.71 | MACD: 30.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 47.11 | S/R: 90.0
+  Indicators -> RSI: 52.65 | MACD hist: 0.2947 | ADX: 18.55 | ATR: 1.8773 | Vol ratio: 1.01
+  Fundamentals -> P/E: 9.496015 | Rev growth: 0.084 | EPS growth: 0.766 | D/E: 106.06 | ROE: 0.022869999 | FCF: 5929500160.0
+  Support: [75.32, 75.02, 74.78]
+  Resistance: [73.38, 78.96, 79.56]
+  Quant risk -> Stop: $74.94 (2.1%) | Target: $82.21 (7.3%) | R:R: 3.4
+
+--- FSLR (First Solar, Inc.) | Sector: clean_energy ---
+  Price: $192.49  |  5d: -3.9%  |  20d: -0.2%
+  52w Range: $119.09 - $285.99 (-32.7% from high)
+  Scores -> Tech: 50.0 | Fund: 86.8 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 30.0 | EMA: 20.0 | BB: 70.0 | Vol: 50.0 | ADX: 39.64 | S/R: 50.0
+  Indicators -> RSI: 44.65 | MACD hist: 0.3765 | ADX: 14.82 | ATR: 8.5624 | Vol ratio: 0.95
+  Fundamentals -> P/E: 7.9092975 | Rev growth: 0.111 | EPS growth: 0.323 | D/E: 6.871 | ROE: 0.1745 | FCF: 963923136.0
+  Support: [216.73, 214.74, 214.0]
+  Resistance: [197.35, 200.94, 202.72]
+  Quant risk -> Stop: $188.05 (2.3%) | Target: $218.18 (13.3%) | R:R: 5.8
+
+--- ANF (Abercrombie & Fitch Company) | Sector: retail ---
+  Price: $97.28  |  5d: +4.3%  |  20d: +10.6%
+  52w Range: $65.45 - $133.11 (-26.9% from high)
+  Scores -> Tech: 63.3 | Fund: 69.5 | Macro: 85.0
+  Tech breakdown -> RSI: 57.43 | MACD: 100.0 | EMA: 100.0 | BB: 50.0 | Vol: 70.0 | ADX: 36.88 | S/R: 20.0
+  Indicators -> RSI: 56.29 | MACD hist: 0.1053 | ADX: 13.44 | ATR: 4.4824 | Vol ratio: 1.45
+  Fundamentals -> P/E: 8.296994 | Rev growth: 0.054 | EPS growth: 0.03 | D/E: 82.236 | ROE: 0.3716 | FCF: 263745872.0
+  Support: [92.7, 91.13, 90.79]
+  Resistance: [88.82, 92.13, 92.14]
+  Quant risk -> Stop: $92.24 (5.2%) | Target: $110.73 (13.8%) | R:R: 2.7
+
+--- EW (Edwards Lifesciences Corporatio) | Sector: medtech ---
+  Price: $81.44  |  5d: +4.2%  |  20d: -1.3%
+  52w Range: $68.63 - $87.89 (-7.3% from high)
+  Scores -> Tech: 71.0 | Fund: 59.5 | Macro: 85.0
+  Tech breakdown -> RSI: 63.81 | MACD: 100.0 | EMA: 100.0 | BB: 50.0 | Vol: 70.0 | ADX: 44.3 | S/R: 50.0
+  Indicators -> RSI: 53.1 | MACD hist: 0.1419 | ADX: 17.15 | ATR: 2.0998 | Vol ratio: 1.13
+  Fundamentals -> P/E: 24.517778 | Rev growth: 0.133 | EPS growth: -0.766 | D/E: 6.824 | ROE: 0.10353 | FCF: 1169737472.0
+  Support: [81.73, 81.35, 80.6]
+  Resistance: [79.91, 80.42, 82.17]
+  Quant risk -> Stop: $80.94 (0.6%) | Target: $87.74 (7.7%) | R:R: 12.7
+
+--- DG (Dollar General Corporation) | Sector: retail ---
+  Price: $126.46  |  5d: +6.0%  |  20d: +2.0%
+  52w Range: $84.53 - $157.48 (-19.7% from high)
+  Scores -> Tech: 61.2 | Fund: 71.7 | Macro: 85.0
+  Tech breakdown -> RSI: 66.66 | MACD: 80.0 | EMA: 75.0 | BB: 15.0 | Vol: 50.0 | ADX: 74.29 | S/R: 50.0
+  Indicators -> RSI: 51.67 | MACD hist: 1.7567 | ADX: 32.15 | ATR: 4.181 | Vol ratio: 0.72
+  Fundamentals -> P/E: 15.915144 | Rev growth: 0.059 | EPS growth: 1.219 | D/E: 184.665 | ROE: 0.18992001 | FCF: 2162651648.0
+  Support: [148.41, 143.63, 140.95]
+  Resistance: [124.55, 148.53, 149.17]
+  Quant risk -> Stop: $118.1 (6.6%) | Target: $148.53 (17.4%) | R:R: 2.6
+
+--- DECK (Deckers Outdoor Corporation) | Sector: retail ---
+  Price: $111.06  |  5d: +2.7%  |  20d: +10.6%
+  52w Range: $78.91 - $133.43 (-16.8% from high)
+  Scores -> Tech: 54.8 | Fund: 79.5 | Macro: 85.0
+  Tech breakdown -> RSI: 50.39 | MACD: 30.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 62.54 | S/R: 50.0
+  Indicators -> RSI: 59.81 | MACD hist: 1.3484 | ADX: 26.27 | ATR: 3.9567 | Vol ratio: 0.86
+  Fundamentals -> P/E: 15.219568 | Rev growth: 0.071 | EPS growth: 0.11 | D/E: 13.14 | ROE: 0.39688 | FCF: 758731904.0
+  Support: [114.53, 113.4, 110.05]
+  Resistance: [102.59, 103.43, 107.39]
+  Quant risk -> Stop: $109.5 (1.4%) | Target: $122.93 (10.7%) | R:R: 7.6
+
+--- SEDG (SolarEdge Technologies, Inc.) | Sector: clean_energy ---
+  Price: $39.82  |  5d: -7.8%  |  20d: -23.0%
+  52w Range: $11.45 - $53.75 (-25.9% from high)
+  Scores -> Tech: 66.1 | Fund: 64.8 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 65.0 | EMA: 75.0 | BB: 70.0 | Vol: 50.0 | ADX: 48.87 | S/R: 50.0
+  Indicators -> RSI: 44.6 | MACD hist: -1.2103 | ADX: 19.44 | ATR: 3.7055 | Vol ratio: 0.79
+  Fundamentals -> P/E: 23.085228 | Rev growth: 0.709 | EPS growth: None | D/E: 94.575 | ROE: -0.74681 | FCF: 235121504.0
+  Support: [46.01, 45.8, 40.4]
+  Resistance: [36.56, 37.37, 37.85]
+  Quant risk -> Stop: $36.7 (7.8%) | Target: $50.94 (27.9%) | R:R: 3.6
+
+--- NFLX (Netflix, Inc.) | Sector: internet_media ---
+  Price: $94.83  |  5d: -8.1%  |  20d: +3.3%
+  52w Range: $75.01 - $134.12 (-29.3% from high)
+  Scores -> Tech: 50.1 | Fund: 85.2 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 10.0 | EMA: 20.0 | BB: 70.0 | Vol: 50.0 | ADX: 80.82 | S/R: 50.0
+  Indicators -> RSI: 44.21 | MACD hist: -0.4363 | ADX: 35.41 | ATR: 3.5199 | Vol ratio: 1.46
+  Fundamentals -> P/E: 24.442455 | Rev growth: 0.162 | EPS growth: 0.864 | D/E: 53.788 | ROE: 0.48494998 | FCF: 25993676800.0
+  Support: [97.44, 93.87, 90.69]
+  Resistance: [78.85, 83.3, 84.66]
+  Quant risk -> Stop: $93.4 (1.5%) | Target: $105.39 (11.1%) | R:R: 7.4
+
+--- PM (Philip Morris International Inc) | Sector: consumer_staples ---
+  Price: $157.55  |  5d: -3.2%  |  20d: -3.4%
+  52w Range: $139.58 - $189.61 (-16.9% from high)
+  Scores -> Tech: 75.4 | Fund: 52.5 | Macro: 85.0
+  Tech breakdown -> RSI: 100.0 | MACD: 80.0 | EMA: 40.0 | BB: 70.0 | Vol: 50.0 | ADX: 83.7 | S/R: 90.0
+  Indicators -> RSI: 39.77 | MACD hist: 0.1193 | ADX: 36.85 | ATR: 4.0377 | Vol ratio: 0.97
+  Fundamentals -> P/E: 17.127958 | Rev growth: 0.068 | EPS growth: None | D/E: None | ROE: None | FCF: 8938874880.0
+  Support: [178.62, 173.59, 165.42]
+  Resistance: [163.66, 166.48, 167.5]
+  Quant risk -> Stop: $154.36 (2.0%) | Target: $169.66 (7.7%) | R:R: 3.8
+
+--- GSK (GSK plc) | Sector: pharma ---
+  Price: $57.35  |  5d: -2.7%  |  20d: +10.6%
+  52w Range: $34.42 - $61.21 (-6.3% from high)
+  Scores -> Tech: 56.1 | Fund: 77.2 | Macro: 85.0
+  Tech breakdown -> RSI: 61.02 | MACD: 30.0 | EMA: 100.0 | BB: 50.0 | Vol: 50.0 | ADX: 59.32 | S/R: 50.0
+  Indicators -> RSI: 54.49 | MACD hist: 0.1481 | ADX: 24.66 | ATR: 1.1792 | Vol ratio: 0.9
+  Fundamentals -> P/E: 10.918367 | Rev growth: 0.062 | EPS growth: 0.547 | D/E: 111.475 | ROE: 0.43310001 | FCF: 3284124928.0
+  Support: [59.02, 57.56, 57.08]
+  Resistance: [50.96, 54.98, 56.05]
+  Quant risk -> Stop: $56.79 (1.0%) | Target: $60.89 (6.2%) | R:R: 6.4
+
+Analyze this data and provide your trading decisions as JSON.

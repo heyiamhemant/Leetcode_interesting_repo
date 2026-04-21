@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Swing Trader{% endblock %}
+{% block content %}
+<div class="flex-between mb-2">
+  <h1>Dashboard</h1>
+  <span class="regime-badge {{ regime.regime }}">
+    <span class="regime-dot"></span>
+    {{ regime.regime }} regime — {{ (regime.allocation_pct * 100)|int }}% allocation, {{ regime.tilt }} tilt
+  </span>
+</div>
+
+<div class="grid grid-4 mb-2">
+  <div class="stat">
+    <div class="label">Deployed</div>
+    <div class="value cyan">${{ "%.0f"|format(total_deployed) }}</div>
+    <div class="label">${{ "%.0f"|format(cash) }} cash</div>
+  </div>
+  <div class="stat">
+    <div class="label">Open Positions</div>
+    <div class="value blue">{{ open_count }}</div>
+    <div class="label">of 10 max</div>
+  </div>
+  <div class="stat">
+    <div class="label">Total P&L</div>
+    <div class="value {{ 'green' if total_pnl >= 0 else 'red' }}">${{ "%.2f"|format(total_pnl) }}</div>
+    <div class="label">closed trades</div>
+  </div>
+  <div class="stat">
+    <div class="label">Win Rate</div>
+    <div class="value {{ 'green' if win_rate >= 50 else 'yellow' }}">{{ "%.0f"|format(win_rate) }}%</div>
+    <div class="label">{{ total_trades }} trades</div>
+  </div>
+</div>
+
+{% if regime.signals %}
+<div class="card mb-2">
+  <h3>Macro Signals</h3>
+  {% for name, sig in regime.signals.items() %}
+  <div class="signal-item">
+    <span class="signal-dot {{ 'bullish' if sig.bullish else 'bearish' }}"></span>
+    <strong>{{ name }}:</strong> {{ sig.detail }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="grid grid-2">
+  <div class="card">
+    <div class="card-header">
+      <h3>Quick Actions</h3>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:0.75rem;">
+      <a href="/scan" class="btn btn-primary">Run Market Scan</a>
+      <a href="/portfolio" class="btn btn-outline">View Portfolio</a>
+      <a href="/journal" class="btn btn-outline">Trade Journal</a>
+      <a href="/review" class="btn btn-outline">Quarterly Review</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Open Positions</h3>
+    </div>
+    {% if positions %}
+    <table>
+      <thead><tr><th>Ticker</th><th>Entry</th><th>Stop</th><th>Target</th><th>Size</th></tr></thead>
+      <tbody>
+      {% for p in positions %}
+      <tr>
+        <td><strong>{{ p.ticker }}</strong></td>
+        <td class="mono">${{ "%.2f"|format(p.entry_price) }}</td>
+        <td class="mono text-red">${{ "%.2f"|format(p.stop_loss) if p.stop_loss else '-' }}</td>
+        <td class="mono text-green">${{ "%.2f"|format(p.target) if p.target else '-' }}</td>
+        <td class="mono">${{ "%.0f"|format(p.position_usd) }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="text-dim text-center">No open positions. Run a scan to get started.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% if latest_decision and latest_decision.analysis_summary %}
+<div class="card mt-2">
+  <h3>Latest Analysis</h3>
+  <p>{{ latest_decision.analysis_summary }}</p>
+  <p class="text-dim mt-2" style="font-size:0.85rem;">
+    {{ latest_decision.picks|length if latest_decision.picks else 0 }} picks —
+    <a href="/scan" style="color:var(--blue);">View full scan</a>
+  </p>
+</div>
+{% endif %}
+
+{% endblock %}

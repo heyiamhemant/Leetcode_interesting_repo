@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+{% block title %}Scan — Swing Trader{% endblock %}
+{% block content %}
+<div class="flex-between mb-2">
+  <h1>Market Scan</h1>
+  <div style="display:flex;gap:0.5rem;">
+    <button id="btnScan" class="btn btn-primary" onclick="startScan()">Run Full Scan</button>
+    <button id="btnPaste" class="btn btn-outline" onclick="showPasteModal()">Paste Claude Response</button>
+    <button id="btnLoadFile" class="btn btn-outline" onclick="loadResponseFile()">Load from File</button>
+  </div>
+</div>
+
+<div id="scanStatus" class="alert alert-info hidden">
+  <span class="spinner"></span>
+  <span id="scanStatusText" style="margin-left:0.75rem;"></span>
+</div>
+
+<div id="scanError" class="alert alert-danger hidden"></div>
+
+{% if decision %}
+<!-- Analysis Summary -->
+{% if decision.analysis_summary %}
+<div class="card mb-2">
+  <h3>Claude's Market Analysis</h3>
+  <p>{{ decision.analysis_summary }}</p>
+</div>
+{% endif %}
+
+{% if decision.regime_assessment %}
+<div class="card mb-2">
+  <h3>Regime Assessment</h3>
+  <p class="text-dim">{{ decision.regime_assessment }}</p>
+</div>
+{% endif %}
+
+<!-- Picks -->
+{% if decision.picks %}
+<div class="flex-between mb-1">
+  <h2>Trade Signals ({{ decision.picks|length }} picks)</h2>
+  <button class="btn btn-success btn-sm" onclick="logAllEntries()">Log All Entries to Journal</button>
+</div>
+
+{% for p in decision.picks %}
+<div class="pick-card">
+  <div class="pick-header">
+    <span class="pick-rank">{{ loop.index }}</span>
+    <span class="pick-ticker">{{ p.ticker }}</span>
+    <span class="pick-action {{ p.action|default('buy')|lower }}">{{ p.action|default('BUY') }}</span>
+    <span class="conviction-{{ p.conviction|default('medium')|lower }}" style="font-weight:600;font-size:0.85rem;">
+      {{ p.conviction|default('N/A') }}
+    </span>
+  </div>
+  <div class="pick-numbers">
+    <div class="pick-num-item">
+      <div class="num-label">Entry</div>
+      <div class="num-value">${{ "%.2f"|format(p.entry_price) }}</div>
+    </div>
+    <div class="pick-num-item">
+      <div class="num-label">Stop Loss</div>
+      <div class="num-value text-red">${{ "%.2f"|format(p.stop_loss) }}
+        <span class="text-dim" style="font-size:0.75rem;">({{ "%.1f"|format((p.entry_price - p.stop_loss) / p.entry_price * 100) }}%)</span>
+      </div>
+    </div>
+    <div class="pick-num-item">
+      <div class="num-label">Target</div>
+      <div class="num-value text-green">${{ "%.2f"|format(p.target) }}
+        <span class="text-dim" style="font-size:0.75rem;">(+{{ "%.1f"|format((p.target - p.entry_price) / p.entry_price * 100) }}%)</span>
+      </div>
+    </div>
+    <div class="pick-num-item">
+      <div class="num-label">R:R</div>
+      <div class="num-value">{{ "%.1f"|format(p.risk_reward_ratio) }}x</div>
+    </div>
+    <div class="pick-num-item">
+      <div class="num-label">Size</div>
+      <div class="num-value">${{ "%.0f"|format(p.position_usd) }}</div>
+    </div>
+  </div>
+  <div class="pick-reasoning">{{ p.reasoning }}</div>
+</div>
+{% endfor %}
+{% endif %}
+
+<!-- Allocation -->
+{% if decision.portfolio_allocation %}
+<div class="card mt-2 mb-2">
+  <h3>Portfolio Allocation</h3>
+  <div class="grid grid-3">
+    <div class="stat">
+      <div class="label">Deployed</div>
+      <div class="value cyan" style="font-size:1.4rem;">${{ "%.0f"|format(decision.portfolio_allocation.total_deployed) }}</div>
+    </div>
+    <div class="stat">
+      <div class="label">Cash Reserve</div>
+      <div class="value" style="font-size:1.4rem;">${{ "%.0f"|format(decision.portfolio_allocation.cash_reserve) }}</div>
+    </div>
+    <div class="stat">
+      <div class="label">Positions</div>
+      <div class="value blue" style="font-size:1.4rem;">{{ decision.picks|length }}</div>
+    </div>
+  </div>
+  {% if decision.portfolio_allocation.rationale %}
+  <p class="text-dim mt-2" style="font-size:0.85rem;">{{ decision.portfolio_allocation.rationale }}</p>
+  {% endif %}
+</div>
+{% endif %}
+
+<!-- Watchlist Notes -->
+{% if decision.watchlist_notes %}
+<div class="card mb-2">
+  <h3>Watchlist Notes</h3>
+  {% for n in decision.watchlist_notes %}
+  <div class="watchlist-note">
+    <span class="wn-ticker">{{ n.ticker }}</span>
+    <span class="text-dim">{{ n.note }}</span>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Risk Warnings -->
+{% if decision.risk_warnings %}
+<div class="card mb-2">
+  <h3>Risk Warnings</h3>
+  {% for w in decision.risk_warnings %}
+  <div class="risk-item">&#9888; {{ w }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Review Triggers -->
+{% if decision.next_review_triggers %}
+<div class="card">
+  <h3>Next Review Triggers</h3>
+  {% for t in decision.next_review_triggers %}
+  <div class="signal-item"><span class="signal-dot bullish"></span>{{ t }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% else %}
+<div class="card text-center" style="padding:3rem;">
+  <p class="text-dim" style="font-size:1.1rem;">No scan results yet.</p>
+  <p class="text-dim mb-2">Click "Run Full Scan" to gather data and consult Claude.</p>
+</div>
+{% endif %}
+
+<!-- Paste Modal -->
+<div id="pasteModal" class="modal-backdrop">
+  <div class="modal" style="max-width:800px;">
+    <h3>Step 1: Copy the prompt to Claude</h3>
+    <p class="text-dim mb-2" style="font-size:0.85rem;">
+      Click "Copy Prompt" below, paste it into <a href="https://claude.ai" target="_blank">claude.ai</a>, then paste Claude's JSON response in Step 2.
+    </p>
+    <div class="form-group">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <label>Prompt</label>
+        <button class="btn btn-outline btn-sm" id="btnCopyPrompt" onclick="copyPrompt()">Copy Prompt</button>
+      </div>
+      <textarea id="promptPreview" readonly style="height:120px;font-size:0.75rem;opacity:0.6;cursor:default;" placeholder="Loading prompt..."></textarea>
+    </div>
+    <h3 style="margin-top:1.5rem;">Step 2: Paste Claude's response</h3>
+    <div class="form-group">
+      <label>JSON Response</label>
+      <textarea id="pasteInput" placeholder='{"analysis_summary": "...", "picks": [...]}'></textarea>
+    </div>
+    <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+      <button class="btn btn-outline" onclick="hidePasteModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitPaste()">Load Response</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function startScan() {
+  const btn = document.getElementById('btnScan');
+  const status = document.getElementById('scanStatus');
+  const statusText = document.getElementById('scanStatusText');
+  btn.disabled = true;
+  status.classList.remove('hidden');
+  statusText.textContent = 'Starting scan...';
+
+  fetch('/api/scan/start', {method: 'POST'})
+    .then(r => r.json())
+    .then(() => pollScan());
+}
+
+function pollScan() {
+  const statusText = document.getElementById('scanStatusText');
+  const status = document.getElementById('scanStatus');
+  const errDiv = document.getElementById('scanError');
+
+  fetch('/api/scan/status')
+    .then(r => r.json())
+    .then(data => {
+      statusText.textContent = data.progress || 'Working...';
+      if (data.error) {
+        errDiv.textContent = data.error;
+        errDiv.classList.remove('hidden');
+        status.classList.add('hidden');
+        document.getElementById('btnScan').disabled = false;
+        return;
+      }
+      if (data.running) {
+        setTimeout(pollScan, 2000);
+      } else if (data.result) {
+        if (data.result.status === 'manual_required') {
+          status.classList.add('hidden');
+          document.getElementById('btnScan').disabled = false;
+          showPasteModal();
+        } else {
+          location.reload();
+        }
+      }
+    });
+}
+
+function loadResponseFile() {
+  fetch('/api/scan/load-response', {method: 'POST'})
+    .then(r => r.json())
+    .then(data => {
+      if (data.status === 'ok') location.reload();
+      else alert(data.message || 'Failed to load response file.');
+    });
+}
+
+let _cachedPrompt = '';
+
+function showPasteModal() {
+  document.getElementById('pasteModal').classList.add('show');
+  const preview = document.getElementById('promptPreview');
+  if (!_cachedPrompt) {
+    preview.value = 'Loading prompt...';
+    fetch('/api/scan/prompt')
+      .then(r => r.json())
+      .then(data => {
+        if (data.status === 'ok') {
+          _cachedPrompt = data.prompt;
+          preview.value = _cachedPrompt.substring(0, 2000) + '\n\n... (' + _cachedPrompt.length + ' chars total)';
+        } else {
+          preview.value = 'No prompt found. Run a scan first.';
+        }
+      })
+      .catch(() => { preview.value = 'Failed to load prompt.'; });
+  }
+}
+function hidePasteModal() { document.getElementById('pasteModal').classList.remove('show'); }
+
+function copyPrompt() {
+  const btn = document.getElementById('btnCopyPrompt');
+  if (!_cachedPrompt) {
+    fetch('/api/scan/prompt')
+      .then(r => r.json())
+      .then(data => {
+        if (data.status === 'ok') {
+          _cachedPrompt = data.prompt;
+          navigator.clipboard.writeText(_cachedPrompt);
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = 'Copy Prompt'; }, 2000);
+        } else {
+          alert('No prompt found. Run a scan first.');
+        }
+      });
+  } else {
+    navigator.clipboard.writeText(_cachedPrompt);
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy Prompt'; }, 2000);
+  }
+}
+
+function submitPaste() {
+  const text = document.getElementById('pasteInput').value.trim();
+  if (!text) return;
+
+  fetch('/api/scan/upload-response', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({response: text})
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (data.status === 'ok') location.reload();
+      else alert(data.message || 'Invalid JSON.');
+    })
+    .catch(() => alert('Failed to parse JSON.'));
+}
+
+function logAllEntries() {
+  if (!confirm('Log all BUY picks as trade entries in the journal?')) return;
+
+  fetch('/api/log-all-entries', {method: 'POST'})
+    .then(r => r.json())
+    .then(data => {
+      if (data.status === 'ok') {
+        alert('Logged ' + data.logged.length + ' entries: ' + data.logged.map(l => l.ticker).join(', '));
+      } else {
+        alert(data.message || 'Error logging entries.');
+      }
+    });
+}
+</script>
+{% endblock %}

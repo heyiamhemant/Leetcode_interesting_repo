@@ -3992,6 +3992,8 @@ function saveModal() {
   };
   saveState();
 
+  const savedModalId = activeModal;
+
   if (conf >= 4) {
     const m = document.getElementById('modal');
     m.classList.add('victory-flash');
@@ -4004,7 +4006,15 @@ function saveModal() {
     else showToast('Saved! \u2713', 'success');
   }
 
+  const planItem = todayPlan.find(x => x.id === savedModalId);
+  if (planItem && conf >= 1) {
+    planItem.done = true;
+    planItem.rating = conf;
+    savePlan();
+  }
+
   renderProblems();
+  renderToday();
   renderDashboard();
   updateHeroStats();
   updateBadges();
@@ -4018,78 +4028,123 @@ function generatePlan() {
   const now = Date.now();
   const DAY = 86400000;
 
-  // Count already-slain by difficulty to gate progression
   const slainByDiff = { Easy: 0, Medium: 0, Hard: 0 };
+  const slainByTopic = {};
+  const totalByTopic = {};
   RAW_PROBLEMS.forEach(p => {
-    if (getConf(p) > 0) slainByDiff[p.diff] = (slainByDiff[p.diff] || 0) + 1;
+    const t = p.topic.split('/')[0].trim();
+    totalByTopic[t] = (totalByTopic[t] || 0) + 1;
+    if (getConf(p) > 0) {
+      slainByDiff[p.diff] = (slainByDiff[p.diff] || 0) + 1;
+      slainByTopic[t] = (slainByTopic[t] || 0) + 1;
+    }
   });
+  const totalSlain = slainByDiff.Easy + slainByDiff.Medium + slainByDiff.Hard;
 
-  const scored = RAW_PROBLEMS.map(p => {
+  // Separate into two buckets: due reviews vs new/unseen
+  const reviews = [];
+  const unseen = [];
+
+  RAW_PROBLEMS.forEach(p => {
     const c = getConf(p);
     const ud = getUD(p.id);
+    const t = p.topic.split('/')[0].trim();
+    const topicMastery = (slainByTopic[t] || 0) / (totalByTopic[t] || 1);
 
-    // Days since last review (manual) or since solve date
-    let daysSince = 999;
-    if (ud.lastReviewed) {
-      daysSince = Math.floor((now - new Date(ud.lastReviewed).getTime()) / DAY);
-    } else if (p.date) {
-      const parts = p.date.split(' ');
-      if (parts.length === 3) {
-        const d = new Date(parts[1] + ' ' + parts[0] + ', ' + parts[2]);
-        if (!isNaN(d)) daysSince = Math.floor((now - d.getTime()) / DAY);
+    if (c > 0) {
+      let daysSince = 999;
+      if (ud.lastReviewed) {
+        daysSince = Math.floor((now - new Date(ud.lastReviewed).getTime()) / DAY);
+      } else if (p.date) {
+        const parts = p.date.split(' ');
+        if (parts.length === 3) {
+          const d = new Date(parts[1] + ' ' + parts[0] + ', ' + parts[2]);
+          if (!isNaN(d)) daysSince = Math.floor((now - d.getTime()) / DAY);
+        }
+      }
+      const interval = SR_INTERVALS[Math.min(c, 5)];
+      const overdue = daysSince - interval;
+      if (overdue >= 0) {
+        const urgency = Math.min(overdue, 90) * 2;
+        const weaknessBonus = (5 - c) * 10;
+        reviews.push({ ...p, _score: urgency + weaknessBonus + Math.random() * 2, _conf: c, _type: 'review' });
+      }
+    } else {
+      // Difficulty gating based on overall + per-topic progression
+      let eligible = true;
+      let priority = 0;
+      const diffBase = { Easy: 100, Medium: 50, Hard: 10 };
+      priority = diffBase[p.diff] || 50;
+
+      if (p.diff === 'Hard') {
+        if (totalSlain < 20) eligible = false;
+        else if (slainByDiff.Easy < 15 || slainByDiff.Medium < 10) eligible = false;
+        else if (topicMastery < 0.3) eligible = false;
+        else priority += topicMastery * 30;
+      } else if (p.diff === 'Medium') {
+        if (totalSlain < 5) eligible = false;
+        else if (slainByDiff.Easy < 5) eligible = false;
+        else priority += topicMastery * 20;
+      } else {
+        priority += 50;
+      }
+
+      if (eligible) {
+        unseen.push({ ...p, _score: priority + Math.random() * 5, _conf: 0, _type: 'new' });
       }
     }
-
-    const interval = SR_INTERVALS[Math.min(c, 5)];
-    const overdue = Math.max(0, daysSince - interval);
-
-    // Core score: lower confidence = higher need to review
-    const confScore = (5 - c) * 15;
-
-    // Overdue bonus: the more overdue, the more urgently it needs review
-    const overdueScore = Math.min(overdue, 60) * 1.5;
-
-    // Difficulty gating: penalise Hard if few Easy/Medium slain
-    let diffPenalty = 0;
-    if (p.diff === 'Hard' && slainByDiff.Easy < 5) diffPenalty = 60;
-    else if (p.diff === 'Hard' && slainByDiff.Medium < 3) diffPenalty = 30;
-    else if (p.diff === 'Medium' && slainByDiff.Easy < 3) diffPenalty = 20;
-
-    // Small noise for variety (much smaller than before)
-    const noise = Math.random() * 3;
-
-    return { ...p, _score: confScore + overdueScore - diffPenalty + noise, _conf: c, _overdue: overdue };
   });
 
-  scored.sort((a, b) => b._score - a._score);
+  reviews.sort((a, b) => b._score - a._score);
+  unseen.sort((a, b) => b._score - a._score);
 
-  // Pick with topic diversity
+  // Allocation: reviews get priority, fill remainder with new problems
+  // At least 70% reviews if available, rest new problems
+  const reviewSlots = Math.min(reviews.length, Math.ceil(n * 0.7));
+  const newSlots = n - reviewSlots;
+
   const picked = [];
   const topicCount = {};
-  const maxPerTopic = Math.max(2, Math.ceil(n / 5));
-  for (const p of scored) {
-    if (picked.length >= n) break;
-    const t = p.topic.split('/')[0].trim();
-    if ((topicCount[t] || 0) < maxPerTopic) {
-      picked.push(p);
-      topicCount[t] = (topicCount[t] || 0) + 1;
+  const maxPerTopic = Math.max(2, Math.ceil(n / 4));
+
+  function pickFrom(pool, limit) {
+    let added = 0;
+    for (const p of pool) {
+      if (added >= limit) break;
+      const t = p.topic.split('/')[0].trim();
+      if ((topicCount[t] || 0) < maxPerTopic) {
+        picked.push(p);
+        topicCount[t] = (topicCount[t] || 0) + 1;
+        added++;
+      }
     }
+    return added;
   }
+
+  const reviewsPicked = pickFrom(reviews, reviewSlots);
+  pickFrom(unseen, newSlots);
+
+  // If we didn't fill enough, relax topic limits
   if (picked.length < n) {
-    for (const p of scored) {
+    const ids = new Set(picked.map(x => x.id));
+    const remaining = [...reviews, ...unseen].filter(x => !ids.has(x.id));
+    remaining.sort((a, b) => b._score - a._score);
+    for (const p of remaining) {
       if (picked.length >= n) break;
-      if (!picked.find(x => x.id === p.id)) picked.push(p);
+      picked.push(p);
     }
   }
 
-  // Sort picked: Easy first, then Medium, then Hard for session flow
+  // Sort: Easy -> Medium -> Hard for session flow
   const diffOrder = { Easy: 0, Medium: 1, Hard: 2 };
   picked.sort((a, b) => (diffOrder[a.diff] || 1) - (diffOrder[b.diff] || 1));
 
   todayPlan = picked.map(p => ({ id: p.id, done: false }));
   savePlan();
   renderToday();
-  showToast(`Quest accepted: ${picked.length} monsters to hunt`, 'info');
+  const rc = picked.filter(x => x._type === 'review').length;
+  const nc = picked.filter(x => x._type === 'new').length;
+  showToast(`Quest accepted: ${rc} review${rc!==1?'s':''}, ${nc} new encounter${nc!==1?'s':''}`, 'info');
   updateBadges();
 }
 

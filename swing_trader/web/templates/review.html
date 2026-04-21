@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Review — Swing Trader{% endblock %}
+{% block content %}
+<div class="flex-between mb-2">
+  <h1>Quarterly Review — {{ quarter }}</h1>
+  <div style="display:flex;gap:0.5rem;">
+    <a href="/review?quarter=2026Q1" class="btn btn-outline btn-sm">Q1</a>
+    <a href="/review?quarter=2026Q2" class="btn btn-outline btn-sm">Q2</a>
+    <a href="/review?quarter=2026Q3" class="btn btn-outline btn-sm">Q3</a>
+    <a href="/review?quarter=2026Q4" class="btn btn-outline btn-sm">Q4</a>
+  </div>
+</div>
+
+{% if review.total_trades and review.total_trades > 0 %}
+
+<div class="grid grid-4 mb-2">
+  <div class="stat">
+    <div class="label">Total Trades</div>
+    <div class="value">{{ review.total_trades }}</div>
+  </div>
+  <div class="stat">
+    <div class="label">Win Rate</div>
+    <div class="value {{ 'green' if review.win_rate >= 50 else 'yellow' }}">{{ "%.1f"|format(review.win_rate) }}%</div>
+    <div class="label">{{ review.winning_trades }}W / {{ review.losing_trades }}L</div>
+  </div>
+  <div class="stat">
+    <div class="label">Total P&L</div>
+    <div class="value {{ 'green' if review.total_pnl >= 0 else 'red' }}">
+      ${{ "%.2f"|format(review.total_pnl) }}
+    </div>
+    <div class="label">{{ "%.1f"|format(review.total_pnl_pct) }}%</div>
+  </div>
+  <div class="stat">
+    <div class="label">Avg R:R</div>
+    <div class="value {{ 'green' if review.avg_rr >= 1.5 else 'yellow' }}">{{ "%.2f"|format(review.avg_rr) }}x</div>
+  </div>
+</div>
+
+<div class="grid grid-2 mb-2">
+  <div class="card">
+    <h3>Performance Metrics</h3>
+    <div class="metric-row">
+      <span class="metric-label">Avg Win</span>
+      <span class="metric-value text-green">${{ "%.2f"|format(review.avg_win) }}</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">Avg Loss</span>
+      <span class="metric-value text-red">${{ "%.2f"|format(review.avg_loss) }}</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">Best Trade</span>
+      <span class="metric-value text-green">{{ review.best_trade }}</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">Worst Trade</span>
+      <span class="metric-value text-red">{{ review.worst_trade }}</span>
+    </div>
+    {% if review.spy_return_pct is not none %}
+    <div class="metric-row">
+      <span class="metric-label">SPY Return</span>
+      <span class="metric-value">{{ "%.2f"|format(review.spy_return_pct) }}%</span>
+    </div>
+    {% endif %}
+    {% if review.alpha is not none %}
+    <div class="metric-row">
+      <span class="metric-label">Alpha vs SPY</span>
+      <span class="metric-value {{ 'text-green' if review.alpha >= 0 else 'text-red' }}">{{ "%+.2f"|format(review.alpha) }}%</span>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h3>Scoring Effectiveness</h3>
+    <div class="metric-row">
+      <span class="metric-label">High-Score Win Rate</span>
+      <span class="metric-value">{{ "%.1f"|format(review.high_score_win_rate) }}%</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">Low-Score Win Rate</span>
+      <span class="metric-value">{{ "%.1f"|format(review.low_score_win_rate) }}%</span>
+    </div>
+
+    {% if review.sector_pnl %}
+    <h3 class="mt-2">Sector P&L</h3>
+    {% for sector, pnl in review.sector_pnl.items() %}
+    <div class="metric-row">
+      <span class="metric-label">{{ sector }}</span>
+      <span class="metric-value {{ 'text-green' if pnl >= 0 else 'text-red' }}">${{ "%.2f"|format(pnl) }}</span>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+</div>
+
+{% if review.improvement_hints %}
+<div class="card">
+  <h3>Improvement Hints</h3>
+  {% for hint in review.improvement_hints %}
+  <div class="alert alert-warning mb-1">{{ hint }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% else %}
+<div class="card text-center" style="padding:3rem;">
+  <p class="text-dim" style="font-size:1.1rem;">{{ review.message or 'No closed trades for this quarter.' }}</p>
+  <p class="text-dim">Trade data will appear here after you log entries and exits.</p>
+</div>
+{% endif %}
+{% endblock %}

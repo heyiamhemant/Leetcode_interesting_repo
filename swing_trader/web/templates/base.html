@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Swing Trader{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <nav>
+    <span class="logo">SwingTrader</span>
+    <a href="/" class="{% if request.path == '/' %}active{% endif %}">Dashboard</a>
+    <a href="/scan" class="{% if '/scan' in request.path %}active{% endif %}">Scan</a>
+    <a href="/portfolio" class="{% if '/portfolio' in request.path %}active{% endif %}">Portfolio</a>
+    <a href="/journal" class="{% if '/journal' in request.path %}active{% endif %}">Journal</a>
+    <a href="/review" class="{% if '/review' in request.path %}active{% endif %}">Review</a>
+  </nav>
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
