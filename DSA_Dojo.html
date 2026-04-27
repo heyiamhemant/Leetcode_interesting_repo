@@ -3128,7 +3128,8 @@ function getDueInfo(p) {
     }
   }
   if (lastMs === null) return { days: -999, label: 'New', cls: 'due-new' };
-  const interval = SR_INTERVALS[Math.min(c, 5)];
+  // Unrated problems (c=0) use a 30-day default so they don't all show as overdue
+  const interval = c > 0 ? SR_INTERVALS[Math.min(c, 5)] : 30;
   const elapsed = Math.floor((now - lastMs) / DAY);
   const dueIn = interval - elapsed;
   if (dueIn <= 0) return { days: dueIn, label: dueIn === 0 ? 'Today' : `${Math.abs(dueIn)}d overdue`, cls: 'due-overdue' };
@@ -3641,12 +3642,14 @@ function renderDashboard() {
   let nodesHTML = '';
   topics.forEach(([name, data]) => {
     const avgConf = data.total ? data.confSum / data.total : 0;
-    const pct = Math.round(avgConf / 5 * 100);
-    const rawColor = pct >= 70 ? '#3fcfb4' : pct >= 40 ? '#f5a623' : pct >= 20 ? '#e09020' : '#f55f5f';
-    const glowColor = pct >= 70 ? 'rgba(63,207,180,0.3)' : pct >= 40 ? 'rgba(245,166,35,0.25)' : 'rgba(245,95,95,0.2)';
-    const level = pct >= 80 ? 'Cleared' : pct >= 60 ? 'Conquering' : pct >= 40 ? 'Battling' : pct >= 20 ? 'Entered' : 'Uncharted';
+    const solvedPct = data.total ? Math.round(data.solved / data.total * 100) : 0;
+    const confPct = Math.round(avgConf / 5 * 100);
+    const pct = solvedPct;
+    const rawColor = confPct >= 70 ? '#3fcfb4' : confPct >= 40 ? '#f5a623' : confPct >= 20 ? '#e09020' : '#f55f5f';
+    const glowColor = confPct >= 70 ? 'rgba(63,207,180,0.3)' : confPct >= 40 ? 'rgba(245,166,35,0.25)' : 'rgba(245,95,95,0.2)';
+    const level = solvedPct >= 80 ? 'Cleared' : solvedPct >= 60 ? 'Conquering' : solvedPct >= 40 ? 'Battling' : solvedPct >= 20 ? 'Entered' : 'Uncharted';
     const isCleared = data.mastered === data.total && data.total > 0;
-    const isLocked = pct === 0;
+    const isLocked = solvedPct === 0;
 
     const sizeClass = data.total > 12 ? 'pn-size-lg' : data.total > 5 ? 'pn-size-md' : 'pn-size-sm';
     const ringSize = data.total > 12 ? 110 : data.total > 5 ? 90 : 74;
@@ -3660,9 +3663,13 @@ function renderDashboard() {
     const monsterDiff = data.total > 10 ? 'Hard' : data.total > 5 ? 'Medium' : 'Easy';
 
     const topicProbs = RAW_PROBLEMS.filter(p => p.topic.split('/')[0].trim() === name);
-    const dueCount = topicProbs.filter(p => { const d = getDueInfo(p); return d.days <= 0; }).length;
-    const nextDue = topicProbs.map(p => ({p, d: getDueInfo(p)})).filter(x => x.d.days > 0).sort((a,b) => a.d.days - b.d.days)[0];
-    const tooltipText = `${dueCount} due now` + (nextDue ? ` \u2022 Next: ${nextDue.p.name}` : '');
+    const solvedProbs = topicProbs.filter(p => { const ud = userData[p.id]; return (ud && (ud.lastReviewed || ud.manualConf)) || p.date; });
+    const dueCount = solvedProbs.filter(p => { const d = getDueInfo(p); return d.days <= 0 && d.cls !== 'due-new'; }).length;
+    const nextDue = solvedProbs.map(p => ({p, d: getDueInfo(p)})).filter(x => x.d.days > 0).sort((a,b) => a.d.days - b.d.days)[0];
+    const unsolved = topicProbs.length - solvedProbs.length;
+    const tooltipText = (dueCount > 0 ? `${dueCount} due now` : 'None due') +
+      (nextDue ? ` \u2022 Next in ${nextDue.d.label}` : '') +
+      (unsolved > 0 ? ` \u2022 ${unsolved} unseen` : '');
 
     nodesHTML += `
       <div class="pathway-node-abs ${sizeClass} ${isCleared ? 'pn-cleared' : ''} ${isLocked ? 'pn-locked' : ''}"
