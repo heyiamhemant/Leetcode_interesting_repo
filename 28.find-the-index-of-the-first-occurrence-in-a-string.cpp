@@ -70,6 +70,18 @@ public:
         }
         return foundPos;
     }
+
+    int strStr2026(string haystack, string needle) {
+        int m = haystack.size();
+        int n = needle.size();
+        for(int i = 0 ; i <= m - n ; i++ ) {
+            int j = 0;
+            while(j < n && i + j < m && haystack[i+j] == needle[j]) j++; // expand window
+            if(j==n) return i;
+
+        }
+        return -1;
+    }
 };
 // @lc code=end
 
