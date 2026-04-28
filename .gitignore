@@ -142,14 +142,9 @@
 /* CTA Enter the Dungeon — castle-gate feel */
 .cta-enter {
   border: 3px solid transparent !important;
-
-  background-color: #1a0f08;
-  background-image:
-    linear-gradient(180deg, rgba(11,8,7,0.55), rgba(11,8,7,0.85)),
-    url('./assets/pathway_darkroot2.jpg');
-  background-size: 100% 100%, cover;
-  background-position: 0 0, center;
-  background-repeat: no-repeat, no-repeat;
+  background:
+    radial-gradient(ellipse at center, rgba(122,31,31,0.5) 0%, rgba(20,16,12,0.95) 70%) padding-box,
+    linear-gradient(135deg, var(--gold-bright), var(--gold-deep), var(--gold)) border-box !important;
 }
 .cta-enter::after {
   content: ''; position: absolute; inset: 6px; pointer-events: none;
@@ -280,7 +275,7 @@ a:hover { color: var(--gold-bright); }
   padding: var(--space-md) var(--space-sm);
   display: flex; flex-direction: column; gap: var(--space-sm);
   position: sticky; top: 0; height: 100vh; overflow-y: auto;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 .rail-brand {
   font-family: var(--serif-display); font-size: 18px; font-weight: 900;
@@ -353,7 +348,7 @@ a:hover { color: var(--gold-bright); }
   position: sticky; top: 0; z-index: 10;
   background:
     linear-gradient(180deg, rgba(11,8,7,0.92) 60%, rgba(11,8,7,0.4) 100%);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   margin-left: calc(var(--space-lg) * -1);
   margin-right: calc(var(--space-lg) * -1);
   padding-left: var(--space-lg); padding-right: var(--space-lg);
@@ -589,17 +584,14 @@ a:hover { color: var(--gold-bright); }
   gap: var(--space); margin-top: var(--space);
 }
 .dungeon-card {
-  padding: var(--space); border: 1px solid rgba(232,200,122,0.2);
-  background-color: #1f1812;
-  background-image:
-    linear-gradient(180deg, rgba(11,8,7,0.22) 0%, rgba(11,8,7,0.6) 55%, rgba(11,8,7,0.92) 100%),
-    var(--bg-img, none);
-  background-size: 100% 100%, cover;
-  background-position: 0 0, center;
-  background-repeat: no-repeat, no-repeat;
+  padding: var(--space); border: 1px solid rgba(232,200,122,0.15);
+  background:
+    linear-gradient(180deg, rgba(11,8,7,0.45) 0%, rgba(11,8,7,0.92) 75%),
+    var(--bg-img, none) center/cover no-repeat,
+    linear-gradient(180deg, rgba(31,24,18,0.7), rgba(11,8,7,0.9));
   border-radius: var(--rad); cursor: pointer;
   transition: all .3s ease; position: relative; overflow: hidden;
-  min-height: 170px;
+  min-height: 140px;
 }
 .dungeon-card > * { position: relative; }
 .dungeon-card::before {
@@ -637,18 +629,15 @@ a:hover { color: var(--gold-bright); }
 
 .realm-card {
   position: relative; padding: clamp(16px, 1.6vw, 22px);
-  border: 1px solid rgba(232,200,122,0.22); border-radius: 6px;
-  background-color: #1f1812;
-  background-image:
-    linear-gradient(180deg, rgba(11,8,7,0.25) 0%, rgba(11,8,7,0.6) 55%, rgba(11,8,7,0.92) 100%),
-    var(--bg-img, none);
-  background-size: 100% 100%, cover;
-  background-position: 0 0, center;
-  background-repeat: no-repeat, no-repeat;
+  border: 1px solid rgba(232,200,122,0.18); border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(11,8,7,0.55) 0%, rgba(11,8,7,0.95) 80%),
+    var(--bg-img, none) center/cover no-repeat,
+    linear-gradient(180deg, rgba(31,24,18,0.85), rgba(11,8,7,0.95));
   cursor: pointer; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
   overflow: hidden;
   display: flex; flex-direction: column; gap: 14px;
-  min-height: 240px;
+  min-height: 220px;
 }
 .realm-card::before {
   content: ''; position: absolute; inset: 0; pointer-events: none;
@@ -870,23 +859,12 @@ a:hover { color: var(--gold-bright); }
 .quest-card {
   display: grid; grid-template-columns: auto 1fr auto auto; gap: var(--space);
   align-items: center; padding: var(--space);
+  background: linear-gradient(180deg, rgba(31,24,18,0.75), rgba(11,8,7,0.9));
   border: 1px solid rgba(232,200,122,0.15);
   border-radius: var(--rad); position: relative; overflow: hidden;
   transition: all .3s ease;
-    linear-gradient(180deg, rgba(11,8,7,0.55) 0%, rgba(11,8,7,0.92) 75%),
-    var(--bg-img, none) center/cover no-repeat,
-    linear-gradient(180deg, rgba(31,24,18,0.85), rgba(11,8,7,0.95));
-  background-color: #1f1812;
-  background-image:
-    linear-gradient(180deg, rgba(11,8,7,0.40) 0%, rgba(11,8,7,0.88) 75%, rgba(11,8,7,0.95) 100%),
-    var(--bg-img, none);
-  background-size: 100% 100%, cover;
-  background-position: 0 0, center;
-  background-repeat: no-repeat, no-repeat;
-  position: relative; overflow: hidden;
 }
 .quest-card:hover { border-color: rgba(232,200,122,0.4); transform: translateX(2px); }
-.quest-card > * { position: relative; z-index: 1; }
 .quest-card.done { opacity: .85; border-color: rgba(111,168,107,0.4); background: linear-gradient(180deg, rgba(74,103,65,0.15), rgba(11,8,7,0.9)); }
 .quest-card.done .quest-name { text-decoration: line-through; color: var(--text-dim); }
 .quest-card.done::after {
@@ -1033,9 +1011,6 @@ a:hover { color: var(--gold-bright); }
     0 0 24px var(--seal-glow, rgba(232,200,122,0.18));
   display: grid; place-items: center;
   transition: box-shadow .35s ease, border-color .35s ease;
-
-  background-image: var(--keep-bg, none);
-  background-size: cover; background-position: center;
 }
 .keep:hover .keep-medallion {
   box-shadow:
@@ -1117,21 +1092,17 @@ a:hover { color: var(--gold-bright); }
 
 /* Ambient embers (subtle, not cartoon) */
 .codex-ember {
-  position: absolute; width: 1.5px; height: 1.5px; border-radius: 50%;
-  background: #ffb86a; box-shadow: 0 0 3px rgba(255,160,80,0.4), 0 0 8px rgba(255,120,40,0.2);
-  pointer-events: none; z-index: 0; opacity: 0;
+  position: absolute; width: 2px; height: 2px; border-radius: 50%;
+  background: #ffb86a; box-shadow: 0 0 4px rgba(255,160,80,0.7), 0 0 10px rgba(255,120,40,0.4);
+  pointer-events: none; z-index: 5; opacity: 0;
   animation: emberRise var(--er-dur, 9s) linear var(--er-delay, 0s) infinite;
-  will-change: transform, opacity;
-  filter: blur(0.3px);
 }
 @keyframes emberRise {
-  0%   { transform: translate(0, 0) scale(0.6); opacity: 0; }
-  6%   { opacity: 1; }
-  92%  { opacity: 1; }
-  100% { transform: translate(var(--er-dx, 20px), var(--er-dy, -200px)) scale(1.0); opacity: 0; }
+  0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+  10% { opacity: 1; }
+  85% { opacity: .8; }
+  100% { transform: translate(var(--er-dx, 20px), var(--er-dy, -200px)) scale(1.1); opacity: 0; }
 }
-.firefly { width: 2px; height: 2px; background: #ffd47a; box-shadow: 0 0 4px rgba(255,200,120,0.4), 0 0 9px rgba(255,150,60,0.2); animation-timing-function: ease-in-out; opacity: .85; }
-.firefly-bright { width: 3px; height: 3px; background: #fff0b8; box-shadow: 0 0 6px rgba(255,230,140,0.5), 0 0 14px rgba(255,180,80,0.28); }
 
 /* The actual paved road */
 .road-paved-base { fill: none; stroke: #1c130b; stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; }
@@ -1278,19 +1249,11 @@ a:hover { color: var(--gold-bright); }
   gap: var(--space);
 }
 .monster-card {
-  padding: var(--space); border: 1px solid rgba(232,200,122,0.18);
-  background-color: #1f1812;
-  background-image:
-    linear-gradient(180deg, rgba(11,8,7,0.35) 0%, rgba(11,8,7,0.85) 75%, rgba(11,8,7,0.95) 100%),
-    var(--bg-img, none);
-  background-size: 100% 100%, cover;
-  background-position: 0 0, center;
-  background-repeat: no-repeat, no-repeat;
+  padding: var(--space); border: 1px solid rgba(232,200,122,0.12);
+  background: linear-gradient(180deg, rgba(31,24,18,0.7), rgba(11,8,7,0.9));
   border-radius: var(--rad); cursor: pointer;
   transition: all .3s ease; position: relative; overflow: hidden;
-  min-height: 160px;
 }
-.monster-card > * { position: relative; z-index: 1; }
 .monster-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: var(--diff-col, var(--gold-deep));
@@ -1315,18 +1278,15 @@ a:hover { color: var(--gold-bright); }
    ═════════════════════════════════════════════════════════════════════════ */
 .boss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space); }
 .boss-card {
-  padding: var(--space-md); border: 1px solid rgba(176,69,69,0.35);
-  background-color: #1c0e0e;
-  background-image:
-    linear-gradient(180deg, rgba(11,8,7,0.30) 0%, rgba(11,8,7,0.75) 60%, rgba(11,8,7,0.95) 100%),
-    radial-gradient(ellipse at top right, rgba(122,31,31,0.35), transparent 60%),
-    var(--boss-img, none);
-  background-size: 100% 100%, 100% 100%, cover;
-  background-position: 0 0, 0 0, center;
-  background-repeat: no-repeat, no-repeat, no-repeat;
+  padding: var(--space-md); border: 1px solid rgba(176,69,69,0.25);
+  background:
+    linear-gradient(180deg, rgba(11,8,7,0.55) 0%, rgba(11,8,7,0.95) 80%),
+    radial-gradient(ellipse at top right, rgba(122,31,31,0.3), transparent 60%),
+    var(--boss-img, none) center/cover no-repeat,
+    linear-gradient(180deg, rgba(31,24,18,0.85), rgba(11,8,7,0.95));
   border-radius: var(--rad); cursor: pointer;
   transition: all .35s ease; position: relative; overflow: hidden;
-  min-height: 240px;
+  min-height: 220px;
 }
 .boss-card::before {
   content: ''; position: absolute; inset: 0; pointer-events: none;
@@ -1351,7 +1311,7 @@ a:hover { color: var(--gold-bright); }
 .modal-overlay {
   position: fixed; inset: 0; z-index: 200;
   background: rgba(0,0,0,0.85);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   display: none; align-items: center; justify-content: center; padding: var(--space);
   animation: modalBg .3s ease;
 }
@@ -1457,12 +1417,12 @@ textarea.modal-comment {
 .mobile-topbar {
   display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 50;
   padding: 10px 14px; background: linear-gradient(180deg, rgba(11,8,7,0.95), rgba(11,8,7,0.7));
-  border-bottom: 1px solid rgba(232,200,122,0.15); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(232,200,122,0.15); backdrop-filter: blur(10px);
   align-items: center; justify-content: space-between;
 }
 .hamburger { background: transparent; border: 1px solid rgba(232,200,122,0.3); color: var(--gold); width: 38px; height: 38px; border-radius: var(--rad-sm); font-size: 18px; }
 .mobile-brand { font-family: var(--serif-display); color: var(--gold); font-size: 16px; letter-spacing: .08em; }
-.drawer-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 80; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+.drawer-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 80; backdrop-filter: blur(4px); }
 .drawer-overlay.open { display: block; animation: modalBg .3s ease; }
 .mobile-drawer { display: none; position: fixed; top: 0; left: 0; bottom: 0; width: 280px; z-index: 90;
   background: linear-gradient(180deg, var(--ash), var(--ink)); border-right: 1px solid rgba(232,200,122,0.2);
@@ -1488,7 +1448,7 @@ textarea.modal-comment {
   font-family: var(--mono); font-size: 10px; letter-spacing: .2em;
   color: var(--gold-deep); padding: 6px 12px;
   border: 1px solid rgba(232,200,122,0.25); border-radius: 4px;
-  background: rgba(0,0,0,0.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
   text-decoration: none;
 }
 .back-classic:hover { color: var(--gold); border-color: var(--gold); }
@@ -1568,7 +1528,7 @@ textarea.modal-comment {
   position: sticky; top: 0; z-index: 12;
   background: linear-gradient(180deg, rgba(11,8,7,0.95) 0%, rgba(11,8,7,0.6) 80%, transparent 100%);
   padding: 8px 0;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 .dash-tabs {
   display: inline-flex; gap: 0;
@@ -1599,49 +1559,6 @@ textarea.modal-comment {
 }
 .dash-tab.active .dt-ico { opacity: 1; transform: scale(1.05); }
 .dash-tab.active .dt-meta { color: var(--gold); }
-@media (max-width: 720px) {
-  /* On mobile, single-column cards become tall, so the dark overlay swallowed
-     the dark-souls scene image. Lighten the overlay and scale image cover so
-     the image stays visible behind card content. */
-  .realm-card {
-    background-image:
-      linear-gradient(180deg, rgba(11,8,7,0.20) 0%, rgba(11,8,7,0.7) 60%, rgba(11,8,7,0.92) 100%),
-      var(--bg-img, none) !important;
-    background-size: 100% 100%, cover !important;
-    background-position: 0 0, center !important;
-    background-repeat: no-repeat, no-repeat !important;
-    min-height: 240px;
-  }
-  .dungeon-card {
-    background-image:
-      linear-gradient(180deg, rgba(11,8,7,0.18) 0%, rgba(11,8,7,0.65) 60%, rgba(11,8,7,0.92) 100%),
-      var(--bg-img, none) !important;
-    background-size: 100% 100%, cover !important;
-    background-position: 0 0, center !important;
-    background-repeat: no-repeat, no-repeat !important;
-    min-height: 160px;
-  }
-  /* Bestiary monster cards + boss cards + quest cards: ensure the bg-img layer
-     keeps a visible top band on mobile by lightening the top of the overlay. */
-  .monster-card, .quest-card {
-    background-image:
-      linear-gradient(180deg, rgba(11,8,7,0.25) 0%, rgba(11,8,7,0.78) 70%, rgba(11,8,7,0.95) 100%),
-      var(--bg-img, none) !important;
-    background-size: 100% 100%, cover !important;
-    background-position: 0 0, center !important;
-    background-repeat: no-repeat, no-repeat !important;
-  }
-  .boss-card {
-    background-image:
-      linear-gradient(180deg, rgba(11,8,7,0.20) 0%, rgba(11,8,7,0.7) 60%, rgba(11,8,7,0.95) 100%),
-      radial-gradient(ellipse at top right, rgba(122,31,31,0.35), transparent 60%),
-      var(--boss-img, none) !important;
-    background-size: 100% 100%, 100% 100%, cover !important;
-    background-position: 0 0, 0 0, center !important;
-    background-repeat: no-repeat, no-repeat, no-repeat !important;
-  }
-}
-
 @media (max-width: 720px) {
   .dash-tab { padding: 8px 12px; font-size: 11px; min-width: 0; }
   .dt-ico { font-size: 16px; }
@@ -1675,7 +1592,7 @@ textarea.modal-comment {
   background: linear-gradient(180deg, rgba(40,28,18,0.55), rgba(15,10,6,0.85));
   border: 1px solid rgba(232,200,122,0.22);
   box-shadow: 0 6px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(232,200,122,0.08);
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   min-width: 70px;
 }
 .util-chip.alert { border-color: rgba(201,42,42,0.55); box-shadow: 0 6px 22px rgba(201,42,42,0.2), inset 0 1px 0 rgba(255,138,58,0.18); }
@@ -1768,23 +1685,15 @@ textarea.modal-comment {
 .panel-sub { font-family: var(--mono); font-size: 10px; color: var(--text-muted); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 8px; }
 
 /* ─── Heatmap ─── */
-.heatmap-wrap { position: relative; padding: 4px 0 10px; overflow-x: auto; }
-.hm-grid { display: grid; grid-template-columns: 28px 1fr; grid-template-rows: 14px 1fr; gap: 4px; min-width: max-content; position: relative; }
-.hm-months { grid-column: 2 / 3; grid-row: 1 / 2; display: grid; grid-template-columns: repeat(var(--cols), 13px); column-gap: 3px; font-family: var(--mono); font-size: 10px; color: var(--text-muted); letter-spacing: .12em; text-transform: uppercase; }
-.hm-mlabel { white-space: nowrap; }
-.hm-days { grid-column: 1 / 2; grid-row: 2 / 3; display: grid; grid-template-rows: repeat(7, 13px); row-gap: 3px; font-family: var(--mono); font-size: 9px; color: var(--text-muted); letter-spacing: .12em; text-transform: uppercase; padding-top: 1px; }
-.hm-dlabel { line-height: 13px; }
-.hm-cells { grid-column: 2 / 3; grid-row: 2 / 3; display: grid; grid-template-rows: repeat(7, 13px); grid-auto-flow: column; grid-auto-columns: 13px; gap: 3px; }
-.hm-empty { background: transparent !important; border-color: transparent !important; pointer-events: none; }
-.hm-tooltip { position: absolute; transform: translate(-50%, -100%); background: rgba(15,11,8,0.96); border: 1px solid var(--gold-deep); border-radius: 4px; padding: 6px 10px; pointer-events: none; z-index: 10; box-shadow: 0 4px 16px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,200,122,0.15); white-space: nowrap; }
-.hm-tooltip[hidden] { display: none; }
-.hm-tt-date { font-family: var(--serif); font-size: 12px; color: var(--gold); letter-spacing: .04em; }
-.hm-tt-count { font-family: var(--mono); font-size: 11px; color: var(--text); margin-top: 2px; }
+.heatmap-wrap {
+  display: grid; grid-template-rows: repeat(7, 12px); grid-auto-flow: column; grid-auto-columns: 12px;
+  gap: 3px; padding: 10px 0; overflow-x: auto;
+}
 .hm-cell {
-  display: inline-block; width: 13px; height: 13px;
+  display: inline-block; width: 12px; height: 12px;
   background: rgba(232,200,122,0.04);
   border: 1px solid rgba(232,200,122,0.06);
-  border-radius: 2px; transition: transform .12s ease;
+  border-radius: 2px; transition: transform .15s ease;
   position: relative;
 }
 .hm-cell:hover { transform: scale(1.4); z-index: 2; border-color: var(--gold); }
@@ -1796,9 +1705,8 @@ textarea.modal-comment {
 
 /* ─── Hero power bars ─── */
 .hero-powerbars { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; max-width: 480px; }
-.hpb-row { display: grid; grid-template-columns: 80px 1fr auto; gap: 10px; align-items: center; font-family: var(--mono); font-size: 11px; }
-.hpb-label { color: var(--text-dim); letter-spacing: .12em; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
-.hpb-ico { font-size: 14px; filter: drop-shadow(0 0 4px currentColor); }
+.hpb-row { display: grid; grid-template-columns: 60px 1fr auto; gap: 10px; align-items: center; font-family: var(--mono); font-size: 11px; }
+.hpb-label { color: var(--text-dim); letter-spacing: .12em; text-transform: uppercase; }
 .hpb-track { height: 6px; background: rgba(0,0,0,0.5); border: 1px solid rgba(232,200,122,0.12); border-radius: 99px; overflow: hidden; position: relative; }
 .hpb-fill { height: 100%; border-radius: 99px; transition: width 1.4s cubic-bezier(.4,0,.2,1); position: relative; }
 .hpb-fill::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2.4s linear infinite; }
@@ -2085,158 +1993,6 @@ textarea.modal-comment {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
-
-/* ═════════ Mobile overflow / responsive polish ═════════ */
-@media (max-width: 720px) {
-  /* Welcome / intro screen */
-  .intro { padding: 24px 16px !important; gap: 12px !important; text-align: center; }
-  .intro-crest { width: 120px !important; height: 120px !important; }
-  .intro-crest svg { width: 60px !important; height: 60px !important; }
-  .intro-title {
-    font-size: clamp(24px, 8vw, 40px) !important;
-    letter-spacing: .04em !important;
-    line-height: 1.1; padding: 0 8px;
-    word-break: break-word; max-width: 100%;
-  }
-  .intro-tagline {
-    font-size: 10px !important; letter-spacing: .18em !important;
-    padding: 0 12px; max-width: 100%;
-  }
-  .intro-runes { font-size: 18px !important; gap: 8px !important; letter-spacing: .12em !important; }
-  .intro-hint {
-    font-size: 9px !important; letter-spacing: .14em !important;
-    bottom: 6vh !important; padding: 0 16px; text-align: center; max-width: 100%;
-  }
-}
-
-@media (max-width: 720px) {
-  /* Page-level: ensure nothing forces horizontal scroll */
-  html, body { overflow-x: hidden; }
-  .main { padding-left: clamp(12px, 3vw, 18px) !important; padding-right: clamp(12px, 3vw, 18px) !important; }
-
-  /* Page headers: stop sticking, scale down */
-  .page-header {
-    position: static !important;
-    margin-left: 0 !important; margin-right: 0 !important;
-    padding-left: 0 !important; padding-right: 0 !important;
-  }
-  .page-title { font-size: clamp(22px, 7vw, 32px) !important; line-height: 1.1; word-break: break-word; }
-  .page-subtitle { font-size: 11px !important; letter-spacing: .2em; }
-
-  /* Hero card: stack, center, allow wrap */
-  .hero { padding: 16px !important; gap: 12px !important; }
-  .hero-name { font-size: 24px !important; word-break: break-word; }
-  .hero-title { font-size: 11px !important; letter-spacing: .15em; }
-  .hero-xp-text { font-size: 10px !important; }
-  .hero-powerbars { max-width: 100% !important; }
-  .hpb-row { grid-template-columns: 78px 1fr 76px !important; gap: 8px !important; font-size: 10px !important; }
-  .hpb-stats { font-size: 10px !important; min-width: 0 !important; }
-  .hpb-label { letter-spacing: .08em !important; }
-
-  /* Streak badge wraps below */
-  .streak-badge { font-size: 11px !important; padding: 8px 12px !important; }
-  .streak-num { font-size: 26px !important; }
-
-  /* Realm cards */
-  .realm-card { padding: 14px !important; gap: 10px !important; min-height: 200px !important; }
-  .rl-name { font-size: 14px !important; word-break: break-word; line-height: 1.2; }
-  .rl-sub { font-size: 10px !important; }
-  .rl-prog-row { font-size: 10px !important; flex-wrap: wrap; }
-  .rl-prog-val { font-size: 10px !important; }
-  .rl-tier-stats { font-size: 10px !important; }
-  .rl-conq, .rl-alert { font-size: 9px !important; padding: 2px 6px !important; }
-
-  /* Dungeon mastery cards */
-  .dungeon-name { font-size: 12px !important; word-break: break-word; }
-  .dungeon-progress { font-size: 10px !important; }
-
-  /* Topic mastery */
-  .mastery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important; }
-  .mastery-name { font-size: 11px !important; }
-
-  /* Bestiary monster cards */
-  .monster-card { padding: 14px !important; min-height: 140px !important; }
-  .mc-name { font-size: 13px !important; line-height: 1.25; word-break: break-word; }
-  .mc-num { font-size: 9px !important; }
-  .mc-hint { font-size: 11px !important; min-height: 0 !important; }
-  .mc-tag { font-size: 9px !important; padding: 2px 6px !important; }
-  .mc-stars { font-size: 11px !important; }
-  .mc-sprite { font-size: 26px !important; }
-  .bestiary-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important; gap: 10px !important; }
-
-  /* Quest cards: stack the 3-column layout vertically on mobile */
-  .quest-card {
-    grid-template-columns: 56px 1fr !important;
-    grid-template-rows: auto auto !important;
-    grid-template-areas: 'icon info' 'actions actions' !important;
-    padding: 12px !important; gap: 10px !important;
-  }
-  .quest-monster { grid-area: icon; }
-  .quest-info { grid-area: info; min-width: 0; }
-  .quest-name { font-size: 14px !important; word-break: break-word; line-height: 1.25; }
-  .quest-meta { font-size: 10px !important; flex-wrap: wrap; gap: 4px !important; }
-  .quest-tag { font-size: 9px !important; padding: 2px 6px !important; }
-  .quest-reason { font-size: 10px !important; }
-  .quest-xp { font-size: 11px !important; white-space: nowrap; }
-  .quest-action { font-size: 11px !important; padding: 6px 12px !important; }
-  .quest-card > div:last-child { grid-area: actions; justify-content: flex-end; }
-
-  /* Boss cards */
-  .boss-card { padding: 16px !important; min-height: 180px !important; }
-  .boss-title { font-size: 16px !important; line-height: 1.2; word-break: break-word; }
-  .boss-desc { font-size: 12px !important; }
-  .boss-tag { font-size: 9px !important; padding: 2px 6px !important; }
-  .boss-grid { grid-template-columns: 1fr !important; }
-
-  /* Modal */
-  .modal { width: 96vw !important; max-width: 96vw !important; max-height: 92vh !important; }
-  .modal-title { font-size: 18px !important; word-break: break-word; line-height: 1.2; }
-  .modal-meta { font-size: 10px !important; flex-wrap: wrap; gap: 6px !important; }
-
-  /* Pathway tooltip */
-  .path-tooltip { font-size: 11px !important; max-width: 80vw !important; }
-
-  /* Heatmap: shrink, allow scroll */
-  .hm-cell, .hm-cells > .hm-cell { width: 11px !important; height: 11px !important; }
-  .hm-cells { grid-auto-columns: 11px !important; grid-template-rows: repeat(7, 11px) !important; }
-
-  /* Dashboard tabs row: tighten and make scroll-friendly if needed */
-  .dash-tabs-row { padding: 0 !important; }
-  .dash-tabs { gap: 4px !important; padding: 6px !important; flex-wrap: wrap; }
-  .dash-tab { padding: 8px 10px !important; min-width: 0 !important; flex: 1; }
-  .dt-label { font-size: 11px !important; letter-spacing: .04em; }
-
-  /* Utility chips: wrap nicely, shrink */
-  .util-chip { padding: 6px 10px !important; min-width: 0 !important; }
-  .uc-val { font-size: 14px !important; }
-  .uc-label { font-size: 8px !important; letter-spacing: .15em; }
-
-  /* Generic: prevent any overflow */
-  .panel-title { font-size: 13px !important; word-break: break-word; }
-  .panel { padding: 16px !important; }
-  .summary-meta { font-size: 9px !important; letter-spacing: .04em; }
-  .bento-cell.panel > details { padding: 16px !important; }
-  .bento-cell.panel > details > summary { padding: 12px 16px !important; margin: -16px !important; margin-bottom: 0 !important; }
-  .bento-cell.panel > details[open] > summary { margin-bottom: 14px !important; }
-
-  /* Buttons inside cards: prevent crammed layouts */
-  .btn-primary, .btn-secondary { font-size: 12px !important; padding: 10px 16px !important; }
-  .cta-enter { padding: 18px !important; }
-  .cta-enter .cta-line.cta-main { font-size: 22px !important; letter-spacing: .04em; }
-  .cta-enter .cta-line.cta-warn { font-size: 9px !important; letter-spacing: .2em; }
-
-  /* Quick rate buttons */
-  .quest-rate-btn { width: 28px !important; height: 28px !important; font-size: 12px !important; }
-}
-
-/* Tighter still on very small screens */
-@media (max-width: 380px) {
-  .hpb-row { grid-template-columns: 66px 1fr 60px !important; }
-  .quest-name { font-size: 13px !important; }
-  .rl-name { font-size: 13px !important; }
-  .mc-name { font-size: 12px !important; }
-}
-
 </style>
 </head>
 <body>
@@ -3170,90 +2926,6 @@ function renderUtilityStrip() {
     }
   } catch (e) {}
 }
-function renderDungeons() {
-  if (!document.getElementById('dungeon-grid')) return;
-// Dungeons
-const topics = {};
-RAW_PROBLEMS.forEach(p => {
-  if (!topics[p.topic]) topics[p.topic] = { total: 0, solved: 0, conf: 0 };
-  topics[p.topic].total++;
-  const c = getConf(p);
-  if (c > 0) { topics[p.topic].solved++; topics[p.topic].conf += c; }
-});
-// Build rich realm rows
-const RECENT_MS = 180 * 86400000;
-const now = Date.now();
-const sortMode = (document.getElementById('realms-sort') && document.getElementById('realms-sort').value) || 'conquest';
-const rows = Object.entries(topics).map(([t, d]) => {
-  const v = visualOf(t);
-  const probsT = RAW_PROBLEMS.filter(p => p.topic === t);
-  const tc = countTiers(probsT);
-  const pp = d.total ? d.solved / d.total : 0;
-  let recent = 0, lastReviewMs = 0, dueNow = 0, overdueNow = 0;
-  probsT.forEach(p => {
-    const last = getLastReviewMsLocal(p);
-    if (last) {
-      if (last > lastReviewMs) lastReviewMs = last;
-      if ((now - last) <= RECENT_MS && getConf(p) > 0) recent++;
-    }
-    if (getConf(p) > 0) {
-      const di = getDueInfo(p);
-      if (di.cls !== 'due-new') {
-        if (di.days === 0) dueNow++;
-        else if (di.days < 0) overdueNow++;
-      }
-    }
-  });
-  const recentPct = d.total ? recent / d.total : 0;
-  return { t, d, v, probsT, tc, pp, recent, recentPct, lastReviewMs, dueNow, overdueNow };
-});
-if (sortMode === 'conquest')      rows.sort((a, b) => b.pp - a.pp || b.d.total - a.d.total);
-else if (sortMode === 'momentum') rows.sort((a, b) => b.recentPct - a.recentPct || b.recent - a.recent);
-else if (sortMode === 'due')      rows.sort((a, b) => (b.dueNow + b.overdueNow * 2) - (a.dueNow + a.overdueNow * 2));
-else if (sortMode === 'size')     rows.sort((a, b) => b.d.total - a.d.total);
-else                              rows.sort((a, b) => a.t.localeCompare(b.t));
-document.getElementById('dungeon-grid').innerHTML = rows.map(r => {
-  const { t, d, v, tc, pp, recent, recentPct, lastReviewMs, dueNow, overdueNow } = r;
-  const ppPct = Math.round(pp * 100);
-  const recentPctR = Math.round(recentPct * 100);
-  const tier = (slain, total, col, ico) => total
-    ? `<div class="rl-tier" style="--tc:${col}"><span class="rl-tier-ico">${ico}</span><span class="rl-tier-stats">${slain}/${total}</span><div class="rl-tier-bar"><div style="width:${total ? slain/total*100 : 0}%"></div></div></div>`
-    : '';
-  const lastTxt = lastReviewMs ? new Date(lastReviewMs).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }) : 'never';
-  const conqBadge = pp >= 1 ? `<div class="rl-conq">⚜ Conquered</div>` : '';
-  const alertBadge = (dueNow + overdueNow) > 0 ? `<div class="rl-alert" title="${dueNow} due · ${overdueNow} overdue">${overdueNow ? '⚠' : '⏰'} ${dueNow + overdueNow}</div>` : '';
-  const _scene = sceneFor(t);
-  return `<div class="realm-card" onclick="filterByTopic('${t.replace(/'/g,"\\'")}')" style="--col:${v.color}55;--col-bar:${v.color}80;--col-bar2:${v.color};background-image:linear-gradient(180deg,rgba(11,8,7,0.25) 0%,rgba(11,8,7,0.6) 55%,rgba(11,8,7,0.92) 100%),url('${_scene}');background-size:100% 100%,cover;background-position:0 0,center;background-repeat:no-repeat,no-repeat;">
-    ${conqBadge}
-    ${alertBadge}
-    <div class="rl-head">
-      <span class="rl-icon" style="color:${v.color}">${v.icon}</span>
-      <div class="rl-titles">
-        <div class="rl-name">${t}</div>
-        <div class="rl-sub">${d.total} encounters · last ${lastTxt}</div>
-      </div>
-    </div>
-    <div class="rl-progress">
-      <div class="rl-prog-row">
-        <span class="rl-prog-label">Conquest</span>
-        <span class="rl-prog-val">${d.solved} / ${d.total} · ${ppPct}%</span>
-      </div>
-      <div class="rl-bar"><div class="rl-bar-fill" style="width:${ppPct}%"></div></div>
-      <div class="rl-prog-row rl-prog-row-sub">
-        <span class="rl-prog-label">Momentum (180d)</span>
-        <span class="rl-prog-val">${recent} recent · ${recentPctR}%</span>
-      </div>
-      <div class="rl-bar rl-bar-sub"><div class="rl-bar-fill momentum" style="width:${recentPctR}%"></div></div>
-    </div>
-    <div class="rl-tiers">
-      ${tier(tc.slainSlime, tc.Slime, '#6fa86b', '🟢')}
-      ${tier(tc.slainDrake, tc.Drake, '#c89c4a', '🐉')}
-      ${tier(tc.slainDemon, tc.Demon, '#b04545', '👹')}
-    </div>
-  </div>`;
-}).join('');
-}
-
 function renderDashboard() {
   renderUtilityStrip();
   const xp = computeXP();
@@ -3299,7 +2971,85 @@ function renderDashboard() {
     <div class="kpi"><div class="kpi-icon">⏳</div><div class="kpi-num">${dueNow}</div><div class="kpi-label">Due Now</div></div>
   `;
 
-  renderDungeons();
+  // Dungeons
+  const topics = {};
+  RAW_PROBLEMS.forEach(p => {
+    if (!topics[p.topic]) topics[p.topic] = { total: 0, solved: 0, conf: 0 };
+    topics[p.topic].total++;
+    const c = getConf(p);
+    if (c > 0) { topics[p.topic].solved++; topics[p.topic].conf += c; }
+  });
+  // Build rich realm rows
+  const RECENT_MS = 180 * 86400000;
+  const now = Date.now();
+  const sortMode = (document.getElementById('realms-sort') && document.getElementById('realms-sort').value) || 'conquest';
+  const rows = Object.entries(topics).map(([t, d]) => {
+    const v = visualOf(t);
+    const probsT = RAW_PROBLEMS.filter(p => p.topic === t);
+    const tc = countTiers(probsT);
+    const pp = d.total ? d.solved / d.total : 0;
+    let recent = 0, lastReviewMs = 0, dueNow = 0, overdueNow = 0;
+    probsT.forEach(p => {
+      const last = getLastReviewMsLocal(p);
+      if (last) {
+        if (last > lastReviewMs) lastReviewMs = last;
+        if ((now - last) <= RECENT_MS && getConf(p) > 0) recent++;
+      }
+      if (getConf(p) > 0) {
+        const di = getDueInfo(p);
+        if (di.cls !== 'due-new') {
+          if (di.days === 0) dueNow++;
+          else if (di.days < 0) overdueNow++;
+        }
+      }
+    });
+    const recentPct = d.total ? recent / d.total : 0;
+    return { t, d, v, probsT, tc, pp, recent, recentPct, lastReviewMs, dueNow, overdueNow };
+  });
+  if (sortMode === 'conquest')      rows.sort((a, b) => b.pp - a.pp || b.d.total - a.d.total);
+  else if (sortMode === 'momentum') rows.sort((a, b) => b.recentPct - a.recentPct || b.recent - a.recent);
+  else if (sortMode === 'due')      rows.sort((a, b) => (b.dueNow + b.overdueNow * 2) - (a.dueNow + a.overdueNow * 2));
+  else if (sortMode === 'size')     rows.sort((a, b) => b.d.total - a.d.total);
+  else                              rows.sort((a, b) => a.t.localeCompare(b.t));
+  document.getElementById('dungeon-grid').innerHTML = rows.map(r => {
+    const { t, d, v, tc, pp, recent, recentPct, lastReviewMs, dueNow, overdueNow } = r;
+    const ppPct = Math.round(pp * 100);
+    const recentPctR = Math.round(recentPct * 100);
+    const tier = (slain, total, col, ico) => total
+      ? `<div class="rl-tier" style="--tc:${col}"><span class="rl-tier-ico">${ico}</span><span class="rl-tier-stats">${slain}/${total}</span><div class="rl-tier-bar"><div style="width:${total ? slain/total*100 : 0}%"></div></div></div>`
+      : '';
+    const lastTxt = lastReviewMs ? new Date(lastReviewMs).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }) : 'never';
+    const conqBadge = pp >= 1 ? `<div class="rl-conq">⚜ Conquered</div>` : '';
+    const alertBadge = (dueNow + overdueNow) > 0 ? `<div class="rl-alert" title="${dueNow} due · ${overdueNow} overdue">${overdueNow ? '⚠' : '⏰'} ${dueNow + overdueNow}</div>` : '';
+    return `<div class="realm-card" onclick="filterByTopic('${t.replace(/'/g,"\\'")}')" style="--col:${v.color}55;--col-bar:${v.color}80;--col-bar2:${v.color};--bg-img:url('${sceneFor(t)}')">
+      ${conqBadge}
+      ${alertBadge}
+      <div class="rl-head">
+        <span class="rl-icon" style="color:${v.color}">${v.icon}</span>
+        <div class="rl-titles">
+          <div class="rl-name">${t}</div>
+          <div class="rl-sub">${d.total} encounters · last ${lastTxt}</div>
+        </div>
+      </div>
+      <div class="rl-progress">
+        <div class="rl-prog-row">
+          <span class="rl-prog-label">Conquest</span>
+          <span class="rl-prog-val">${d.solved} / ${d.total} · ${ppPct}%</span>
+        </div>
+        <div class="rl-bar"><div class="rl-bar-fill" style="width:${ppPct}%"></div></div>
+        <div class="rl-prog-row rl-prog-row-sub">
+          <span class="rl-prog-label">Momentum (180d)</span>
+          <span class="rl-prog-val">${recent} recent · ${recentPctR}%</span>
+        </div>
+        <div class="rl-bar rl-bar-sub"><div class="rl-bar-fill momentum" style="width:${recentPctR}%"></div></div>
+      </div>
+      <div class="rl-tiers">
+        ${tier(tc.slainSlime, tc.Slime, '#6fa86b', '🟢')}
+        ${tier(tc.slainDrake, tc.Drake, '#c89c4a', '🐉')}
+        ${tier(tc.slainDemon, tc.Demon, '#b04545', '👹')}
+      </div>
+    </div>`;
+  }).join('');
 
   renderHeroPowerBars();
   renderSummaryMetas();
@@ -3323,10 +3073,9 @@ function renderHeroPowerBars() {
   });
   wrap.innerHTML = ['Easy', 'Medium', 'Hard'].map(d => {
     const x = data[d];
-    const tier = MONSTER_TIER[d];
     const pct = x.t ? Math.round(x.s / x.t * 100) : 0;
-    return `<div class="hpb-row" title="${tier.plural} slain">
-      <div class="hpb-label"><span class="hpb-ico">${tier.icon}</span>${tier.plural}</div>
+    return `<div class="hpb-row">
+      <div class="hpb-label">${d}</div>
       <div class="hpb-track"><div class="hpb-fill ${x.c}" style="width:${pct}%"></div></div>
       <div class="hpb-stats">${x.s} / ${x.t} · ${pct}%</div>
     </div>`;
@@ -3345,77 +3094,22 @@ function renderHeatmap() {
     const key = d.getTime();
     counts[key] = (counts[key] || 0) + 1;
   });
+  const out = [];
   const today = new Date(); today.setHours(0,0,0,0);
   // Align so that the leftmost column starts on a Sunday
   const start = new Date(today.getTime() - (days - 1) * DAY);
   const startDow = start.getDay();
-
-  // Total cell count incl. leading padding, then group into week columns (7 rows × N cols)
-  const totalCells = startDow + days;
-  const cols = Math.ceil(totalCells / 7);
-  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-  // Month labels: for each column, look at the first non-padded day in that column;
-  // if its day-of-month <= 7 we know that's the column where a new month begins → label it.
-  const monthLabels = new Array(cols).fill('');
-  let lastLabeledMonth = -1;
-  for (let col = 0; col < cols; col++) {
-    // first cell index of this column = col*7
-    // first DAY index of this column = col*7 - startDow (clamped to >= 0)
-    const dayIx = col * 7 - startDow;
-    if (dayIx < 0 || dayIx >= days) continue;
-    const d = new Date(start.getTime() + dayIx * DAY);
-    if (d.getMonth() !== lastLabeledMonth && d.getDate() <= 7) {
-      monthLabels[col] = MONTHS[d.getMonth()];
-      lastLabeledMonth = d.getMonth();
-    }
-  }
-
-  const monthRow = monthLabels.map(m => `<span class="hm-mlabel">${m}</span>`).join('');
-  const dayRow = ['', 'Mon', '', 'Wed', '', 'Fri', ''].map(l => `<span class="hm-dlabel">${l}</span>`).join('');
-
-  // Cells
-  const cells = [];
-  for (let i = 0; i < startDow; i++) cells.push('<span class="hm-cell hm-empty"></span>');
+  // pad with empty cells before start to align
+  for (let i = 0; i < startDow; i++) out.push('<span class="hm-cell" style="visibility:hidden"></span>');
   for (let i = 0; i < days; i++) {
     const d = new Date(start.getTime() + i * DAY);
-    const c = counts[d.getTime()] || 0;
+    const k = d.getTime();
+    const c = counts[k] || 0;
     let lvl = 0;
     if (c >= 6) lvl = 4; else if (c >= 4) lvl = 3; else if (c >= 2) lvl = 2; else if (c >= 1) lvl = 1;
-    const fmt = d.toLocaleDateString(undefined, { weekday: 'short', day: '2-digit', month: 'short' });
-    cells.push(`<span class="hm-cell hm-${lvl}" data-date="${fmt}" data-count="${c}"></span>`);
+    out.push(`<span class="hm-cell hm-${lvl}" title="${d.toLocaleDateString()}: ${c} review${c !== 1 ? 's' : ''}"></span>`);
   }
-
-  wrap.innerHTML = `
-    <div class="hm-grid" style="--cols:${cols}">
-      <div class="hm-months">${monthRow}</div>
-      <div class="hm-days">${dayRow}</div>
-      <div class="hm-cells">${cells.join('')}</div>
-      <div class="hm-tooltip" id="hm-tooltip" hidden></div>
-    </div>
-  `;
-
-  // Custom tooltip: more reliable + immediate vs the native title delay
-  const tip = wrap.querySelector('#hm-tooltip');
-  const cellsRoot = wrap.querySelector('.hm-cells');
-  const onMove = (ev) => {
-    const t = ev.target;
-    if (!t.classList || !t.classList.contains('hm-cell') || t.classList.contains('hm-empty')) {
-      tip.hidden = true; return;
-    }
-    const date = t.dataset.date || '';
-    const count = +(t.dataset.count || 0);
-    tip.innerHTML = `<div class="hm-tt-date">${date}</div><div class="hm-tt-count">${count} review${count !== 1 ? 's' : ''}</div>`;
-    tip.hidden = false;
-    const wrapRect = wrap.getBoundingClientRect();
-    const cellRect = t.getBoundingClientRect();
-    const x = cellRect.left + cellRect.width / 2 - wrapRect.left;
-    const y = cellRect.top - wrapRect.top - 8;
-    tip.style.left = x + 'px';
-    tip.style.top = y + 'px';
-  };
-  cellsRoot.addEventListener('mousemove', onMove);
-  cellsRoot.addEventListener('mouseleave', () => { tip.hidden = true; });
+  wrap.innerHTML = out.join('');
 }
 
 /* ═════════ TODAY COMMAND CENTER ═════════ */
@@ -3649,8 +3343,7 @@ function renderTopicDeepDive() {
   document.getElementById('topic-problems').innerHTML = probs.map(p => {
     const conf = getConf(p);
     const diffCol = p.diff === 'Easy' ? 'var(--easy)' : p.diff === 'Medium' ? 'var(--medium)' : 'var(--hard)';
-    const _scene = sceneFor(p.topic);
-    return `<div class="monster-card ${conf > 0 ? 'solved' : ''}" onclick="openModal(${p.id})" style="--diff-col:${diffCol};background-image:linear-gradient(180deg,rgba(11,8,7,0.35) 0%,rgba(11,8,7,0.85) 75%,rgba(11,8,7,0.95) 100%),url('${_scene}');background-size:100% 100%,cover;background-position:0 0,center;background-repeat:no-repeat,no-repeat;">
+    return `<div class="monster-card ${conf > 0 ? 'solved' : ''}" onclick="openModal(${p.id})" style="--diff-col:${diffCol}">
       <div class="mc-head"><div class="mc-sprite">${monsterFor(p)}</div>
         <div><h4 class="mc-name">${p.name}</h4><div class="mc-num">#${p.num} · ${tierNameOf(p)} · ${p.diff}</div></div></div>
       <div class="mc-hint">${(p.hint||'').slice(0,110)}${(p.hint||'').length>110?'…':''}</div>
@@ -3716,8 +3409,7 @@ function renderQuests() {
     const rateRow = q.done ? '' : `<div class="quest-rate" onclick="event.stopPropagation()">
       ${[1,2,3,4,5].map(c => `<button class="quest-rate-btn c${c} ${curRating === c ? 'sel' : ''}" title="Rate ${c}/5 and log victory" onclick="event.stopPropagation();quickRate(${p.id}, ${c})">${c}</button>`).join('')}
     </div>`;
-    const _scene = sceneFor(p.topic);
-    return `<div class="quest-card ${q.done ? 'done' : ''}" data-id="${p.id}" style="--mc:${v.color}40;background-image:linear-gradient(180deg,rgba(11,8,7,0.40) 0%,rgba(11,8,7,0.88) 75%,rgba(11,8,7,0.95) 100%),url('${_scene}');background-size:100% 100%,cover;background-position:0 0,center;background-repeat:no-repeat,no-repeat;">
+    return `<div class="quest-card ${q.done ? 'done' : ''}" data-id="${p.id}" style="--mc:${v.color}40">
       <div class="quest-monster" onclick="openModal(${p.id})" title="${tierNameOf(p)}">${monsterFor(p)}</div>
       <div class="quest-info" onclick="openModal(${p.id})">
         <h4 class="quest-name">${p.name}</h4>
@@ -3891,32 +3583,16 @@ function renderPathway() {
     stage.appendChild(m);
   }
 
-  // Fireflies — biased so at any frame ≥50% are in the upper quarter of the page.
-  // Two cohorts:
-  //   • bottom-cohort: spawn near the bottom, rise full MAP_H (long phase below mid)
-  //   • top-cohort:    spawn near mid-page already, rise only the upper half — these
-  //                     spend their entire visible life in the top portion.
-  const FF_COUNT = 14;
-  for (let e = 0; e < FF_COUNT; e++) {
-    const topCohort = e % 2 === 0; // half-and-half
+  // Subtle ambient embers (6, slow, drifting up — perf)
+  for (let e = 0; e < 6; e++) {
     const el = document.createElement('div');
-    el.className = 'codex-ember firefly';
-    el.style.left = (4 + (e * 41) % 92) + '%';
-    if (topCohort) {
-      // Spawn somewhere in the lower-mid stage and rise into the upper quarter
-      el.style.top = (MAP_H * (0.45 + ((e * 7) % 20) / 100)) + 'px';
-    } else {
-      // Spawn near the bottom edge
-      el.style.top = (MAP_H - 20 - (e * 13) % 50) + 'px';
-    }
-    const dur = 18 + (e * 1.7) % 10;
-    el.style.setProperty('--er-dur', dur + 's');
-    // Phase-spread within each cohort
-    el.style.setProperty('--er-delay', (-(e * dur) / FF_COUNT) + 's');
-    el.style.setProperty('--er-dx', (((e * 11) % 51) - 25) + 'px');
-    // Both cohorts travel ~MAP_H worth of distance (their spawn-Y differs)
-    el.style.setProperty('--er-dy', (-(MAP_H * (1.05 + ((e * 7) % 20) / 100))) + 'px');
-    if (e % 4 === 0) el.classList.add('firefly-bright');
+    el.className = 'codex-ember';
+    el.style.left = (5 + (e * 47) % 90) + '%';
+    el.style.top = (60 + (e * 137) % (MAP_H - 80)) + 'px';
+    el.style.setProperty('--er-dur', (10 + e * 1.3) + 's');
+    el.style.setProperty('--er-delay', (-e * 1.7) + 's');
+    el.style.setProperty('--er-dx', ((e * 11 % 21) - 10) + 'px');
+    el.style.setProperty('--er-dy', (-180 - (e * 13 % 80)) + 'px');
     stage.appendChild(el);
   }
 
@@ -3945,7 +3621,7 @@ function renderPathway() {
     node.style.left = p.x + '%'; node.style.top = p.y + 'px';
     node.dataset.topic = t;
     node.innerHTML = `
-      <div class="keep-medallion ${sizeClass}" style="--seal-col:${sealCol};--seal-glow:${sealGlow};--seal-rim:${sealRim};background-image:url('${sceneFor(t)}');background-size:cover;background-position:center;">
+      <div class="keep-medallion ${sizeClass}" style="--seal-col:${sealCol};--seal-glow:${sealGlow};--seal-rim:${sealRim};">
         <svg class="keep-arc" viewBox="0 0 ${ring} ${ring}">
           <circle cx="${ring/2}" cy="${ring/2}" r="${r}" stroke="${arcCol}" stroke-width="3" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"/>
         </svg>
@@ -4031,13 +3707,12 @@ function renderBestiary() {
     const lastLbl = last ? new Date(last).toLocaleDateString() : 'Never';
     const ud = userData[p.id] || {};
     const diffCol = p.diff === 'Easy' ? 'var(--easy)' : p.diff === 'Medium' ? 'var(--medium)' : 'var(--hard)';
-    const _scene = sceneFor(p.topic);
-    return `<div class="monster-card ${conf > 0 ? 'solved' : ''}" onclick="openModal(${p.id})" style="--diff-col:${diffCol};background-image:linear-gradient(180deg,rgba(11,8,7,0.35) 0%,rgba(11,8,7,0.85) 75%,rgba(11,8,7,0.95) 100%),url('${_scene}');background-size:100% 100%,cover;background-position:0 0,center;background-repeat:no-repeat,no-repeat;">
+    return `<div class="monster-card ${conf > 0 ? 'solved' : ''}" onclick="openModal(${p.id})" style="--diff-col:${diffCol}">
       <div class="mc-head">
         <div class="mc-sprite">${monsterFor(p)}</div>
         <div>
           <h4 class="mc-name">${p.name}</h4>
-          <div class="mc-num">#${p.num} · ${tierNameOf(p)} · ${p.diff}</div>
+          <div class="mc-num">#${p.num} · ${p.diff}</div>
         </div>
       </div>
       <div class="mc-hint">${(p.hint || '').slice(0, 110)}${(p.hint || '').length > 110 ? '…' : ''}</div>
@@ -4074,8 +3749,7 @@ function renderBoss() {
   if (!pool.length) { grid.innerHTML = `<div class="empty-state"><div class="empty-icon">👑</div><h3>No bosses match</h3><p>Adjust your filters</p></div>`; return; }
   grid.innerHTML = pool.map(p => {
     const ud = userData['sd_' + p.id] || {};
-    const _bossImg = bossImageFor(p.id || p.title);
-    return `<div class="boss-card ${ud.attempted ? 'defeated' : ''}" onclick="openSDModal('${p.id}')" style="background-image:linear-gradient(180deg,rgba(11,8,7,0.30) 0%,rgba(11,8,7,0.75) 60%,rgba(11,8,7,0.95) 100%),radial-gradient(ellipse at top right,rgba(122,31,31,0.35),transparent 60%),url('${_bossImg}');background-size:100% 100%,100% 100%,cover;background-position:0 0,0 0,center;background-repeat:no-repeat,no-repeat,no-repeat;">
+    return `<div class="boss-card ${ud.attempted ? 'defeated' : ''}" onclick="openSDModal('${p.id}')" style="--boss-img:url('${bossImageFor(p.id || p.title)}')">
       <span class="boss-freq" style="background:${fcol[p.freq]}22;color:${fcol[p.freq]};border:1px solid ${fcol[p.freq]}55">${p.freq}</span>
       <h3 class="boss-title">👑 ${p.title}</h3>
       <p class="boss-desc">${p.desc}</p>
