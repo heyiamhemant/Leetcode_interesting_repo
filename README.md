@@ -7,14 +7,14 @@ A personal collection of LeetCode solutions, paired with a gamified web tracker 
 - **`/` (root)** — Solutions to ~336 LeetCode problems in Python and C++, organized one file per problem.
 - **`DSA_Dojo.html`** — V1 of the tracker: a single-file HTML app that visualizes the entire problem set as a forest-themed dungeon journey.
 - **`v2/`** — V2 of the tracker: a cinematic Dark Souls-inspired rebuild with Dark Souls scene imagery, parallax pathway, animated fireflies, collapsible bento dashboard, and full mobile/Safari support.
-- **`screenshots/`** — Preview captures from V1.
+- **`screenshots/`** — Preview captures from V1 and V2.
 
 ## Live Sites
 
 - **V1 (Forest):** [heyiamhemant.github.io/DSA_Dojo/](https://heyiamhemant.github.io/DSA_Dojo/)
 - **V2 (Dark Souls):** [heyiamhemant.github.io/DSA_Dojo/v2/](https://heyiamhemant.github.io/DSA_Dojo/v2/)
 
-## Preview (V1)
+## Preview (V1 — Forest)
 
 | Dashboard | Quest Board |
 |:-:|:-:|
@@ -23,6 +23,24 @@ A personal collection of LeetCode solutions, paired with a gamified web tracker 
 | Bestiary | Dungeon Pathway |
 |:-:|:-:|
 | ![Bestiary](screenshots/bestiary.png) | ![Pathway](screenshots/pathway.png) |
+
+## Preview (V2 — Dark Souls)
+
+| Title Screen | Dashboard |
+|:-:|:-:|
+| ![Intro](screenshots/intro_v2.png) | ![Dashboard V2](screenshots/dashboard_v2.png) |
+
+| Realms of Conquest | Dungeon Pathway |
+|:-:|:-:|
+| ![Realms V2](screenshots/realms_v2.png) | ![Pathway V2](screenshots/pathway_v2.png) |
+
+| Quest Board | Bestiary |
+|:-:|:-:|
+| ![Quest Board V2](screenshots/quest_board_v2.png) | ![Bestiary V2](screenshots/bestiary_v2.png) |
+
+| Boss Raids |
+|:-:|
+| ![Boss Raids V2](screenshots/boss_raids_v2.png) |
 
 ## Features
 
