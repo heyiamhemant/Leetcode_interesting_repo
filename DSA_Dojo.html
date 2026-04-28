@@ -35,6 +35,12 @@
   --fog-color: rgba(11,18,8,0.92);
   --card-glow: rgba(92,184,92,0.08);
   --overlay-bg: rgba(5,10,3,0.8);
+  --glass-bg: rgba(21, 35, 22, 0.62);
+  --glass-border: rgba(143, 206, 0, 0.18);
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-md: 14px;
+  --space-lg: 20px;
 }
 
 /* ── Light Theme (Sunlit Forest Clearing) ── */
@@ -58,6 +64,8 @@
   --fog-color: rgba(238,245,230,0.9);
   --card-glow: rgba(61,139,61,0.06);
   --overlay-bg: rgba(250,253,246,0.8);
+  --glass-bg: rgba(250, 253, 246, 0.78);
+  --glass-border: rgba(61, 139, 61, 0.15);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -66,7 +74,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: clamp(13px, 1.2vw, 15px);
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
@@ -614,6 +622,57 @@ body::after {
   font-size: 10px;
   color: var(--accent);
 }
+
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, rgba(12,20,12,0.9), rgba(8,14,8,0.97));
+  border-top: 1px solid var(--glass-border);
+  z-index: 160;
+  backdrop-filter: blur(8px);
+}
+.mobile-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+.mobile-nav-btn {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(20, 28, 20, 0.7);
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 11px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.mobile-nav-btn.active {
+  color: var(--accent);
+  border-color: rgba(143,206,0,0.45);
+}
+.mobile-hunt-fab {
+  display: none;
+  position: fixed;
+  right: 14px;
+  bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+  z-index: 170;
+  border: 1px solid rgba(143,206,0,0.35);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), #2d6a2d);
+  color: #fff;
+  font-family: var(--font-quest);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 11px 14px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.28);
+}
 .nav-icon { font-size: 16px; width: 20px; text-align: center; filter: drop-shadow(0 0 3px currentColor); }
 .nav-badge {
   margin-left: auto;
@@ -705,7 +764,7 @@ body::after {
 /* ── Page titles — Ornate game headers ── */
 .page-title {
   font-family: var(--font-title);
-  font-size: 26px;
+  font-size: clamp(20px, 2.4vw, 30px);
   font-weight: 900;
   margin-bottom: 6px;
   letter-spacing: 2px;
@@ -1132,6 +1191,15 @@ body::after {
   padding: 22px;
   position: relative;
   overflow: hidden;
+}
+.quest-setup,
+.quest-board,
+.dash-panel-card,
+.analytics-card,
+.card {
+  background: linear-gradient(180deg, var(--glass-bg), var(--card));
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(6px);
 }
 .quest-setup::before {
   content: '';
@@ -2692,6 +2760,77 @@ td { padding: 11px 14px; vertical-align: middle; }
   opacity: 0.5;
 }
 .empty-state-svg svg { width: 100%; height: 100%; }
+
+@media (max-width: 980px) {
+  #sidebar {
+    position: static;
+    width: 100%;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    box-shadow: none;
+  }
+  #app {
+    display: block;
+    padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+  }
+  #main {
+    margin-left: 0;
+    padding: 14px;
+  }
+  .revision-panel,
+  .dash-hero-stats,
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+  .today-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .session-flow {
+    grid-template-columns: 1fr;
+  }
+  .problems-table-wrap {
+    border-width: 1px;
+  }
+  #sidebar .nav,
+  #sidebar .sidebar-actions,
+  #sidebar .theme-toggle-wrap {
+    display: none;
+  }
+  .mobile-bottom-nav {
+    display: block;
+  }
+  .mobile-hunt-fab.show {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 640px) {
+  #main {
+    padding: 10px;
+  }
+  .page-title {
+    margin-bottom: 8px;
+  }
+  .page-sub {
+    margin-bottom: 10px;
+  }
+  .btn,
+  .sidebar-action-btn,
+  .theme-toggle,
+  .rev-count-input,
+  .plan-action-btn,
+  .quest-mini-act {
+    min-height: 44px;
+  }
+  .quest-item {
+    padding: 10px 10px;
+    gap: 8px;
+  }
+}
 </style>
 </head>
 <body>
@@ -2858,18 +2997,18 @@ td { padding: 11px 14px; vertical-align: middle; }
     </div>
   </div>
   <div class="nav">
-    <div class="nav-item active" onclick="navigate('dashboard')">
+    <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')">
       <span class="nav-icon">&#9876;</span> Dungeon Map
     </div>
-    <div class="nav-item" onclick="navigate('today')">
+    <div class="nav-item" data-page="today" onclick="navigate('today')">
       <span class="nav-icon">&#128220;</span> Quest Board
       <span class="nav-badge" id="badge-today" style="display:none"></span>
     </div>
-    <div class="nav-item" onclick="navigate('problems')">
+    <div class="nav-item" data-page="problems" onclick="navigate('problems')">
       <span class="nav-icon">&#128126;</span> Monster Bestiary
       <span class="nav-badge">336</span>
     </div>
-    <div class="nav-item" onclick="navigate('sysdesign')">
+    <div class="nav-item" data-page="sysdesign" onclick="navigate('sysdesign')">
       <span class="nav-icon">&#128081;</span> Boss Raids
       <span class="nav-badge" id="badge-sd">0/25</span>
     </div>
@@ -3121,6 +3260,16 @@ td { padding: 11px 14px; vertical-align: middle; }
 </div>
 
 </main>
+
+<div class="mobile-bottom-nav" id="mobile-bottom-nav">
+  <div class="mobile-nav-grid">
+    <button class="mobile-nav-btn active" data-page="dashboard" onclick="navigate('dashboard')">&#9876; Map</button>
+    <button class="mobile-nav-btn" data-page="today" onclick="navigate('today')">&#128220; Quest</button>
+    <button class="mobile-nav-btn" data-page="problems" onclick="navigate('problems')">&#128126; Bestiary</button>
+    <button class="mobile-nav-btn" data-page="sysdesign" onclick="navigate('sysdesign')">&#128081; Boss</button>
+  </div>
+</div>
+<button class="mobile-hunt-fab" id="mobile-hunt-fab" onclick="startTodayHunt()">Start Hunt</button>
 </div>
 
 <!-- Battle Modal -->
@@ -3382,6 +3531,22 @@ function getDueInfo(p) {
   if (dueIn <= 0) return { days: dueIn, label: dueIn === 0 ? 'Today' : `${Math.abs(dueIn)}d overdue`, cls: 'due-overdue' };
   if (dueIn <= 2) return { days: dueIn, label: `${dueIn}d`, cls: 'due-soon' };
   return { days: dueIn, label: `${dueIn}d`, cls: 'due-ok' };
+}
+
+function getLastReviewMs(p) {
+  const ud = userData[p.id];
+  if (ud && ud.lastReviewed) {
+    const t = new Date(ud.lastReviewed).getTime();
+    if (!isNaN(t)) return t;
+  }
+  if (p.date) {
+    const parts = p.date.split(' ');
+    if (parts.length === 3) {
+      const d = new Date(parts[1] + ' ' + parts[0] + ', ' + parts[2]);
+      if (!isNaN(d)) return d.getTime();
+    }
+  }
+  return null;
 }
 
 function getDateAfterDays(days) {
@@ -3684,13 +3849,14 @@ function updateHeroStats() {
 // ═══════════════════════════════════════════════════════
 function navigate(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item, .mobile-nav-btn').forEach(n => n.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
-  document.querySelector(`[onclick="navigate('${page}')"]`).classList.add('active');
+  document.querySelectorAll(`[data-page="${page}"]`).forEach(el => el.classList.add('active'));
   if (page === 'problems') renderProblems();
   if (page === 'dashboard') renderDashboard();
   if (page === 'sysdesign') renderSD();
   if (page === 'today') renderToday();
+  updateMobileHuntFab(page);
 }
 
 function openDungeonDoor() {
@@ -3712,6 +3878,44 @@ function enterDungeon(topicName) {
   document.getElementById('filter-topic').value = topicName;
   applyFilters();
   showToast(`Entering dungeon: ${topicName}`, 'info');
+}
+
+function updateMobileHuntFab(page = null) {
+  const fab = document.getElementById('mobile-hunt-fab');
+  if (!fab) return;
+  const activePage = page || (document.querySelector('.page.active')?.id || '').replace('page-', '');
+  const shouldShow = window.innerWidth <= 980 && activePage === 'today';
+  fab.classList.toggle('show', shouldShow);
+  fab.textContent = todayPlan.length ? 'Resume Hunt' : 'Start Hunt';
+}
+
+function initMobileGestures() {
+  const main = document.getElementById('main');
+  if (!main || window._mobileGesturesBound) return;
+  window._mobileGesturesBound = true;
+  let sx = 0, sy = 0;
+  main.addEventListener('touchstart', (e) => {
+    if (!e.touches || !e.touches[0]) return;
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+  }, { passive: true });
+  main.addEventListener('touchend', (e) => {
+    if (window.innerWidth > 980 || !sx) return;
+    if (document.querySelector('.modal-overlay.open')) return;
+    const t = e.changedTouches && e.changedTouches[0];
+    if (!t) return;
+    const dx = t.clientX - sx;
+    const dy = t.clientY - sy;
+    sx = 0; sy = 0;
+    if (Math.abs(dx) < 55 || Math.abs(dy) > 45) return;
+    const pages = ['dashboard', 'today', 'problems', 'sysdesign'];
+    const current = (document.querySelector('.page.active')?.id || '').replace('page-', '');
+    const idx = pages.indexOf(current);
+    if (idx < 0) return;
+    const next = dx < 0 ? idx + 1 : idx - 1;
+    if (next >= 0 && next < pages.length) navigate(pages[next]);
+  }, { passive: true });
+  window.addEventListener('resize', () => updateMobileHuntFab(), { passive: true });
 }
 
 function getReviewEvents() {
@@ -3745,6 +3949,9 @@ function renderProgressAnalytics() {
   const events = getReviewEvents();
   const dayMs = 86400000;
   const today = new Date();
+  const nowMs = today.getTime();
+  const RECENT_MASTERY_DAYS = 180;
+  const RECENT_MASTERY_MS = RECENT_MASTERY_DAYS * dayMs;
   const toIso = d => d.toISOString().split('T')[0];
 
   const dayKeys = [];
@@ -3791,18 +3998,19 @@ function renderProgressAnalytics() {
   const topicMap = {};
   RAW_PROBLEMS.forEach(p => {
     const t = p.topic.split('/')[0].trim();
-    if (!topicMap[t]) topicMap[t] = { total: 0, solved: 0, overdue: 0 };
+    if (!topicMap[t]) topicMap[t] = { total: 0, recent: 0, overdue: 0 };
     topicMap[t].total++;
-    if (getConf(p) > 0) topicMap[t].solved++;
+    const lastMs = getLastReviewMs(p);
+    if (lastMs !== null && (nowMs - lastMs) <= RECENT_MASTERY_MS) topicMap[t].recent++;
     const due = getDueInfo(p);
     if (due.days < 0) topicMap[t].overdue++;
   });
   const topics = Object.entries(topicMap).map(([name, d]) => ({
     name,
     total: d.total,
-    solved: d.solved,
+    recent: d.recent,
     overdue: d.overdue,
-    pct: d.total ? Math.round(d.solved / d.total * 100) : 0
+    pct: d.total ? Math.round(d.recent / d.total * 100) : 0
   })).sort((a, b) => b.pct - a.pct);
 
   const strongest = topics[0];
@@ -3825,7 +4033,7 @@ function renderProgressAnalytics() {
   document.getElementById('topic-heatmap').innerHTML = topics.slice(0, 10).map(t => {
     const bg = t.pct >= 80 ? 'rgba(63,207,180,0.20)' : t.pct >= 50 ? 'rgba(245,166,35,0.18)' : 'rgba(245,95,95,0.16)';
     return `<div class="topic-chip" style="background:${bg}" onclick="navigate('problems');document.getElementById('filter-topic').value='${t.name.replace(/'/g, "\\'")}';applyFilters();">
-      ${t.name}<br><small>${t.solved}/${t.total} • ${t.pct}%</small>
+      ${t.name}<br><small>${t.recent}/${t.total} recent • ${t.pct}%</small>
     </div>`;
   }).join('');
 }
@@ -4670,6 +4878,7 @@ function renderTodayCommandCenter(done = 0, total = 0) {
   });
 
   const hasPlan = total > 0;
+  updateMobileHuntFab('today');
   el.innerHTML = `
     <div class="today-command-top">
       <div class="today-command-title">&#9876; Today's Command Center</div>
@@ -4969,6 +5178,7 @@ function initFloatingDecorations() {
 // ═══════════════════════════════════════════════════════
 function init() {
   initTheme();
+  initMobileGestures();
   initParticles();
   initFloatingDecorations();
   document.getElementById('hero-avatar-img').src = IMG.knight;
@@ -4981,6 +5191,7 @@ function init() {
   renderToday();
   updateBadges();
   updateHeroStats();
+  updateMobileHuntFab('dashboard');
 }
 
 init();
