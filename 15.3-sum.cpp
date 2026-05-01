@@ -97,5 +97,33 @@ public:
         return result;
     }
 };
+class Solution2026May {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> res;
+        int i = 0, j = 0, k = 0, n = nums.size();
+        for(i = 0 ; i < nums.size() ; i++) {
+            // Skip the same element to avoid duplicate triplets starting with nums[i]
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            j = i + 1;
+            k = n - 1;
+            while(j < k) {
+                if(nums[i] + nums[j] + nums[k] == 0) {
+                    res.push_back({nums[i],nums[j],nums[k]});
+                    // Skip duplicates for the second element
+                    while (j < k && nums[j] == nums[j + 1]) j++;
+                    // Skip duplicates for the third element
+                    while (j < k && nums[k] == nums[k - 1]) k--;
+                    j++;
+                    k--;
+                }
+                else if(nums[i] + nums[j] + nums[k] < 0) j++;
+                else k--;
+            }
+        }
+        return res;
+    }
+};
 // @lc code=end
 
