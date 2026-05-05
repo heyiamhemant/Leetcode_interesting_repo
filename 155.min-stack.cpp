@@ -111,11 +111,40 @@ public:
         return -1;
     }
 };
+// 2026 Min Stack with better space complexity using std::pair instead of an array
+class CleanerMinStack {
+    stack<std::pair<int,int>> S;
+public:
+    CleanerMinStack() {
+        
+    }
+    
+    void push(int val) {
+        if(S.empty()) S.push(make_pair(val, val));
+        else {
+            if(S.top().second > val) S.push(make_pair(val, val));
+            else S.push(make_pair(val, S.top().second));
+        }
+    }
+    
+    void pop() {
+        if(!S.empty()) S.pop();
+    }
+    
+    int top() {
+        if(!S.empty()) return S.top().first;
+        return -1;
+    }
+    
+    int getMin() {
+        if(!S.empty()) return S.top().second;
+        return -1;
+    }
 };
 
 /**
- * Your MinStack object will be instantiated and called as such:
- * MinStack* obj = new MinStack();
+ * Your CleanerMinStack object will be instantiated and called as such:
+ * CleanerMinStack* obj = new CleanerMinStack();
  * obj->push(val);
  * obj->pop();
  * int param_3 = obj->top();
