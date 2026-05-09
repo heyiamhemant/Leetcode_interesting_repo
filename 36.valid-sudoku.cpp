@@ -107,5 +107,26 @@ public:
         return true;
     }
 };
+class Solution2026 {  // beat 100 %
+ public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        int n = board.size();
+        bool row[9][9] = {false};
+        bool col[9][9] = {false};
+        bool box[9][9] = {false}; //boxes from 0 to 9
+        for(int i = 0 ; i < 9 ; i++) {
+            for(int j = 0 ; j < 9 ; j++) {
+                if(board[i][j] == '.') continue;
+                int num = board[i][j] - '1';
+                // to get 5,5 in box 4 -> 4 is 1 * 3 + 1
+                int boxId = (i / 3) * 3 + j / 3;
+
+                if(row[i][num] || col[j][num] || box[boxId][num]) return false;
+                row[i][num] = col[j][num] = box[boxId][num] = true;
+            }
+        }
+        return true;
+    }
+};
 // @lc code=end
 

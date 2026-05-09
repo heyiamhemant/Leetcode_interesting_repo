@@ -1,0 +1,50 @@
+{
+  "credentials": {
+    "username": "YOUR_IRCTC_USERNAME",
+    "password": "YOUR_IRCTC_PASSWORD"
+  },
+  "journey": {
+    "from_station": "NDLS",
+    "to_station": "BCT",
+    "journey_date": "15/05/2026",
+    "class": "3A",
+    "quota": "GENERAL",
+    "train_number": "12952",
+    "boarding_station": "NDLS"
+  },
+  "passengers": [
+    {
+      "name": "John Doe",
+      "age": 30,
+      "gender": "M",
+      "berth": "LB",
+      "food": "V",
+      "nationality": "IN"
+    },
+    {
+      "name": "Jane Doe",
+      "age": 28,
+      "gender": "F",
+      "berth": "LB",
+      "food": "V",
+      "nationality": "IN"
+    }
+  ],
+  "contact": {
+    "mobile": "9999999999"
+  },
+  "payment": {
+    "method": "UPI",
+    "upi_id": "yourname@okicici"
+  },
+  "schedule": {
+    "tatkal_open_time": "10:00:00",
+    "start_buffer_seconds": 30,
+    "is_ac_class": true
+  },
+  "browser": {
+    "headless": false,
+    "implicit_wait_seconds": 5,
+    "page_load_timeout_seconds": 30
+  }
+}
