@@ -70,5 +70,25 @@ public:
     }
 
 };
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> prefix(n,0), suffix(n,0), res(n,0);
+        prefix[0] = nums[0];
+        suffix[n - 1] = nums[n - 1];
+        for(int i = 1 ; i < n; i++) {
+            prefix[i] = nums[i] * prefix[i-1]; 
+            suffix[n - i - 1] = nums[n- i - 1] * suffix[n-i]; 
+        }
+
+        for(int i = 0; i < n ; i++ ) {
+            int suff = i + 1 < n ? suffix[i+1] : 1;
+            int pre = i - 1 >= 0 ? prefix[i-1] : 1;
+            res[i] = suff * pre;
+        }
+        return res;
+    }
+};
 // @lc code=end
 
