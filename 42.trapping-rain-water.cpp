@@ -72,6 +72,19 @@ public:
         }
         return water;
     }
+    int trap2026(vector<int>& height) {
+        int low = 0;
+        int high = height.size() - 1;
+        int water = 0;
+        while(low <= high) {
+            int curLevel = min(height[low],height[high]);
+            while(low <= high && height[low] <= curLevel ) 
+                water += (curLevel - height[low++]);
+            while(low <= high && height[high] <= curLevel)
+                water += curLevel - height[high--];
+        }
+        return water;
+    }
 };
 // @lc code=end
 
